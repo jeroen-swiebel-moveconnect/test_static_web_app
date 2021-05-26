@@ -1,0 +1,140 @@
+<section class="lookup-container" id="{{ field.id }}">
+    <section class="lookup row form-field-section">
+        <span
+            *ngIf="
+                field &&
+                !field.isTableCell &&
+                currentView &&
+                currentView['CodeType'] === 'Data Form' &&
+                field &&
+                !field.CodeHideLabel
+            "
+            class="col-md-3  {{ field.headerClass }}  {{ field.groupHeaderClass }}"
+        >
+            {{ translationContext + field.CodeCode | translate }}</span
+        >
+        <section class="col-md-9 demo-full-width">
+            <section
+                class="ps-rel {{ field && field.dataClass }} {{ field && field.groupDataClass }}"
+                [ngClass]="{ 'lookup-readonly': field && !field.isOnlyLookup }"
+                pTooltip="{{ field && field.CodeHelp }}"
+                [escape]="false"
+                tooltipPosition="bottom"
+                placeholder="Bottom"
+                showDelay="1000"
+                hideDelay="500"
+            >
+                <!-- <div class="mask-lookup"> </div> -->
+                <span
+                    class="ui-autocomplete ui-widget chip-wrapper"
+                    *ngIf="
+                        field &&
+                        !(
+                            field.CodeFieldType == 'Rich Text' ||
+                            field.CodeFieldType == 'Notes' ||
+                            field.CodeFieldType == 'File Upload'
+                        )
+                    "
+                >
+                    <!-- <ejs-chiplist
+                        #chip{{field._id}}
+                        id="chipset"
+                        cssClass="e-outline"
+                        enableDelete="true"
+                        (delete)="removeOption($event)"
+                    >
+                        <e-chips #chips>
+                            <ng-template ngFor let-chip [ngForOf]="selectedList" trackBy:getTrackBy(column)>
+                                <e-chip
+                                    class="h-20"
+                                    value="{{ chip._id }}"
+                                    text="{{ chip.label }}"
+                                ></e-chip>
+                            </ng-template>
+                        </e-chips>
+                    </ejs-chiplist> -->
+
+                    <ng-template
+                        class="h-20"
+                        ngFor
+                        let-chipItem
+                        [ngForOf]="selectedList"
+                        trackBy:getTrackBy(column)
+                    >
+                        <button ejs-button class="chip" (click)="removeOption(chipItem)">
+                            <span class="pd-l-5 font-description">{{ chipItem.label }}</span>
+                            <span class="e-icons e-clear-icon clear-chip"></span>
+                        </button>
+                    </ng-template>
+                </span>
+
+                <span *ngIf="field && field.CodeFieldType == 'Notes'" class="textarea">
+                    <textarea
+                        tabindex="{{ field.tabIndex }}"
+                        class="demo-full-width"
+                        handle-keydown
+                        pInputTextarea
+                        rows="5"
+                        placeholder="{{ field.CodePlaceholder }}"
+                        [disabled]="field.CodeEnabled === 'No'"
+                        [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="selectedText"
+                        (ngModelChange)="markDirty($event)"
+                        required="{{ field.CodeRequired ? true : false }}"
+                        (focus)="showNotes = true"
+                        pTooltip="{{ field.CodeHelp }}"
+                        [escape]="false"
+                        tooltipPosition="bottom"
+                        placeholder="Bottom"
+                        showDelay="1000"
+                        hideDelay="500"
+                    ></textarea>
+                </span>
+                <span *ngIf="field && field.CodeFieldType == 'File Upload'" class="ui-fileupload">
+                    <div class="ui-fileupload-content">
+                        <img
+                            [src]="imgUri"
+                            *ngIf="imgUri"
+                            class="pull-left uploded-image"
+                            draggable="false"
+                        />
+                        {{
+                            field.CodeValue?.FileSearchName
+                                ? field.CodeValue?.FileSearchName
+                                : field.CodeValue
+                        }}
+                        <button
+                            *ngIf="field && field.CodeFieldType == 'File Upload' && field.CodeValue"
+                            [disabled]="isLookupEnbled"
+                            class="fa fa-search file-search-icon"
+                            type="button"
+                            (click)="loadLookup()"
+                        ></button>
+                    </div>
+                </span>
+                <button
+                    *ngIf="
+                        field &&
+                        field.CodeFieldType != 'Rich Text' &&
+                        (field.CodeFieldType != 'File Upload' || !field.CodeValue)
+                    "
+                    [disabled]="isLookupEnbled"
+                    [ngClass]="{ 'icon-search': !field.isOnlyLookup }"
+                    class="fa fa-search search-icon"
+                    type="button"
+                    (click)="loadLookup()"
+                ></button>
+                <button
+                    *ngIf="(field && field.CodeValue) || selectedText"
+                    ejs-button
+                    iconCss="e-icons e-clear-icon"
+                    [ngClass]="{
+                        'clear-icon': field.CodeFieldType != 'File Upload',
+                        'file-upload-clear-icon': field.CodeFieldType == 'File Upload'
+                    }"
+                    (click)="clear()"
+                ></button>
+            </section>
+        </section>
+    </section>
+</section>

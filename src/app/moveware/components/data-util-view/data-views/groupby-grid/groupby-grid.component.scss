@@ -1,0 +1,155 @@
+@import '../../../../../../assets/scss/moveware.scss';
+
+tr {
+    &:focus {
+        background-color: $SECONDARY-COLOR !important;
+        // color: white !important;
+
+        // a {
+        //     color: white !important;
+        // }
+    }
+
+    button {
+        width: auto !important;
+        color: $PRIMARY-COLOR;
+        font-weight: bold;
+    }
+}
+
+.header-clear-icon {
+    position: relative;
+}
+.e-sortfilterdiv {
+    display: none !important;
+}
+
+.icon-position {
+    position: absolute;
+    z-index: 100;
+    right: 23px;
+}
+
+tr.fixed_row {
+    background-color: $PRIMARY-COLOR !important;
+    width: 100%;
+    position: fixed;
+
+    a {
+        color: $WHITE !important;
+
+        &:hover {
+            color: $PRIMARY-COLOR;
+            //  background: $WHITE;
+        }
+    }
+}
+
+::ng-deep td {
+    editable-cell {
+        section {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+
+            span {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+
+            p-dropdown {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
+    }
+
+    app-select {
+        padding-left: 0px !important;
+
+        .ui-dropdown-clear-icon:hover {
+            opacity: 0.8;
+        }
+    }
+
+    app-input {
+        padding-left: 0px !important;
+
+        .clear-btn {
+            padding-bottom: 4px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    app-multiselect {
+        padding-left: 0px !important;
+    }
+
+    app-date {
+        padding-left: 0px !important;
+    }
+
+    app-selectbutton {
+        padding-left: 0px !important;
+    }
+
+    app-editable-combobox {
+        padding-left: 0px !important;
+    }
+
+    dynamic-field {
+        padding-left: 0px !important;
+    }
+
+    icon-picker {
+        padding-left: 0px !important;
+    }
+
+    &.search-cell {
+        vertical-align: top;
+
+        .col-md-9 {
+            flex: auto;
+            max-width: 100%;
+        }
+    }
+
+    .form-field-section {
+        padding-bottom: 0px;
+
+        .Select .ui-selectbutton .ui-button-text {
+            padding: 0.2em 0.6em;
+        }
+
+        .ui-multiselect-label {
+            padding: 0px;
+        }
+    }
+}
+.e-grid .e-sortnumber {
+    display: none !important;
+}
+.remove-alt-row-shadding {
+    tr:nth-of-type(odd) {
+        background-color: transparent !important;
+    }
+}
+.e-grid .e-recordplusexpand,
+.e-grid .e-recordpluscollapse {
+    width: 1px !important;
+    padding: 0px !important;
+    .e-icons {
+        text-indent: 4px;
+        font-size: 10px;
+    }
+}
+
+.e-grid-min-height .e-gridcontent .e-groupcaption {
+    padding-left: 10px !important;
+}
+
+.e-grid .e-gridheader .e-headercontent .e-table col.e-group-intent {
+    width: 0px !important; //set width for the drag intent
+}

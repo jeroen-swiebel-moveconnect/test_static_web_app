@@ -1,0 +1,211 @@
+pipeline {
+    agent {
+        label 'build.moveconnect'
+    }
+
+    options {
+        parallelsAlwaysFailFast()
+    }
+    
+    environment  {
+        scannerHome = tool 'SonarQubeScanner';
+        envText=''
+        nodejsHome = tool 'nodejs'
+        NODE_HOME = "${nodejsHome}"
+        PATH = "${nodejsHome}/bin:${env.PATH}"
+        CHROME_BIN="/usr/bin/google-chrome"
+
+        DEVELOP_BRANCH='origin/dev'
+        DEV_TARGET_BRANCH='dev'
+
+        TEST_BRANCH='origin/test'
+        TEST_TARGET_BRANCH='test'
+
+        UAT_BRANCH='origin/uat'
+        UAT_TARGET_BRANCH='uat'
+
+        PROD_BRANCH='origin/master'
+        PROD_TARGET_BRANCH='master'
+
+        STORAGE_CONTAINER='$web'
+        STORAGE_ACCOUNT_ID=''
+    }
+
+    stages {
+        stage ('Setup env'){
+            steps {
+                dir('ui/src/environments'){
+                    script { 
+                        echo "Current branch = ${env.GIT_BRANCH}"
+                        echo "Target branch = ${env.CHANGE_TARGET}"
+
+                        if (env.GIT_BRANCH==DEVELOP_BRANCH || env.CHANGE_TARGET==DEV_TARGET_BRANCH) {
+                            echo "${env.CHANGE_TARGET?'PR for DEV':'DEV'} build: Applying environment.dev.ts environment configuration"
+                            envText = readFile file: 'environment.dev.ts'
+                        }
+                        else if (env.GIT_BRANCH==TEST_BRANCH || env.CHANGE_TARGET==TEST_TARGET_BRANCH) {
+                            echo "${env.CHANGE_TARGET?'PR for TEST':'TEST'} build: Applying environment.test.ts environment configuration"
+                            envText = readFile file: 'environment.test.ts'
+                        }
+                        else if (env.GIT_BRANCH==UAT_BRANCH || env.CHANGE_TARGET==UAT_TARGET_BRANCH) {
+                            echo "${env.CHANGE_TARGET?'PR for DEV':'DEV'} build: Applying environment.uat.ts environment configuration"
+                            envText = readFile file: 'environment.uat.ts'
+                        }
+                        else if (env.GIT_BRANCH==PROD_BRANCH || env.CHANGE_TARGET==PROD_TARGET_BRANCH) {
+                            echo "${env.CHANGE_TARGET?'PR for PROD':'PROD'} build: Applying environment.ts environment configuration"
+                            envText = readFile file: 'environment.ts'
+                        }
+                        else {
+                            echo "Regular build, keeping  environment.ts environment configuration"
+                            envText = readFile file: 'environment.ts'
+                        }
+                        writeFile file: 'environment.ts', text: "${envText}"
+                        writeFile file: 'environment.prod.ts', text: "${envText}"
+                        writeFile file: 'environment.dev.ts', text: "${envText}"
+                        writeFile file: 'environment.uat.ts', text: "${envText}"
+                        echo "Environment set for ${env.CHANGE_TARGET?'PR':'branch'} ${env.CHANGE_TARGET?env.CHANGE_TARGET:env.GIT_BRANCH}"
+                    }
+                }
+            }
+        }
+        stage('Partial Build'){
+            when {
+                expression {env.GIT_BRANCH!=DEVELOP_BRANCH && env.GIT_BRANCH!=TEST_BRANCH && env.GIT_BRANCH!=UAT_BRANCH && env.GIT_BRANCH!=PROD_BRANCH} 
+            }
+            steps {
+	            dir('ui') {
+                    sh "npm install --prefer-offline"
+                }
+            }
+        }
+        stage('Full build'){
+            when {
+                expression {env.GIT_BRANCH==DEVELOP_BRANCH || env.GIT_BRANCH==TEST_BRANCH || env.GIT_BRANCH==UAT_BRANCH || env.GIT_BRANCH==PROD_BRANCH} 
+            }
+	        steps {
+	            dir('ui') {
+                    sh "npm install"
+                }
+                dir('supplemental') {
+                    sh "npm install"
+                }
+            }
+        }
+        stage('Test'){
+	        steps {
+                dir('ui') {
+                    sh "npm run jenkinstest"
+                }
+                junit 'ui/junitresults/JUNITRESULTS_FOR_JENKINS.xml'
+            }
+        }
+        stage('SonarQube'){
+            when {
+                expression {env.GIT_BRANCH!=DEVELOP_BRANCH && env.GIT_BRANCH!=TEST_BRANCH && env.GIT_BRANCH!=UAT_BRANCH && env.GIT_BRANCH!=PROD_BRANCH} 
+            }
+            steps {
+                withSonarQubeEnv('Build Server Qube') {
+			        dir('ui') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+        stage("Quality Gate"){
+            when {
+                expression {env.GIT_BRANCH!=DEVELOP_BRANCH && env.GIT_BRANCH!=TEST_BRANCH && env.GIT_BRANCH!=PROD_BRANCH} 
+            }
+            steps { 
+                timeout(time: 15, unit: 'MINUTES') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+// TODO: Add PROD build
+        stage ('Create deployment build'){
+            when {
+                expression {env.GIT_BRANCH==DEVELOP_BRANCH || env.GIT_BRANCH==TEST_BRANCH || env.GIT_BRANCH==UAT_BRANCH || env.GIT_BRANCH==PROD_BRANCH} 
+            }
+            steps {
+                dir('ui'){
+                    script { 
+                        envText = readFile file: 'src/environments/environment.ts'
+                        echo "Environment config \n ${envText} "
+                        if (env.GIT_BRANCH==DEVELOP_BRANCH) {
+                            echo "Building DEV release"
+                            sh """
+                                node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build --prod --progress=true --base-href=/
+                            """
+                        }
+                        else if (env.GIT_BRANCH==TEST_BRANCH) {
+                            echo "Building TEST release"
+                            sh """
+                                node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build --prod --progress=true --base-href=/
+                            """
+                        }
+                        else if (env.GIT_BRANCH==UAT_BRANCH) {
+                            echo "Building UAT release"
+                            sh """
+                                node --max-old-space-size=12000 node_modules/@angular/cli/bin/ng build --prod --progress=true --base-href=/
+                            """
+                        }
+                    }
+                }
+            }
+        }
+
+// TODO: Add PROD deployment
+        stage('Copy artifacts') {
+            when {
+                expression {env.GIT_BRANCH==DEVELOP_BRANCH || env.GIT_BRANCH==TEST_BRANCH || env.GIT_BRANCH==UAT_BRANCH || env.GIT_BRANCH==PROD_BRANCH} 
+            }
+            steps {
+                echo 'Copying dist files to tmp folder and zip all files that match the pattern'
+                sh ''' 
+                    cp -r ui/dist/MoveWareFrontEndUI/* ./
+                    rm -r ui*
+                    rm -r supplemental*
+                    rm -r .git
+                '''
+            }
+        }   
+
+        stage('Deploy') {
+            when {
+                expression {env.GIT_BRANCH==DEVELOP_BRANCH || env.GIT_BRANCH==TEST_BRANCH || env.GIT_BRANCH==UAT_BRANCH} 
+            }
+            steps {
+                script {
+                    if (env.GIT_BRANCH==DEVELOP_BRANCH) {
+                        STORAGE_ACCOUNT_ID='static_website_DEV_storage_account' 
+                    }
+                    else if (env.GIT_BRANCH==TEST_BRANCH) {
+                        STORAGE_ACCOUNT_ID='static_website_TEST_storage_account'
+                    }
+                    else {
+                        STORAGE_ACCOUNT_ID='static_website_UAT_storage_account'
+                    }
+                    echo "STORAGE_ACCOUNT_ID = ${STORAGE_ACCOUNT_ID}"
+
+                    echo 'Deploy website'
+                        // gzip all files that match the file extensions
+                        sh "find . -iname '*.js' -exec gzip {} \\;"
+                        azureUpload blobProperties: [cacheControl: '', contentEncoding: '', contentLanguage: '', contentType: '', detectContentType: true], cleanUpContainerOrShare: false, containerName: "${STORAGE_CONTAINER}", excludeFilesPath: '**/*.gz', fileShareName: '', filesPath: '**', storageCredentialId: "${STORAGE_ACCOUNT_ID}" , storageType: 'blobstorage', uploadArtifactsOnlyIfSuccessful: true
+                        // now delete everything that doesn't end in gz and rename all the gz files back to their original name
+                        sh "find . -not -iname '*.gz' -exec rm {} \\;"
+                        sh "find . -iname '*.js.gz' -exec rename 's/.js.gz/.js/' {} \\;"
+                        // what's left are the gzip'd files to be uploaded
+                        azureUpload blobProperties: [cacheControl: '', contentEncoding: 'gzip', contentLanguage: '', contentType: '', detectContentType: true], cleanUpContainerOrShare: false, containerName: "${STORAGE_CONTAINER}", excludeFilesPath: '', fileShareName: '', filesPath: '**', storageCredentialId: "${STORAGE_ACCOUNT_ID}" , storageType: 'blobstorage', uploadArtifactsOnlyIfSuccessful: true
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

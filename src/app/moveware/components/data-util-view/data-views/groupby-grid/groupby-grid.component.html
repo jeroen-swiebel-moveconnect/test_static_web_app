@@ -1,0 +1,109 @@
+<div
+    class="control-section"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No'
+    }"
+>
+    <ejs-grid
+        #grid
+        [rowHeight]="rowHeight"
+        [dataSource]="data"
+        [query]="query"
+        [pageSettings]="pageSettings"
+        [infiniteScrollSettings]="infiniteOptions"
+        [enableInfiniteScrolling]="true"
+        [gridLines]="gridLines"
+        [allowGrouping]="true"
+        [groupSettings]="groupSettings"
+        [allowFiltering]="showColumnFilter"
+        [filterSettings]="selectedFilters"
+        height="500px"
+        [gridLines]="gridLines"
+        [rowHeight]="rowHeight"
+        (rowSelected)="onRowSelection($event)"
+        (dataBound)="dataBound()"
+        (actionBegin)="actionBegin($event)"
+        [editSettings]="editSettings"
+        (actionComplete)="actionComplete($event)"
+        (created)="onGridCreate($event)"
+        [contextMenuItems]="contextMenus"
+        (contextMenuClick)="contextMenuClick($event)"
+    >
+        <e-columns>
+            <ng-template ngFor let-column [ngForOf]="allColumnsCopy" trackBy:getTrackBy(column)>
+                <e-column
+                    field="{{ column.CodeCode }}"
+                    headerText="{{ column.CodeCode }}"
+                    clipMode="Ellipsis"
+                    width="{{ gridsterCelWidth * column.CodeColumns }}"
+                    textAlign="{{ column.align }}"
+                    isPrimaryKey="{{ column.CodeCode == '_id' }}"
+                >
+                    <ng-template #headerTemplate>
+                        <div class="sort-selected" (click)="onSort(column)">
+                            <span
+                                translate
+                                [innerHTML]="
+                                    translationContext[this.currentPage._id] + '.' + column.CodeCode
+                                "
+                            ></span>
+                            <span class="sort-span">
+                                <span class="chevron-div-up">
+                                    <i
+                                        class="fa fa-sort-asc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'ASC'"
+                                    ></i>
+                                    <i
+                                        class="fa fa-sort-desc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'DESC'"
+                                    ></i>
+                                </span>
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template #filterTemplate let-data>
+                        <div id="{{ column.CodeCode }}_filterBarcell">
+                            <ng-container
+                                dynamicField
+                                [field]="column"
+                                [codeValue]="column.CodeValue"
+                                [currentView]="currentView"
+                            >
+                            </ng-container>
+                        </div>
+                    </ng-template>
+                    <ng-template #groupSettingsCaptionTemplate let-data>
+                        <span class="groupItems"
+                            >{{
+                                data.key !== '' && data.key !== null && data.key.length > 0
+                                    ? data.key
+                                    : 'Unknown'
+                            }}
+                            ({{ data.count }})</span
+                        >
+                    </ng-template>
+                    <ng-template #template let-data>
+                        <span
+                            process-settings
+                            [record]="data"
+                            [column]="column"
+                            [value]="data[column.CodeCode]"
+                            class="data{{ currentView._id }}{{ column._id }}"
+                            [innerHTML]="data | ContentProcessor: column"
+                        ></span>
+                    </ng-template>
+                    <ng-template #editTemplate let-data>
+                        <ng-container
+                            dynamicField
+                            [field]="column"
+                            [codeValue]="data[column.CodeCode]"
+                            [currentView]="currentView"
+                        >
+                        </ng-container>
+                    </ng-template>
+                </e-column>
+            </ng-template>
+        </e-columns>
+    </ejs-grid>
+</div>

@@ -1,0 +1,47 @@
+@import '../../../../../../assets/scss/moveware.scss';
+
+.gallery-view {
+    padding: 15px;
+    height: 100%;
+    overflow-y: auto;
+
+    .ui-file {
+        height: 200px;
+        width: 200px !important;
+        margin: 10px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.2), 0 2px 8px 4px rgba(60, 64, 67, 0.1);
+    }
+
+    .adjust-selected-imageSize {
+        height: 190px;
+        width: 190px !important;
+        margin: 15px;
+    }
+
+    .caption {
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0 5px 5px 5px;
+    }
+
+    .selected {
+        position: absolute;
+        right: 5px;
+        border: 1px solid $PRIMARY_COLOR;
+        border-radius: 20px;
+        height: 25px;
+        width: 25px;
+        top: 3px;
+
+        .ui-radiobutton {
+            background: $PRIMARY_COLOR;
+            width: 15px;
+            height: 15px;
+            border-radius: 10px;
+        }
+    }
+}

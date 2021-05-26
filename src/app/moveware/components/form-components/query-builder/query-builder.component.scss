@@ -1,0 +1,146 @@
+@import '../../../../../assets/scss/vars.scss';
+
+.e-rule-operator {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.e-rule-value {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.e-rule-filter {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.pd-0 {
+    padding: 0;
+}
+
+textarea {
+    border: 1px solid $BLACK-03 !important;
+
+    &:focus {
+        border: 1px solid $BLACK-06;
+    }
+}
+
+.query-builder-wrapper {
+    padding-left: 14px;
+    padding-right: 14px;
+
+    .show-rule {
+        position: absolute;
+        right: 0;
+        padding: 0px 5px 0px 5px;
+        margin-right: 2px;
+        margin-top: 2px;
+    }
+    .position {
+        right: 25px;
+    }
+}
+
+.pd-r-l-15 {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.primary-button {
+    margin-right: 10px;
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+}
+
+.secondary-button {
+    margin-right: 10px;
+    color: $PRIMARY-COLOR;
+}
+::ng-deep {
+    .rule-dialog.ui-widget-content {
+        .ui-widget-content {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto !important;
+
+            .pd-r-0 {
+                padding-right: 0;
+            }
+
+            .pd-0 {
+                padding-top: 6px;
+                padding-left: 0;
+            }
+
+            app-select,
+            app-multiselect,
+            app-input {
+                padding: 0;
+            }
+
+            app-togglebutton,
+            app-numaric-textbox,
+            app-inputswitch,
+            app-date {
+                padding: 0;
+
+                .e-date-icon,
+                .e-time-icon {
+                    padding-top: 5px;
+                    min-height: 10px;
+                }
+            }
+
+            app-input,
+            app-date,
+            app-numaric-textbox,
+            app-select {
+                .demo-full-width {
+                    max-width: 100% !important;
+                    flex: 0 0 100% !important;
+
+                    .input {
+                        padding: 0;
+                    }
+                }
+            }
+
+            .multiselect-field {
+                width: 100%;
+                padding-right: 0;
+                margin-right: 0;
+                margin-left: 0;
+                padding-left: 0;
+            }
+
+            .data-form-multiselect {
+                width: 100%;
+            }
+
+            ::ng-deep {
+                .e-icons {
+                    display: inline-block;
+                    font: normal normal normal 14px/1 FontAwesome !important;
+                    font-size: inherit;
+                    text-rendering: auto;
+                    -webkit-font-smoothing: antialiased;
+
+                    &.e-caret {
+                        display: none;
+                    }
+
+                    &.e-add-icon {
+                        &:before {
+                            content: '\f067';
+                        }
+                    }
+                }
+
+                ejs-tooltip {
+                    max-width: 100% !important;
+                    flex: 0 0 100% !important;
+                }
+            }
+        }
+    }
+}

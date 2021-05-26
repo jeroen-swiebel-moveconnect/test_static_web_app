@@ -1,0 +1,46 @@
+<ejs-contextmenu
+    #contextmenu
+    [items]="fieldContextMenus"
+    (select)="select($event)"
+></ejs-contextmenu>
+<div class="view-renderer {{ currentView?._id }}">
+    <div class="clear"></div>
+    <div class="ab-container no-padding h-100" *ngIf="!isLoading">
+        <div class="tab-content" *ngIf="!isSubContainer">
+            <section class="pull-right" *ngIf="isPreview">
+                <button type="button" (click)="updateLayout()">Update Layout</button>
+            </section>
+            <section class="form-view-wraper editable-for">
+                <ng-container
+                    class="dynamicViewmw"
+                    [translationContext]="translationContext"
+                    dynamicView
+                    [currentView]="currentView"
+                    [(viewMode)]="viewMode"
+                    [currentPage]="currentPage"
+                    [currentRecord]="selectedRecord"
+                    *ngIf="
+                        currentView &&
+                        currentView.UIElementsMetaData &&
+                        currentView.UIElementsMetaData.length
+                    "
+                    [parentPageCode]="currentPage.CodeUIContainerDesignerParent"
+                    [dataFields]="dataFields"
+                >
+                </ng-container>
+            </section>
+            <section class="profile-view" *ngIf="loadUserProfile">
+                <!-- <app-action-handler [currentView]="currentView" [(viewMode)]="viewMode" [selectedRecord]="selectedRecord"
+          [currentPage]="currentPage" [currentContainerID]="currentContainerID">
+        </app-action-handler> -->
+            </section>
+        </div>
+    </div>
+
+    <div class="col-lg-12 pull-left" *ngIf="!currentView">
+        <section class="row form-field-section pd-l-20"></section>
+        <div class="warning-card" *ngIf="!isPageFound">
+            <span> {{ message }}</span>
+        </div>
+    </div>
+</div>

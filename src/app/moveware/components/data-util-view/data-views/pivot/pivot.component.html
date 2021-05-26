@@ -1,0 +1,40 @@
+<section
+    class="pivot"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No'
+    }"
+>
+    <ejs-pivotfieldlist
+        #pivotfieldlist
+        id="PivotFieldList"
+        [dataSourceSettings]="dataSourceSettings"
+        renderMode="Popup"
+        (enginePopulated)="afterPopulate($event)"
+        target="#fieldlisttarget"
+        allowCalculatedField="true"
+        allowDeferLayoutUpdate="true"
+        (load)="onLoad()"
+        enableVirtualization="true"
+        (dataBound)="ondataBound()"
+    ></ejs-pivotfieldlist>
+    <ejs-pivotview
+        #pivotview
+        id="PivotView"
+        width="100%"
+        height="100%"
+        showToolbar="false"
+        allowExcelExport="true"
+        allowConditionalFormatting="true"
+        allowDrillThrough="true"
+        allowNumberFormatting="true"
+        allowPdfExport="true"
+        allowCalculatedField="true"
+        [chartSettings]="chartSettings"
+        [gridSettings]="gridSettings"
+        [dataSourceSettings]="dataSourceSettings"
+        [displayOption]="displayOption"
+        (enginePopulated)="afterEnginePopulate($event)"
+    >
+    </ejs-pivotview>
+</section>

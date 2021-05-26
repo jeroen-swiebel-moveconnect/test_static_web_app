@@ -1,0 +1,15 @@
+::ng-deep dynamic-field {
+    padding-left: 21px;
+
+    .dynamic-field-container {
+        & > * {
+            margin: 0px;
+            padding-left: 0;
+        }
+    }
+
+    .default-field {
+        padding-left: 16px;
+        padding-right: 14px;
+    }
+}

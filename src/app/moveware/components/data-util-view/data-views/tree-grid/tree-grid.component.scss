@@ -1,0 +1,112 @@
+.grid-view {
+    height: 100%;
+}
+
+.e-emptyrow {
+    display: none !important;
+}
+
+.e-table {
+    width: 100% !important;
+}
+
+.tree-grid {
+    .e-spin-show {
+        display: none !important;
+    }
+}
+
+::ng-deep .e-filterbarcell {
+    padding-bottom: 5px !important;
+    padding-left: 2px !important;
+    padding-right: 4px !important;
+
+    app-select {
+        padding-left: 0px !important;
+
+        .ui-dropdown-clear-icon:hover {
+            opacity: 0.8;
+        }
+    }
+
+    app-input {
+        padding-left: 0px !important;
+
+        .clear-btn {
+            padding-bottom: 4px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    app-multiselect {
+        padding-left: 0px !important;
+    }
+
+    app-date {
+        padding-left: 0px !important;
+    }
+
+    app-selectbutton {
+        padding-left: 0px !important;
+    }
+
+    app-editable-combobox {
+        padding-left: 0px !important;
+    }
+
+    dynamic-field {
+        padding-left: 0px !important;
+    }
+
+    icon-picker {
+        padding-left: 0px !important;
+    }
+
+    .search-cell {
+        vertical-align: top;
+
+        .col-md-9 {
+            flex: auto;
+            max-width: 100% !important;
+        }
+    }
+
+    .form-field-section {
+        padding-bottom: 0px;
+
+        .Select .ui-selectbutton .ui-button-text {
+            padding: 0.2em 0.6em;
+        }
+
+        .ui-multiselect-label {
+            padding: 0px;
+        }
+    }
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+::ng-deep {
+    .rm-no-records-template {
+        .e-emptyrow {
+            display: none;
+        }
+    }
+    .e-headercelldiv,
+    .e-headercell.e-templatecell.e-ellipsistooltip.e-mousepointer {
+        padding: 0 !important;
+    }
+    .e-treecolumn-container {
+        display: flex !important;
+    }
+}
+.remove-alt-row-shadding {
+    tr:nth-of-type(odd) {
+        background-color: transparent !important;
+    }
+}

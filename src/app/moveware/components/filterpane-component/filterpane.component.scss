@@ -1,0 +1,193 @@
+@import '../../../../assets/scss/moveware.scss';
+
+.e-rowdragdrop {
+    padding: 0px;
+}
+
+.filter-list {
+    overflow: auto;
+    white-space: nowrap;
+    width: 100%;
+    padding-left: 20px;
+    height: calc(100% - 70px);
+    margin-left: 0;
+}
+
+.btn-icon-text {
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    width: 100px;
+}
+
+.filters-list-item {
+    display: inline-block;
+    max-width: 400px;
+    min-width: 212px;
+    padding-left: 20px;
+    list-style: none;
+    padding-left: 5px;
+    height: calc(100% - 50px);
+
+    ::ng-deep {
+        .form-field-section {
+            position: relative;
+            float: left;
+            width: 100%;
+
+            .col-md-9 {
+                max-width: 100%;
+                flex: 0 0 100%;
+            }
+
+            .search-btn {
+                position: absolute;
+                right: 0;
+                font-family: 'FontAwesome';
+            }
+        }
+    }
+
+    .checkbox {
+        float: left;
+        width: 100%;
+
+        .filter-checkbox-list {
+            width: 100%;
+        }
+
+        .e-list-parent {
+            overflow-y: auto;
+            height: 100%;
+        }
+    }
+
+    ::ng-deep {
+        // app-select {
+        //     padding-left: 0px;
+        // }
+
+        .form-field-section {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+}
+
+.clear {
+    clear: both;
+}
+
+.remove-alt-row-shadding {
+    tr:nth-of-type(odd) {
+        background-color: transparent !important;
+    }
+}
+
+::ng-deep {
+    filterpane {
+        .form-field-section {
+            padding: 0px;
+
+            &:first-child {
+                padding-left: 0px;
+            }
+        }
+    }
+}
+
+.dialog-buttons-div {
+    bottom: 10px;
+    width: 100%;
+    text-align: end;
+}
+
+::ng-deep .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+    color: $WHITE !important;
+}
+
+::ng-deep .ui-dialog .ui-dialog-titlebar {
+    background-color: $PRIMARY-COLOR !important;
+}
+
+::ng-deep .ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    color: $WHITE !important;
+}
+
+::ng-deep .filter-dialog {
+    .ui-dialog-content {
+        overflow: auto;
+        display: contents;
+    }
+}
+
+.primary-button {
+    margin-right: 10px;
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+}
+
+.secondary-button {
+    margin-right: 10px;
+    color: $PRIMARY-COLOR;
+}
+
+.user-icon-position {
+    position: absolute;
+    right: 20px;
+    padding-top: 3px;
+}
+
+.customise-panel {
+    display: flex !important;
+    align-items: middle;
+    color: #2d353c !important;
+
+    .customise-panel-expand-btn {
+        position: absolute;
+        right: 42px;
+
+        i {
+            color: $BLACK-05;
+        }
+    }
+}
+
+::ng-deep {
+    .e-rowcell.e-templatecell.e-detailrowvisible {
+        padding: 0px !important;
+    }
+
+    .e-icons.e-frame,
+    .e-icons.e-frame.e-check {
+        height: 14px !important;
+        width: 14px !important;
+        line-height: 11px !important;
+        margin-bottom: 5px !important;
+    }
+}
+
+.rowData-display {
+    display: inline-flex;
+    padding-left: 5px;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.filter-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.dialog-content {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: calc(100% - 35px);
+}
+
+.pd-l-10 {
+    padding-left: 10px;
+}

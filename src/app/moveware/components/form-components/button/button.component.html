@@ -1,0 +1,90 @@
+<div *ngIf="button.CodeCode != 'Upload' && button.CodeCode != 'New Version'">
+    <!-- Secondary buttons (i.e. inside the 3 dots) -->
+    <button
+        ejs-button
+        *ngIf="!isPrimaryBtn"
+        (click)="handleAction(button)"
+        class="hide-focus"
+        [ngClass]="
+            button.CodeButtonType === DISPLAY_ICONANDTEXT ? 'btn-icon-text' : 'uploader-transparent'
+        "
+    >
+        <i
+            class="{{ button.CodeIcon.class }} {{ buttonClass }}"
+            *ngIf="
+                button.CodeIcon &&
+                button.CodeIcon.class &&
+                (button.CodeButtonType === DISPLAY_ICON ||
+                    button.CodeButtonType === DISPLAY_ICONANDTEXT)
+            "
+        ></i>
+        <span class="pd-l-5 font-description">{{ fieldLabel | translate }}</span>
+    </button>
+
+    <!-- Primary buttons (i.e. outside 3 dots) -->
+    <button
+        ejs-button
+        *ngIf="isPrimaryBtn && button.CodeVisible"
+        class="hide-focus"
+        [ngClass]="
+            button.CodeButtonType === DISPLAY_ICONANDTEXT ? 'btn-icon-text' : 'uploader-transparent'
+        "
+        (click)="handleAction(button)"
+        [disabled]="button?.CodeEnabled?.CodeCode === 'No'"
+    >
+        <i
+            class="{{ button.CodeIcon.class }} {{ buttonClass }}"
+            *ngIf="
+                button.CodeIcon &&
+                button.CodeIcon.class &&
+                (button.CodeButtonType === DISPLAY_ICON ||
+                    button.CodeButtonType === DISPLAY_ICONANDTEXT)
+            "
+        ></i>
+        <span
+            class="pd-l-5 font-description"
+            *ngIf="
+                button.CodeButtonType === DISPLAY_TEXT ||
+                button.CodeButtonType === DISPLAY_ICONANDTEXT
+            "
+        >
+            {{ fieldLabel | translate }}
+        </span>
+    </button>
+</div>
+<div
+    *ngIf="button.CodeCode === 'Upload' || button.CodeCode === 'New Version'"
+    class="file-uploader margin-top uploader-button"
+>
+    <div class="uploader-icon-padding">
+        <i
+            class="{{ button.CodeIcon.class }} {{ buttonClass }}"
+            *ngIf="
+                button.CodeIcon &&
+                button.CodeIcon.class &&
+                (button.CodeButtonType === DISPLAY_ICON ||
+                    button.CodeButtonType === DISPLAY_ICONANDTEXT)
+            "
+        ></i>
+    </div>
+    <div>
+        <ejs-uploader
+            *ngIf="button.CodeCode === 'Upload'"
+            #defaultupload
+            id="defaultfileupload"
+            class="btn button-no-bg hide-focus ui-btn"
+            [buttons]="customButton"
+            (selected)="onUpload($event)"
+        >
+        </ejs-uploader>
+        <ejs-uploader
+            *ngIf="button.CodeCode === 'New Version'"
+            #defaultuploadNewVersion
+            id="defaultfileuploadNewVersion"
+            class="btn button-no-bg hide-focus ui-btn"
+            [buttons]="customButton"
+            (selected)="onUploadNewVersion($event)"
+        >
+        </ejs-uploader>
+    </div>
+</div>

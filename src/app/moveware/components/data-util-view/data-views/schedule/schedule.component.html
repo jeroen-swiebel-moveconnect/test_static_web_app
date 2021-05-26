@@ -1,0 +1,41 @@
+<section class="schedule">
+    <ejs-schedule
+        #schedule
+        width="100%"
+        height="100%"
+        Orientation="Vertical"
+        [(currentView)]="selectedView"
+        [selectedDate]="selectedDate"
+        [views]="views"
+        [eventSettings]="eventSettings"
+        [hideEmptyAgendaDays]="false"
+        [timeScale]="timeScale"
+        [workHours]="workHours"
+        (eventClick)="onClick($event)"
+        (dataBinding)="getData($event)"
+        (dragStart)="editStart($event)"
+        (dragStop)="editStop($event)"
+        (resizeStart)="editStart($event)"
+        (resizeStop)="editStop($event)"
+        (actionComplete)="actionComplete($event)"
+        (cellClick)="actionComplete($event)"
+        (cellDoubleClick)="actionComplete($event)"
+        [timezone]="timeZone"
+    >
+        <!-- <e-resources>
+            [currentView]="selectedView"
+            <e-resource
+                field="assigneeId"
+                title="Assignee"
+                name="Assignees"
+                [dataSource]="assigneeDataSource"
+                [allowMultiple]="allowMultipleAssignees"
+                textField="text"
+                idField="assigneeId"
+                colorField="color"
+            >
+            </e-resource>
+        </e-resources> -->
+    </ejs-schedule>
+</section>
+<!-- [group]="group" -->

@@ -1,0 +1,84 @@
+@import '../../../../assets/scss/moveware.scss';
+@import '../app-leftnav/app-leftnav.component.scss';
+
+.no-display {
+    display: none;
+}
+
+.mega-menu-overlay {
+    z-index: 998;
+    pointer-events: auto;
+    background-color: #35353547;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mega-menu {
+    z-index: 999;
+    height: 100%;
+
+    ul.activatehorizontalmenu {
+        padding: 0 15px;
+        line-height: 64px;
+        list-style: none;
+
+        li {
+            font-size: 18px;
+            z-index: 999;
+        }
+    }
+
+    ul:not(.activatehorizontalmenu) {
+        li {
+            font-size: 13px;
+            z-index: 999;
+
+            a.header-menu {
+                padding: 11px 15px;
+            }
+        }
+    }
+
+    a {
+        color: $PRIMARY-COLOR;
+        z-index: 999;
+        display: block;
+
+        &:not(.sub-header-menu):hover {
+            color: white;
+            background-color: $PRIMARY-COLOR;
+        }
+
+        &.header-menu {
+            color: white;
+            padding: 0 15px;
+
+            &.no-submenu:hover,
+            &.whiteBG {
+                color: $PRIMARY-COLOR;
+                background-color: white;
+            }
+        }
+    }
+
+    li {
+        position: static;
+    }
+
+    // .menu-main li:hover .menu-sub,
+    .menu-main li .menu-sub.displayMenu {
+        display: block;
+    }
+}
+
+.menu-container {
+    max-width: 1000px;
+    margin-left: 0;
+    height: 100%;
+}

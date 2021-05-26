@@ -1,0 +1,162 @@
+<section
+    class="row form-field-section input"
+    [hidden]="!field.CodeVisible"
+    *ngIf="!field.CodeLookupEnabled; else lookupTemplate"
+    [ngClass]="{
+        notEmpty: field.CodeValue && field.CodeEnabled !== 'No',
+        'editable-cell': field.isEditableCell
+    }"
+    id="{{ field._id }}"
+>
+    <span
+        *ngIf="
+            !field.isTableCell &&
+            currentView &&
+            currentView.CodeType === 'Data Form' &&
+            !field.CodeHideLabel
+        "
+        class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}"
+        >{{ fieldLabel | translate }}</span
+    >
+    <span
+        *ngIf="
+            field.CodeEnabled === 'Yes' ||
+            (field.CodeEnabled !== 'Yes' && viewMode === 'CREATE_MODE')
+        "
+        class="col-md-9 demo-full-width {{ field.CodeFieldType }} {{ field.CodeDescription }} {{
+            field.dataClass
+        }} {{ field.groupDataClass }} {{ field.CodeCode }}"
+    >
+        <ejs-textbox
+            [htmlAttributes]="{ tabindex: field.tabIndex }"
+            #inputText
+            type="text"
+            class="e-input mw-ui-input-text"
+            (focus)="onFocus($event)"
+            autocomplete="off"
+            [showClearButton]="
+                field.CodeValue &&
+                field.CodeValue != '' &&
+                field.CodeEnabled !== 'No' &&
+                field.CodeType !== 'Display Field' &&
+                !field.isTableCell
+            "
+            [placeholder]="field.CodePlaceholder"
+            (input)="markDirty($event, false)"
+            [event-manager]="field.allActions"
+            [field]="field"
+            [ngClass]="{ 'editable-cell': field.isEditableCell }"
+            [disabled]="field.CodeEnabled === 'No'"
+            [readonly]="field.CodeType === 'Display Field'"
+            [ngModelOptions]="{ standalone: true }"
+            (actionEvent)="handleSpecificKeyStroke($event)"
+            (contextmenu)="onRightClick($event, inputText)"
+            (focusout)="onFocusOut()"
+            (keyup)="onKeyPress($event, panel)"
+            (keyup.enter)="searchColumnFilter($event)"
+            (mouseup)="panel && panel.hide(); onmouseUp($event)"
+            (keydown)="handleKeyboardEvent($event)"
+            [(ngModel)]="field.CodeValue"
+        ></ejs-textbox>
+        <div class="error-info-icon"><i class="fa fa-info"></i></div>
+        <!-- <p-chips
+            (onRemove)="onChipRemoved($event)"
+            (onAdd)="onChipAdded($event)"
+            *ngIf="isKeyStroke"
+            (keydown)="handleKeyboardEvent($event)"
+            (keyup)="onKeyPress($event)"
+            [(ngModel)]="selectedList"
+            class="chip options-text"
+        ></p-chips> -->
+        <!-- this is for the new Syncfusion chips which are commented, can be uncommented when the syncfusion input component comes in the picture -->
+        <!--
+      <ejs-chiplist #chip id="chipset" (click)="onChipAdded($event)" cssClass="e-outline" enableDelete="true"
+      (delete)="onChipRemoved($event)">
+      <e-chips #chips>
+        <ng-container *ngFor="let chip of selectedList">
+          <e-chip style="height: 20px;" value={{chip._id}} text={{chip.label}}></e-chip>
+        </ng-container>
+      </e-chips>
+    </ejs-chiplist> -->
+        <!-- <button ejs-button
+            *ngIf="
+                field.CodeValue != '' &&
+                field.CodeValue &&
+                field.CodeEnabled !== 'No' &&
+                field.CodeType !== 'Display Field' &&
+                !field.isTableCell
+            "
+            (click)="
+                field.CodeValue = null; selectedList = []; markDirty(); searchColumnFilter($event)
+            "
+            tabindex="-1"
+            class="clear-btn e-clear-icon"
+        >
+            <i class="e-clear-icon"></i> 
+        </button> -->
+        <button
+            ejs-button
+            *ngIf="field && field.isFilter"
+            [disabled]="isLookupEnbled"
+            class="fa fa-search file-search-icon search-btn"
+            type="button"
+            (click)="loadFilter(field.CodeValue)"
+        ></button>
+        <ejs-dialog
+            id="dialog"
+            #ejDialog
+            *ngIf="isQuickText"
+            [position]="position"
+            width="363px"
+            [closeOnEscape]="true"
+            [selectedItemIndex]="0"
+            [visible]="false"
+            (open)="onDialogOpen($event)"
+        >
+            <ng-template #content>
+                <div class="ui-dropdown-items-wrapper adjust">
+                    <ul
+                        class="ui-dropdown-items ui-dropdown-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"
+                    >
+                        <li
+                            *ngFor="let selected of filteredTexts; let $index = index"
+                            [ngClass]="{ 'selected-item': $index == currentListIndex }"
+                            (click)="onValueSelect(selected)"
+                            class="font-description ui-helper-reset items"
+                        >
+                            {{
+                                selected.label
+                                    ? selected.label
+                                    : selected.CodeCode
+                                    ? (selected.CodeCode | translate)
+                                    : (selected | translate)
+                            }}
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </ejs-dialog>
+    </span>
+
+    <span
+        *ngIf="field.CodeEnabled !== 'Yes' && viewMode !== 'CREATE_MODE'"
+        class="demo-full-width readonly-field  {{ field.CodeFieldType }} {{
+            field.CodeDescription
+        }} {{ field.dataClass }} {{ field.groupDataClass }}"
+        [ngClass]="[field.CodeHideLabel ? 'col-md-12' : 'col-md-9']"
+    >
+        {{ field.CodeValue | translate }}</span
+    >
+</section>
+
+<ng-template #lookupTemplate>
+    <lookup
+        [value]="field.CodeValue"
+        [field]="field"
+        [currentView]="currentView"
+        [currentPage]="currentPage"
+        [currentRecord]="currentRecord"
+        [translationContext]="translationContext"
+    >
+    </lookup>
+</ng-template>

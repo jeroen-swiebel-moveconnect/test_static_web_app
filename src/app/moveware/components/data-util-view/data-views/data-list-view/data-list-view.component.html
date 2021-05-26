@@ -1,0 +1,55 @@
+<section>
+    <div *ngIf="quickSearchField" style="width: 80%">
+        <mw-search
+            (onFocusOut)="collapse = false"
+            [currentView]="currentView"
+            [field]="quickSearchField"
+            [currentContainerID]="currentContainerID"
+            [currentPage]="currentPage"
+        ></mw-search>
+    </div>
+</section>
+<section
+    class="list-view ui-table-scrollable-body"
+    *ngIf="selectedColumns && selectedColumns.length && dataSource && dataSource.length"
+>
+    <button
+        class="not-a-btn list-items"
+        (click)="onSelection(record)"
+        *ngFor="let record of dataSource"
+        [style.height.px]="gridsterHeight"
+        [ngClass]="record._id == selectedRow?._id ? 'active-record' : 'inactive-record'"
+    >
+        <gridster
+            [options]="options"
+            #gridster_form
+            class="list-gridster"
+            [style.height.px]="gridsterHeight"
+        >
+            <gridster-item [item]="header" *ngFor="let header of selectedColumns">
+                <div *ngIf="header.hasContent == true">
+                    <span
+                        class="headers{{ currentView._id }}{{ header._id }} col-md-3 heading-cell"
+                        *ngIf="!header.CodeHideLabel"
+                        class="font-caption"
+                        >{{
+                            translationContext[currentPage._id] + header.CodeCode | translate
+                        }}:</span
+                    >
+                    <span
+                        class=" data{{ currentView._id }}{{ header._id }}"
+                        [ngClass]="[
+                            header.CodeHideLabel ? 'col-md-12' : 'col-md-9',
+                            header.CodeFieldType != 'Icon Picker' &&
+                            header.CodeFieldType != 'File Upload'
+                                ? 'cell-ellipsis'
+                                : ''
+                        ]"
+                        [innerHTML]="record | ContentProcessor: header:record"
+                        translate
+                    ></span>
+                </div>
+            </gridster-item>
+        </gridster>
+    </button>
+</section>

@@ -1,0 +1,10 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.radio-field {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.e-radio + label {
+    padding-right: 15px;
+}

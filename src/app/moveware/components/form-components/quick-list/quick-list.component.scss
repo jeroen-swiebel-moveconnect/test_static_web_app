@@ -1,0 +1,81 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.pd-l-20 {
+    padding-left: 22px;
+}
+
+.quick-add-list {
+    width: 100% !important;
+}
+
+.quick-list-padding {
+    padding-left: 25px !important;
+}
+
+.form-field-section {
+    width: 100%;
+}
+
+.pad-4-0 {
+    padding: 4px 0 0 0 !important;
+}
+
+.search-field {
+    padding-left: 5px;
+    width: 100%;
+    height: 30px;
+}
+
+.quick-btn {
+    position: absolute;
+
+    height: 29px;
+}
+
+.nt-btn {
+    background: transparent;
+    border: none;
+}
+
+.search-btn {
+    right: 6px;
+}
+
+.clear-btn {
+    right: 33px;
+    &:focus {
+        outline: 1px dotted $BLACK;
+    }
+}
+
+.quick-list-item {
+    background: $GREY-F1;
+    color: $PRIMARY_COLOR;
+    line-height: 35px !important;
+    margin: 5px 0;
+    list-style: none;
+    font-size: 16px !important;
+    line-height: 20px !important;
+    padding-left: 20px;
+
+    &:hover {
+        background: $WHITE-05;
+        cursor: pointer;
+    }
+
+    span {
+        color: $BLACK-09;
+    }
+
+    button {
+        width: 100%;
+        text-align: left;
+        &:focus {
+            outline: 1px dotted $BLACK;
+        }
+    }
+
+    .option-icon {
+        padding: 10px;
+    }
+}

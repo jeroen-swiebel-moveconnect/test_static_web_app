@@ -1,0 +1,14 @@
+<section class="mw-themes list-group-item">
+    <section class="row col-md-12 form-field-section">
+        <span class="col-md-3 form-label-c">Select Theme</span>
+        <p-dropdown
+            [options]="themesList"
+            [(ngModel)]="activeTheme"
+            placeholder="Select a City"
+            optionLabel="CodeDescription"
+            class="col-md-9 demo-full-width margin-top"
+            (onChange)="onThemeChange(activeTheme)"
+        ></p-dropdown>
+        <div class="font-label hint" *ngIf="showNotes">{{field.tooltip}}</div>
+    </section>
+</section>

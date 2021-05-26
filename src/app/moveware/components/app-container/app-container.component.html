@@ -1,0 +1,114 @@
+<section id="app-container">
+    <as-split [direction]="'vertical'" [gutterSize]="5" [useTransition]="applyTransition">
+        <as-split-area
+            class="container-row"
+            [ngClass]="{ 'one-row': activeRowCount === 1 }"
+            *ngFor="let row of activeRowCount | times"
+            [style.height.%]="rowHeights[row - 1]"
+            [size]="rowHeights[row - 1]"
+            [order]="1"
+            style="overflow: initial !important"
+        >
+            <as-split
+                [direction]="'horizontal'"
+                [gutterSize]="gutterSize"
+                (dragEnd)="onViewResize($event)"
+                [useTransition]="applyTransition"
+            >
+                <as-split-area
+                    *ngFor="let column of activeColumnCount | times"
+                    [style.width.%]="columnWidths[column - 1]"
+                    [size]="activeColumnCount > 1 ? columnWidths[column - 1] : 100"
+                    [order]="1"
+                    class="column-spliter"
+                    [ngClass]="{
+                        'column-one': activeColumnCount === 1,
+                        'disable-gutter': !(
+                            column > row &&
+                            columnWidths[column - 1] != 99.99 &&
+                            columnWidths[column - 1] != 100 &&
+                            columnWidths[column - 1] != 0 &&
+                            columnWidths[column - 1] != 0.01
+                        )
+                    }"
+                >
+                    <section
+                        class="h-100 column-pages"
+                        *ngIf="!(columnWidths[column - 1] == 0 && rowHeights[row - 1] == 0)"
+                    >
+                        <button
+                            (click)="hideAndBack(columnWidths[column - 1])"
+                            pTooltip="Back"
+                            tooltipPosition="top"
+                            *ngIf="
+                                column > row &&
+                                (columnWidths[column - 1] == 100 ||
+                                    columnWidths[column - 1] == 99.99)
+                            "
+                            type="button"
+                            class="back-btn"
+                        >
+                            <i class="fa fa-arrow-left"></i>
+                        </button>
+                        <section
+                            *ngIf="
+                                column > row &&
+                                columnWidths[column - 1] != 100 &&
+                                (columnWidths[column - 1] != 0 || columnWidths[column - 1] != 0.01)
+                            "
+                        >
+                            <button
+                                type="button"
+                                class="expand-arrows right right-pane-arrows font-caption"
+                            >
+                                <i
+                                    class="fa fa-angle-left"
+                                    (click)="updateWindowWidthToLeft(column)"
+                                ></i>
+                            </button>
+                            <button
+                                type="button"
+                                class="expand-arrows left right-pane-arrows font-caption"
+                                (click)="updateWindowWidthToRight(column)"
+                            >
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </section>
+                        <ng-container>
+                            <app-page-renderer
+                                *ngIf="activePageMapper && activePageMapper[row - 1]"
+                                [currentContainer]="activePageMapper[row - 1][column - 1]"
+                                [parentViewID]="parentViewID"
+                                [currentContainerID]="containerID"
+                                [currentRecord]="currentRecord"
+                                [metaData]="metaData"
+                                [windowSize]="
+                                    isDefaultContainer
+                                        ? 100 - (windowSize ? windowSize : 0)
+                                        : windowSize
+                                "
+                                [pageContainerData]="pageContainerData"
+                            >
+                            </app-page-renderer>
+                        </ng-container>
+                    </section>
+                </as-split-area>
+            </as-split>
+            <section *ngIf="row - 1 > 0" class="vertical-arrows">
+                <button
+                    type="button"
+                    class="expand-arrows vertical up right-pane-arrows font-caption"
+                >
+                    <i class="fa fa-angle-up" (click)="updateWindowHeightToUp(row)"></i>
+                </button>
+                <button
+                    type="button"
+                    class="expand-arrows vertical down right-pane-arrows font-caption"
+                    (click)="updateWindowHeightToDown(row)"
+                >
+                    <i class="fa fa-angle-down"></i>
+                </button>
+            </section>
+        </as-split-area>
+    </as-split>
+</section>

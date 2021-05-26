@@ -1,0 +1,511 @@
+<section>
+    <div class="content-pane-header" *ngIf="isDesignMode">
+        <button type="button" id="filter-btn" (click)="isLeftPaneCollapsed = !isLeftPaneCollapsed">
+            <i class="fa fa-bars pull-right"></i>
+        </button>
+    </div>
+    <section class="pull-right pd-r-20">
+        <button type="button" *ngIf="isDesignMode" class="mode-icon" (click)="changeMode(false)">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" *ngIf="!isDesignMode" class="mode-icon" (click)="changeMode(true)">
+            <i class="fa fa-times"></i>
+        </button>
+        <app-action-handler
+            [taskBar]="currentView?.TaskBars"
+            [currentView]="currentView"
+            [(viewMode)]="viewMode"
+            [selectedRecord]="currentRecord"
+            [currentPage]="currentPage"
+            [currentContainerID]="currentContainerID"
+            (updateLayout)="updateLayout($event)"
+            (addEvent)="addRecod($event)"
+        >
+        </app-action-handler>
+    </section>
+</section>
+<section class="row col-md-12 h-100 pd-0">
+    <section class="col-md-2 h-100 oy-auto pd-0 filter-pane" [hidden]="isLeftPaneCollapsed">
+        <section
+            class="accordion-pane--body"
+            malihu-scrollbar
+            [scrollbarOptions]="scrollbarOptions"
+        >
+            <ejs-accordion cssClass="filters-accordion">
+                <e-accordionitems>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="calendarsList && calendarsList.length"
+                    >
+                        <ng-template #header>
+                            <div>Calendars</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li
+                                    *ngFor="let item of calendarsList; trackBy: getTrackBy"
+                                    draggable="true"
+                                    (dragstart)="onDrag($event, item)"
+                                >
+                                    <button class="not-a-btn">{{ item.CodeCode }}</button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="cardLists && cardLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Cards</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of cardLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="formsList && formsList.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Forms</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of formsList; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="ganttLists && ganttLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Gantts</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of ganttLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="gridsList && gridsList.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Grids</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of gridsList; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="kanbanLists && kanbanLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Kanbans</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of kanbanLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="dataLists && dataLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Lists</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of dataLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        class="not-a-btn"
+                                        (dragstart)="onDrag($event, item)"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="pivotLists && pivotLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Pivots</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of pivotLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="scheduleLists && scheduleLists.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Schedules</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of scheduleLists; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="treesList && treesList.length"
+                    >
+                        <ng-template #header>
+                            <div>Data Trees</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of treesList; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        (dragstart)="onDrag($event, item)"
+                                        class="not-a-btn"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="taskBarsList && taskBarsList.length"
+                    >
+                        <ng-template #header>
+                            <div>Taskbars</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li
+                                    *ngFor="let item of taskBarsList; trackBy: getTrackBy"
+                                    draggable="true"
+                                    (dragstart)="onDrag($event, item)"
+                                >
+                                    <button class="not-a-btn">{{ item.CodeCode }}</button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="UIContainers && UIContainers.length"
+                    >
+                        <ng-template #header>
+                            <div>UI Containers</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li *ngFor="let item of UIContainers; trackBy: getTrackBy">
+                                    <button
+                                        draggable="true"
+                                        class="not-a-btn"
+                                        (dragstart)="onDrag($event, item)"
+                                    >
+                                        {{ item.CodeCode }}
+                                    </button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="fieldsList && fieldsList.length"
+                    >
+                        <ng-template #header>
+                            <div>Fields</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li
+                                    *ngFor="let item of fieldsList; trackBy: getTrackBy"
+                                    draggable="true"
+                                    (dragstart)="onDrag($event, item)"
+                                >
+                                    <button class="not-a-btn">{{ item.CodeCode }}</button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="uiComponentsList && uiComponentsList.length"
+                    >
+                        <ng-template #header>
+                            <div>UI Components</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li
+                                    *ngFor="let item of uiComponentsList; trackBy: getTrackBy"
+                                    draggable="true"
+                                    (dragstart)="onDrag($event, item)"
+                                >
+                                    <button class="not-a-btn">{{ item.CodeCode }}</button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                    <e-accordionitem
+                        cssClass="view-accordion"
+                        *ngIf="tasksList && tasksList.length"
+                    >
+                        <ng-template #header>
+                            <div>Tasks</div>
+                        </ng-template>
+                        <ng-template #content>
+                            <ul class="designer-elements">
+                                <li
+                                    *ngFor="let item of tasksList; trackBy: getTrackBy"
+                                    draggable="true"
+                                    (dragstart)="onDrag($event, item)"
+                                >
+                                    <button class="not-a-btn">{{ item.CodeCode }}</button>
+                                </li>
+                            </ul>
+                        </ng-template>
+                    </e-accordionitem>
+                </e-accordionitems>
+            </ejs-accordion>
+        </section>
+    </section>
+    <section
+        class="mw-designer pd-0"
+        [ngClass]="[
+            isLeftPaneCollapsed ? 'col-md-12' : 'col-md-10',
+            isDesignMode ? 'desinger-mode' : 'edit-mode'
+        ]"
+        (drop)="dropToAdd($event)"
+        (dragover)="allowDrop($event)"
+    >
+        <gridster [options]="options" class="desiger-gridster">
+            <gridster-item
+                #gridsterItem
+                [item]="item"
+                *ngFor="let item of components"
+                [ngClass]="{
+                    'gridster-grid': item.CodeType == 'Data Grid',
+                    'selected-item': item.isSelected
+                }"
+                (click)="editItem(item, false)"
+            >
+                <section
+                    *ngIf="
+                        item.CodeType != 'Taskbar' &&
+                        item.CodeType !== 'Task' &&
+                        item.CodeElement !== 'Field Group'
+                    "
+                    [ngClass]="{
+                        'form-desingeritem': designerType !== 'Dashboard',
+                        collapsedField:
+                            (item.CodeCollapsed == 'Yes' || !item.CodeVisible) &&
+                            designerType !== 'Dashboard',
+                        'pad-15':
+                            item.CodeType === 'Data List' ||
+                            item.CodeType === 'Data Calendar' ||
+                            item.CodeType === 'Data Pivot'
+                    }"
+                    class="gridster-item"
+                >
+                    <span
+                        *ngIf="
+                            item.CodeType !== 'Data Form' && item.CodeType !== 'Field';
+                            else itemTemplate
+                        "
+                    >
+                        <div class="text">
+                            {{ item.CodeDescription + ' ' }}({{ item.CodeType }})
+                        </div>
+                    </span>
+                    <ng-template #itemTemplate>
+                        <ng-container
+                            widget-renderer
+                            *ngIf="
+                                designerType !== 'Data Grid' && designerType !== 'Data List';
+                                else gridColumnTemplate
+                            "
+                            [UIElements]="UIElements"
+                            [UIElementsMetaData]="UIElementsMetaData"
+                            [component]="item"
+                            [currentRecord]="currentRecord"
+                            [currentPage]="currentPage"
+                            [isDesigner]="true"
+                            [restrictData]="restrictData"
+                            [(viewMode)]="viewMode"
+                        >
+                        </ng-container>
+                        <ng-template #gridColumnTemplate>
+                            <div class="align-center">
+                                {{ item.CodeCode | translate }}
+                            </div>
+                        </ng-template>
+                    </ng-template>
+                </section>
+                <section
+                    [ngClass]="{ 'form-desingeritem': designerType !== 'Dashboard' }"
+                    *ngIf="item.isDashboard && item.CodeType === 'Taskbar'"
+                >
+                    <div class="text">{{ item.CodeDescription + ' ' }}({{ item.CodeType }})</div>
+                </section>
+                <section
+                    [ngClass]="{ 'form-desingeritem': designerType !== 'Dashboard' }"
+                    *ngIf="!item.isDashboard && item.CodeType === 'Taskbar'"
+                    class="gridster-item"
+                    (drop)="dropToAddIntoNestedGridster($event, item)"
+                    (dragover)="allowDrop($event)"
+                >
+                    <gridster
+                        [options]="taskBarOptions"
+                        class="desiger-gridster"
+                        style="background-color: #545454"
+                    >
+                        <gridster-item
+                            #gridsterItem
+                            [item]="button"
+                            *ngFor="let button of item.CodeDesigner"
+                            [ngClass]="{
+                                'gridster-grid': button.CodeType == 'Data Grid',
+                                'selected-item': button.isSelected
+                            }"
+                            (click)="editItemInNestedGridster(button, item)"
+                        >
+                            <ng-container
+                                widget-renderer
+                                *ngIf="designerType !== 'Data Grid'; else gridColumnTemplate"
+                                [UIElements]="UIElements"
+                                [UIElementsMetaData]="UIElementsMetaData"
+                                [component]="button"
+                                [currentRecord]="currentRecord"
+                                [currentPage]="currentPage"
+                                [isDesigner]="true"
+                                [restrictData]="restrictData"
+                                [(viewMode)]="viewMode"
+                            >
+                            </ng-container>
+                            <ng-template #gridColumnTemplate>
+                                <div class="align-center">{{ item.CodeCode | translate }}</div>
+                            </ng-template>
+                        </gridster-item>
+                    </gridster>
+                </section>
+                <section
+                    [ngClass]="{ 'form-desingeritem': designerType !== 'Dashboard' }"
+                    *ngIf="item.CodeElement === 'Field Group'"
+                    class="gridster-item"
+                    (drop)="dropToAddIntoNestedGridster($event, item)"
+                    (dragover)="allowDrop($event)"
+                >
+                    <gridster
+                        [options]="options"
+                        class="desiger-gridster"
+                        style="background-color: #545454"
+                    >
+                        <gridster-item
+                            #gridsterItem
+                            [item]="UIElements[childItem]"
+                            *ngFor="let childItem of item.Children"
+                            [ngClass]="{
+                                'gridster-grid': item.CodeType == 'Data Grid',
+                                'selected-item':
+                                    UIElements[childItem] && UIElements[childItem].isSelected
+                            }"
+                            (click)="editItemInNestedGridster(UIElements[childItem], item)"
+                        >
+                            <ng-container
+                                widget-renderer
+                                *ngIf="designerType !== 'Data Grid'; else gridColumnTemplate"
+                                [UIElements]="UIElements"
+                                [UIElementsMetaData]="UIElementsMetaData"
+                                [component]="UIElements[childItem]"
+                                [currentRecord]="currentRecord"
+                                [currentPage]="currentPage"
+                                [isDesigner]="true"
+                                [restrictData]="restrictData"
+                                [(viewMode)]="viewMode"
+                            >
+                            </ng-container>
+                            <ng-template #gridColumnTemplate>
+                                <div class="align-center">
+                                    {{ UIElements[childItem]?.CodeCode | translate }}
+                                </div>
+                            </ng-template>
+                        </gridster-item>
+                    </gridster>
+                </section>
+            </gridster-item>
+        </gridster>
+    </section>
+</section>

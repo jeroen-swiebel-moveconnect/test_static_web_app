@@ -1,0 +1,33 @@
+<!-- START HEADER-->
+<section [ngClass]="{ 'display-none': isThemeLoading }">
+    <header
+        class="header flexbox flex-1"
+        [ngClass]="{ 'h-64': menuLayout === 'Horizontal' }"
+        mw-header
+        [menuLayout]="menuLayout"
+        [hidden]="isThemeLoading"
+    ></header>
+    <!-- END HEADER-->
+    <section
+        class="mw-container"
+        [ngClass]="{ 'horizontal-menu': menuLayout === 'Horizontal', hidden: isThemeLoading }"
+    >
+        <!-- START SIDEBAR-->
+        <nav
+            *ngIf="menuLayout && menuLayout !== 'Horizontal'"
+            class="page-sidebar"
+            id="sidebar"
+            mw-left-nav
+            [menuLayout]="menuLayout"
+        ></nav>
+        <!-- END SIDEBAR-->
+        <!-- START PAGE CONTENT-->
+        <div class="content-wrapper" [ngClass]="{ adjustwidth: menuLayout === 'Horizontal' }">
+            <breadcrumb class="mw-sub-header"></breadcrumb>
+            <div id="toast"></div>
+            <router-outlet></router-outlet>
+        </div>
+        <!-- END PAGE CONTENT-->
+    </section>
+</section>
+<footer class="page-footer" app-footer></footer>

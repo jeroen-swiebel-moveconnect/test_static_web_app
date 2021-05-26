@@ -1,0 +1,17 @@
+@import '../../../../../../assets/scss/moveware.scss';
+
+::ng-deep .section_height {
+    height: 100%;
+
+    fm-pivot > div:first-child {
+        height: 100%;
+    }
+}
+
+.highcharts {
+    height: calc(100% - 100px);
+}
+
+::ng-deep #fm-toolbar-wrapper #fm-toolbar .fm-dropdown-content span {
+    right: 2px !important;
+}

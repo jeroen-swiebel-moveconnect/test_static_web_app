@@ -1,0 +1,11 @@
+<ejs-pager
+    #pager
+    [totalRecordsCount]="count"
+    [currentPage]="pageNumber + 1"
+    [pageSize]="pageSize"
+    [pageSizes]="pageSizeOptions"
+    (click)="onPageChange($event)"
+    (created)="created($event)"
+    [pageCount]="itemsCanFit"
+>
+</ejs-pager>

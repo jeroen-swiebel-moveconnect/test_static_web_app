@@ -1,0 +1,85 @@
+<section
+    *ngIf="field.CodeEnabled==='Yes'"
+    class="row form-field-section multiselect-field"
+    [hidden]="!field.CodeVisible"
+    id="{{ field._id }}"
+    [ngClass]="{'editable-cell': field.isEditableCell}"
+>
+    <span
+        *ngIf="!field.CodeHideLabel && !field.isTableCell && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{field.headerClass}} {{field.groupHeaderClass}}"
+        >{{ fieldLabel | translate }}</span
+    >
+    <section
+        [ngClass]="currentView['CodeType'] === 'Data Form' ? 'data-form-multiselect' : 'grid-multiselect'"
+    >
+        <section *ngIf="!field.CodeFieldType || field.CodeFieldType != 'Dropdown Tree'">
+            <ejs-multiselect
+                [htmlAttributes]="{'tabindex':field.tabIndex}"
+                id="multiselect{{field._id}}"
+                (close)="onClose($event)"
+                #multiselect
+                (focus)="onFocus($event)"
+                [popupWidth]="popupWidth"
+                class="demo-full-width margin-top {{field.dataClass}} {{field.groupDataClass}}"
+                (change)="onChange($event)"
+                filterType="contains"
+                (contextmenu)="onRightClick($event,input)"
+                (keydown)="onKeydown($event)"
+                [showClearButton]="true"
+                [showDropDownIcon]="true"
+                (removed)="onRemove()"
+                [dataSource]="field.options"
+                [fields]="optionFieldsMapping"
+                [mode]="mode"
+                [showSelectAll]="true"
+                [popupHeight]="400"
+                [placeholder]="field.CodePlaceholder"
+                [ngClass]="{'notEmpty': value.length, 'required': field.CodeRequired}"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="value"
+                [changeOnBlur]="false"
+                (focusout)="onFocusOut()"
+            >
+                <!-- <ng-template #itemTemplate let-data>
+                    <span [innerHTML]="data.label"></span
+                ></ng-template>
+                <ng-template #valueTemplate let-data>
+                    <span [innerHTML]="data.label"></span
+                ></ng-template> -->
+            </ejs-multiselect>
+        </section>
+
+        <section *ngIf="field.CodeFieldType === 'Dropdown Tree'">
+            <ejs-dropdowntree
+                [htmlAttributes]="{'tabindex':field.tabIndex}"
+                id="ddtlist{{field._id}}"
+                #dropdowntreelist
+                [fields]="listfields"
+                [showCheckBox]="true"
+                class="demo-full-width margin-top {{ field.dataClass }} {{ field.groupDataClass }}"
+                (change)="onChange($event)"
+                filterType="contains"
+                (contextmenu)="onRightClick($event, input)"
+                [showClearButton]="true"
+                [showDropDownIcon]="true"
+                (removed)="onRemove()"
+                [popupHeight]="400"
+                [placeholder]="field.CodePlaceholder"
+                [ngClass]="{ notEmpty: value.length, required: field.CodeRequired }"
+                [(ngModel)]="value"
+                [changeOnBlur]="false"
+                [popupWidth]="popupWidth"
+            >
+            </ejs-dropdowntree>
+        </section>
+    </section>
+</section>
+<section *ngIf="field.CodeEnabled === 'No'" class="selected-list-container">
+    <span
+        class="selected-item {{field.dataClass}} {{field.groupDataClass}}"
+        *ngFor="let item of field['originalValue']"
+    >
+        {{item.label}}
+    </span>
+</section>

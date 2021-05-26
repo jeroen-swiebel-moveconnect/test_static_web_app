@@ -1,0 +1,31 @@
+<section
+    class="row form-field-section mw-selectbutton"
+    [hidden]="!field.CodeVisible"
+    id="{{ field._id }}"
+>
+    <span
+        *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.headerClass }}"
+        >{{ translationContext + field.CodeCode | translate }}
+    </span>
+    <div class="demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <!-- <ejs-tooltip
+            id="tooltip"
+            class="e-btn-group"
+            content="{{ field.CodeHelp }}"
+            (beforeOpen)="beforeOpenToolTip($event, field.CodeHelp)"
+            position="BottomCenter"
+        > -->
+        <div *ngFor="let option of field.options">
+            <button
+                ejs-button
+                (click)="markDirty(option)"
+                class="e-btn-group not-a-btn e-inactive"
+                [cssClass]="option.isChecked ? 'e-active' : 'e-inactive'"
+            >
+                {{ option.label | translate }}
+            </button>
+        </div>
+        <!-- </ejs-tooltip> -->
+    </div>
+</section>

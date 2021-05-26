@@ -1,0 +1,17 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.mw-themes {
+    background: white;
+    padding: 20px;
+    border-bottom: none !important;
+    .label {
+        padding-bottom: 20px;
+        color: inherit;
+        padding-left: 0px;
+    }
+
+    position: relative;
+    display: block;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}

@@ -1,0 +1,94 @@
+<section
+    class="row form-field-section rich-text-field"
+    [hidden]="!field.CodeVisible"
+    *ngIf="!field.CodeLookupEnabled; else lookupTemplate"
+    [ngClass]="{ 'field.dataClass}}': isTableHeader }"
+>
+    <span
+        *ngIf="!field.CodeHideLabel"
+        class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}"
+    >
+        {{ fieldLabel | translate }}</span
+    >
+    <span
+        class="col-md-9 demo-full-width {{ field.CodeCode }} {{ field.dataClass }} {{
+            field.groupDataClass
+        }}"
+    >
+        <ejs-dialog
+            id="dialog"
+            #ejDialog
+            *ngIf="isQuickText"
+            [position]="position"
+            width="363px"
+            [closeOnEscape]="true"
+            [selectedItemIndex]="0"
+            [animationSettings]="{ effect: 'none', duration: 0, delay: 0 }"
+            (open)="onDialogOpen($event)"
+            [visible]="false"
+        >
+            <ng-template #content>
+                <div class="ui-dropdown-items-wrapper adjust">
+                    <ul
+                        class="ui-dropdown-items ui-dropdown-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"
+                    >
+                        <li
+                            *ngFor="let selected of filteredTexts; let $index = index"
+                            [ngClass]="{ 'selected-item': $index == currentListIndex }"
+                            (click)="onValueSelect(selected)"
+                            class="font-description ui-helper-reset items"
+                        >
+                            {{
+                                selected.label
+                                    ? selected.label
+                                    : selected.CodeCode
+                                    ? (selected.CodeCode | translate)
+                                    : (selected | translate)
+                            }}
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </ejs-dialog>
+
+        <!-- <ejs-tooltip
+            class="demo-full-width full-width"
+            id="tooltip"
+            content="{{ field.CodeHelp }}"
+            (beforeOpen)="beforeOpenToolTip($event, field.CodeHelp)"
+            position="BottomCenter"
+        > -->
+        <textarea
+            tabindex="{{ field.tabIndex }}"
+            id="{{ field._id }}_{{ field.CodeCode }}"
+            #inputTextArea
+            class="demo-full-width full-width {{ field.CodeFieldType }} {{
+                field.CodeDescription
+            }} {{ field.dataClass }} {{ field.groupDataClass }}"
+            class="e-input"
+            placeholder="{{ field.CodePlaceholder }}"
+            [event-manager]="field.allActions"
+            [field]="field"
+            (actionEvent)="handleSpecificKeyStroke($event)"
+            (contextmenu)="onRightClick($event, input)"
+            handle-keydown
+            rows="5"
+            [disabled]="field.CodeEnabled === 'No'"
+            [ngModelOptions]="{ standalone: true }"
+            (mouseup)="panel && panel.hide(); onMouseUp($event)"
+            [ngModel]="field.CodeValue | jsonParser"
+            (ngModelChange)="markDirty($event)"
+            (focus)="onFocus()"
+            (keyup)="isKeyStroke && onKeyPress($event, panel)"
+            (keydown)="handleKeyboardEvent($event)"
+            (focusout)="onFocusOut()"
+            (dblclick)="isDoubleClick && loadDetails($event)"
+            [escape]="false"
+        ></textarea>
+        <!-- </ejs-tooltip> -->
+        <div class="error-info-icon"><i class="fa fa-info"></i></div>
+    </span>
+</section>
+<ng-template #lookupTemplate>
+    <lookup [field]="field" [currentView]="currentView"></lookup>
+</ng-template>

@@ -1,0 +1,95 @@
+<mw-slide-panel
+    [activePane]="isLeftVisible ? 'left' : 'right'"
+    class="width-100-pct"
+    [hidden]="!field.CodeVisible"
+>
+    <div leftPane class="width-100-pct quick-add-list" *ngIf="isLeftVisible">
+        <section class="col-md-12 quick-list-padding">
+            <section>
+                <section class="form-field-section">
+                    <section class="col-md-12 demo-full-width pad-4-0">
+                        <input
+                            type="text"
+                            (keyup)="onInputChanged($event)"
+                            (keydown)="onInputChanged($event)"
+                            [(ngModel)]="searchKey"
+                            class="search-field"
+                        />
+                        <button
+                            type="button"
+                            *ngIf="searchKey && !isSearchLoading"
+                            aria-label="Clear"
+                            (click)="clearSearchText()"
+                            class="clear-btn nt-btn quick-btn"
+                        >
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button
+                            type="button"
+                            *ngIf="!isSearchLoading"
+                            aria-label="Search"
+                            tabindex="-1"
+                            class="nt-btn search-btn quick-btn"
+                        >
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </section>
+                </section>
+            </section>
+
+            <ul *ngFor="let option of options" class="quick-list-item">
+                <li>
+                    <button type="button" class="nt-btn" (click)="loadViewForQuickAdd(option)">
+                        <i
+                            class="{{ option.icon.class }} option-icon"
+                            [ngStyle]="{
+                                'font-size.pt': '' + option.icon.fontSize,
+                                color: option.icon.color
+                            }"
+                            *ngIf="option.icon && option.icon.class"
+                        ></i>
+                        <span>
+                            {{ option.label }}
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <div rightPane class="width-100-pct">
+        <div class="view-renderer" *ngIf="!isLeftVisible">
+            <div class="clear"></div>
+            <div *ngIf="currentRecord.views && currentRecord.views.length" class="tab-container">
+                <div class="tabs">
+                    <ul class="nav nav-tabs -primary">
+                        <li *ngFor="let collectionView of currentRecord.views; let $index = index">
+                            <a
+                                data-toggle="tab"
+                                href="#menu_{{ $index }}"
+                                [ngClass]="{ active: $index === 0 }"
+                                title="{{ collectionView.CodeDescription }}"
+                                (click)="loadViewWithDataByCode(collectionView)"
+                                class="font-body"
+                            >
+                                {{ collectionView.CodeCode | translate }}</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <ng-container
+                        class="dynamicView"
+                        dynamicView
+                        [currentView]="currentRecord.currentView"
+                        *ngIf="
+                            currentRecord &&
+                            currentRecord.currentView &&
+                            currentRecord.currentView.CodeFields
+                        "
+                    >
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</mw-slide-panel>

@@ -1,0 +1,57 @@
+<section
+    class="row form-field-section input default-field"
+    [hidden]="!field.CodeVisible"
+    *ngIf="!field.DynamicField"
+    [ngClass]="{
+        notEmpty: field.CodeValue && field.CodeEnabled !== 'No',
+        'field.dataClass': isTableHeader
+    }"
+>
+    <span
+        *ngIf="
+            !field.isTableCell &&
+            currentView &&
+            currentView.CodeType === 'Data Form' &&
+            !field.CodeHideLabel
+        "
+        class="col-md-3 {{ field.headerClass }}"
+        >{{ translationContext + '.' + field.CodeCode | translate }}</span
+    >
+    <span
+        class="col-md-9 demo-full-width {{ field.CodeFieldType }} {{ field.CodeDescription }} {{
+            field.dataClass
+        }}"
+    >
+        <input
+            autocomplete="off"
+            pInputText
+            required="{{ field.CodeRequired ? true : false }}"
+            placeholder="{{ field.CodePlaceholder }}"
+            [disabled]="field.CodeEnabled === 'No'"
+            [type]="field.CodeFieldType"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="field.CodeValue"
+            (ngModelChange)="markDirty()"
+        />
+        <button
+            *ngIf="field.CodeValue && field.CodeEnabled !== 'No'"
+            (click)="this.field.CodeValue = null; markDirty()"
+            tabindex="-1"
+            class="clear-btn"
+        >
+            <i class="pi pi-times"></i>
+        </button>
+    </span>
+</section>
+<section class="dynamic-field-container">
+    <ng-container
+        dynamicField
+        *ngIf="field.DynamicField && !loading && field.CodeCode"
+        [field]="field.DynamicField"
+        [currentPage]="currentPage"
+        [currentView]="currentView"
+        [currentRecord]="currentRecord"
+        [translationContext]="translationContext"
+    >
+    </ng-container>
+</section>

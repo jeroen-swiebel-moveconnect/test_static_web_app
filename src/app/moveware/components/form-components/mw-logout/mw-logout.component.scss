@@ -1,0 +1,13 @@
+@import '../../../../../assets/scss/vars.scss';
+$BLUE-06: rgba(#0171c1, 0.6);
+$WHITE: #fff;
+
+a.mw-logout {
+    &:focus {
+        outline: 1px dotted $BLACK !important;
+    }
+}
+
+.demo-full-width {
+    display: block;
+}

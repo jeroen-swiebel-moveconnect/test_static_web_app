@@ -1,0 +1,142 @@
+@import '../../../../assets/scss/moveware.scss';
+
+img {
+    width: 60px;
+    height: 60px;
+    align-content: center;
+    margin: 20px;
+}
+
+.mw-dashboard {
+    padding: 10px;
+    float: left;
+    height: 100%;
+    overflow: auto;
+}
+
+.card {
+    margin: 5px;
+    padding: 15px;
+    border-radius: 0;
+}
+
+.card-container {
+    padding: 0 15px;
+}
+
+.card-title {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.card-header {
+    background-color: transparent;
+    padding: 10px 20px;
+    margin-bottom: 1em;
+}
+
+.card-subtitle {
+    padding-top: 10px;
+}
+
+.card-text {
+    color: green;
+}
+
+.checkbox-text {
+    margin-left: 10px;
+}
+
+.task-icon {
+    align-items: right;
+    justify-content: right;
+}
+
+.scroll {
+    max-height: 500px;
+    overflow-y: auto;
+
+    &.calendar-scroll {
+        overflow-y: hidden;
+    }
+}
+
+.grid-container {
+    padding: 0px 15px 15px 15px;
+}
+
+.card-group {
+    //margin-top: 70px;
+}
+
+.chart-title {
+    text-align: center;
+    padding-top: 13px;
+}
+
+//temporary
+.status-img {
+    height: auto;
+    width: 95%;
+}
+
+.up-arrow {
+    font-size: 20px;
+    line-height: 43px;
+    padding-left: 10px;
+    color: green;
+}
+
+.calendar-card {
+    height: 100%;
+}
+
+.graph {
+    width: 100%;
+    padding: 10px;
+
+    img {
+        width: 100%;
+    }
+
+    .graph-title {
+        display: block;
+        font-size: 16px;
+        color: #777777;
+    }
+
+    .graph-value {
+        display: block;
+        margin: 10px 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: green;
+    }
+}
+
+.timeline > .ui-g {
+    .ui-g-3 {
+        font-size: 14px;
+        position: relative;
+        border-right: 1px solid #dce2e7;
+
+        i {
+            background-color: transparent;
+            font-size: 24px;
+            position: absolute;
+            top: 6px;
+            right: -12px;
+        }
+    }
+
+    .ui-g-9 {
+        padding-left: 1.5em;
+    }
+
+    .event-text {
+        color: #647585;
+        font-size: 14px;
+        display: block;
+        padding-bottom: 20px;
+    }
+}

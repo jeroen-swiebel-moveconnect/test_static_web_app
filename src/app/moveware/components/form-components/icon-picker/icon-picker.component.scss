@@ -1,0 +1,124 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.icon-picker {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .mw-ui-input {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .w-input-btn {
+        width: calc(100% - 35px);
+    }
+
+    .icon-search {
+        width: 80%;
+    }
+
+    &--meta {
+        width: 90%;
+    }
+
+    .icon-search {
+        padding-top: 20px;
+        margin-left: 18px;
+    }
+
+    .mr-r-20 {
+        margin-right: 20px;
+    }
+
+    .pd-20 {
+        padding: 0 20px 15px 20px;
+    }
+
+    .mr-b-10 {
+        margin-bottom: 10px;
+    }
+
+    .pd-l-28 {
+        padding-left: 28px;
+    }
+
+    .icon-picker-section {
+        padding-left: 0px !important;
+        max-width: 80% !important;
+        padding-right: 0;
+        display: flex;
+
+        //height: 27px !important;
+        // border-right: 1px solid $BLACK-08 !important;
+        &.input {
+            &:hover {
+                border: 1px solid $BLACK-08;
+            }
+        }
+
+        input + button {
+            border: 1px solid red !important;
+        }
+
+        // &:hover {
+        //     border: 1px solid #a8b4be !important;
+        // }
+    }
+
+    .icon-picker {
+        border-left: none !important;
+        width: 100%;
+    }
+
+    .icon-button {
+        width: 40px;
+        border: 1px solid $BLACK-03;
+        border-right: 1px solid $BLACK-009;
+        //  border-width: 0.5px !important;
+        color: $PRIMARY-COLOR;
+    }
+
+    .ui-inputgroup-addon {
+        border-color: none !important;
+        padding: 1px 4px !important;
+    }
+}
+
+.clear-btn {
+    position: absolute;
+    font-size: 17px;
+    left: calc(100% - 25px);
+    color: $BLACK-06;
+    line-height: 27px;
+    padding-top: 1px;
+    padding-left: 3px;
+
+    &:hover {
+        background: $PRIMARY-COLOR;
+        color: $WHITE;
+    }
+}
+
+.search-btn {
+    position: absolute;
+    left: calc(100% - 50px);
+    font-size: 17px;
+    color: $BLACK-06;
+    line-height: 27px;
+    padding-left: 3px;
+    padding-right: 3px;
+
+    &:hover {
+        color: $WHITE;
+        background: $PRIMARY-COLOR;
+    }
+}
+
+.e-clear-icon::before {
+    content: '\e953';
+}

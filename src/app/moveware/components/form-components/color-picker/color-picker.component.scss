@@ -1,0 +1,43 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.wrap {
+    display: flex;
+}
+
+.wrap .e-btn {
+    background-color: $WHITE-87;
+    border-color: $BLACK-c8;
+    &:hover {
+        border-color: $BLACK-76;
+    }
+}
+
+.boder-color {
+    border-color: $BLACK-c8;
+    &:hover {
+        border-color: $BLACK-76;
+    }
+
+    &:focus {
+        outline: 1px dotted $BLACK;
+    }
+}
+
+input {
+    &:hover {
+        border-color: $BLACK-76;
+    }
+}
+
+.color-picker {
+    padding-left: 36px;
+    padding-right: 14px;
+
+    .demo-full-width {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        &:hover {
+            border-color: $BLACK-76;
+        }
+    }
+}

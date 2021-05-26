@@ -1,0 +1,131 @@
+<section
+    class="row form-field-section date-field"
+    id="{{ field._id }}"
+    [ngClass]="{ 'editable-cell': field.isEditableCell }"
+    [hidden]="!field.CodeVisible"
+>
+    <!-- {{dateFormat | json}} -->
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView['CodeType'] === 'Data Form'
+        "
+        class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}"
+    >
+        {{ fieldLabel | translate }}</span
+    >
+    <span
+        [ngClass]="date ? 'not-empty' : 'empty'"
+        *ngIf="field.CodeEnabled !== 'No'"
+        class="col-md-9 demo-full-width no-padding {{ field.CodeFieldType }} {{
+            field.CodeDescription
+        }} {{ field.groupDataClass }} {{ field.dataClass }} {{ field.CodeCode }}"
+    >
+        <!-- Field type: Date -->
+        <ejs-datepicker
+            tabindex="{{ field.tabIndex }}"
+            *ngIf="isFieldTypeDate && isDateField && !isRange"
+            locale="{{ languageCode }}"
+            [format]="dateFormat"
+            [placeholder]="field.CodePlaceholder"
+            [min]="minDate"
+            [max]="maxDate"
+            [required]="field.CodeRequired"
+            (blur)="onFocusOut($event)"
+            (change)="onChange($event)"
+            (cleared)="clearAll()"
+            (input)="onInput($event)"
+            [(ngModel)]="date"
+        ></ejs-datepicker>
+
+        <!-- Field type: Date Time -->
+        <ejs-datetimepicker
+            tabindex="{{ field.tabIndex }}"
+            #datetimepicker
+            *ngIf="isFieldTypeDateTime && isDateField && !isRange"
+            [placeholder]="field.CodePlaceholder"
+            locale="{{ languageCode }}"
+            [format]="dateFormat"
+            [min]="minDate"
+            [max]="maxDate"
+            [required]="field.CodeRequired"
+            (blur)="onFocusOut($event)"
+            (change)="onChange($event)"
+            (cleared)="clearAll()"
+            (input)="onInput($event)"
+            [(ngModel)]="date"
+        ></ejs-datetimepicker>
+
+        <!-- Field type: Time -->
+        <ejs-timepicker
+            tabindex="{{ field.tabIndex }}"
+            *ngIf="isFieldTypeTime && isDateField && !isRange"
+            locale="{{ languageCode }}"
+            [placeholder]="field.CodePlaceholder"
+            [required]="field.CodeRequired"
+            (blur)="onFocusOut($event)"
+            (change)="onChange($event)"
+            (cleared)="clearAll()"
+            (input)="onInput($event)"
+            [(ngModel)]="date"
+        ></ejs-timepicker>
+
+        <!-- Range Picker (for date ) -->
+        <ejs-daterangepicker
+            tabindex="{{ field.tabIndex }}"
+            #dateRange
+            *ngIf="(isFieldTypeDate || isFieldTypeDateTime) && isDateField && isRange"
+            [format]="dateFormat"
+            [placeholder]="field.CodePlaceholder"
+            [min]="minDate"
+            [max]="maxDate"
+            [required]="field.CodeRequired"
+            (input)="onInput($event)"
+            (change)="onChange($event)"
+            (blur)="onFocusOut($event)"
+            (cleared)="clearAll()"
+            [startDate]="startDate"
+            [endDate]="endDate"
+        ></ejs-daterangepicker>
+        <div class="error-info-icon"><i class="fa fa-info"></i></div>
+        <input
+            tabindex="{{ field.tabIndex }}"
+            *ngIf="!isDateField"
+            #input
+            class="date-input-text"
+            pInputText
+            [ngModelOptions]="{ standalone: true }"
+            (contextmenu)="onRightClick($event, input)"
+            (keyup)="getQuickTexts($event)"
+            [(ngModel)]="field.CodeValue"
+        />
+        <div class="ui-dropdown-items-wrapper adjust" *ngIf="valueSelected">
+            <ul
+                class="ui-dropdown-items ui-dropdown-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"
+            >
+                <li
+                    *ngFor="let selected of filteredTexts"
+                    (click)="onValueSelect(selected)"
+                    class="font-description ui-helper-reset items"
+                >
+                    {{ selected.CodeCode | translate }}
+                </li>
+            </ul>
+        </div>
+    </span>
+    <!-- {{dateFormatWithProperCase}}::{{dateFormat}} -->
+
+    <span *ngIf="field.CodeEnabled === 'No' && isDateField" class="col-md-9 demo-full-width">
+        <span *ngIf="equalIgnoreCase(field.CodeFieldType, 'Date')">
+            {{ date | DateTimeProcessor: field.CodeFormat }}
+        </span>
+        <span *ngIf="equalIgnoreCase(field.CodeFieldType, 'Time')">
+            {{ date | DateTimeProcessor: field.CodeFormat }}
+        </span>
+        <span *ngIf="equalIgnoreCase(field.CodeFieldType, 'Date Time')">
+            {{ date | DateTimeProcessor: field.CodeFormat }}
+        </span>
+    </span>
+</section>

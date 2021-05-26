@@ -1,0 +1,35 @@
+<div
+    class="demo-full-width row form-field-section radio-field"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.headerClass }}"
+        >{{ translationContext + field.CodeCode | translate }}</span
+    >
+    <div style="max-width: 75%" required="field.CodeRequired">
+        <ng-container *ngFor="let option of field.options">
+            <ejs-radiobutton
+                [htmlAttributes]="{ tabindex: field.tabIndex }"
+                #radioButton
+                label="{{ option.label }}"
+                [(ngModel)]="fieldValueLabel"
+                name="{{ translationContext + '.' + field.CodeCode }}"
+                [value]="option.label"
+                (click)="markDirty(option)"
+                translate
+            ></ejs-radiobutton>
+        </ng-container>
+    </div>
+    <span
+        *ngIf="field.CodeRequired"
+        matSuffix
+        [escape]="false"
+        pTooltip="{{ field.CodeDescription }} is required"
+        tooltipPosition="bottom"
+        placeholder="Bottom"
+        showDelay="1000"
+        hideDelay="500"
+    ></span>
+</div>

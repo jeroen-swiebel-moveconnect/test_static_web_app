@@ -1,0 +1,175 @@
+<section class="ui-cards-container">
+    <p-table #table [columns]="selectedColumns">
+        <ng-template pTemplate="header" let-columns>
+            <tr class="header-description sort-selected table-cell" *ngIf="headerVisible">
+                <th
+                    id="{{ currentView._id }}"
+                    class="table-header font-description header{{ column._id }}"
+                    *ngFor="let column of selectedColumns; let i; of: index"
+                    (click)="onSort(column)"
+                >
+                    <span class="sort-selected">
+                        {{ column.CodeCode | translate }}
+                    </span>
+                    <span class="sort-span">
+                        <span class="chevron-div-up">
+                            <i
+                                class="fa fa-sort-desc sort-arrow sort-selected"
+                                *ngIf="column.sorted == 'ASC'"
+                                pTooltip="Sort Increasing"
+                                tooltipPosition="bottom"
+                                placeholder="Bottom"
+                                showDelay="1000"
+                                hideDelay="500"
+                            ></i>
+                            <i
+                                class="fa fa-sort-asc sort-arrow sort-selected"
+                                *ngIf="column.sorted == 'DESC'"
+                                pTooltip="Sort Decreasing"
+                                tooltipPosition="bottom"
+                                placeholder="Bottom"
+                                showDelay="1000"
+                                hideDelay="500"
+                            ></i>
+                        </span>
+                    </span>
+                </th>
+            </tr>
+            <tr class="header-description" *ngIf="showColumnFilter">
+                <td
+                    class="search-cell font-description header{{ currentView._id }}{{ column._id }}"
+                    *ngFor="let column of selectedColumns"
+                >
+                    <ng-container
+                        dynamicField
+                        [field]="column"
+                        [codeValue]="column.CodeValue"
+                        [currentView]="currentView"
+                    >
+                    </ng-container>
+                    <!-- <span
+                        *ngIf="column.CodeFieldType!=='Combo Box' && column.CodeFieldType !=='Multi Select Combo Box' && column.CodeFieldType !== 'Select Button'">
+                        <input pInputText type="text" class="pointer" (keyup.enter)="onRecordSearch(column)"
+                            [autofocus]="currentFocusedField && column.CodeCode === currentFocusedField.CodeCode"
+                            (ngModelChange)="columnSearchFilter[column.CodeCode]=$event"
+                            [ngModel]="columnSearchFilter[column.CodeCode] | stringReplace :'^':''">
+                        <i class="fa fa-close close-icon"
+                            *ngIf="columnSearchFilter && columnSearchFilter[column.CodeCode]"
+                            (click)="clearSearchText(column)"></i>
+                    </span>
+                    <div *ngIf="column.CodeFieldType==='Combo Box' || column.CodeFieldType ==='Multi Select Combo Box' || column.CodeFieldType === 'Select Button'"
+                        style="position: relative">
+                        <p-dropdown #ddFilter [options]="column.options" [autoDisplayFirst]="false" optionLabel="label"
+                            scrollHeight="385px" [showClear]="false" class="demo-full-width margin-top" [filter]="true"
+                            appendTo="body" [(ngModel)]="searchFilters[column.CodeCode]"
+                            (onChange)="updateSearchFilters($event,column);">
+                        </p-dropdown>
+                        <i class="fa fa-close close-icon icon-position"
+                            *ngIf="columnSearchFilter && columnSearchFilter[column.CodeCode]"
+                            (click)="clearSearchText(column);searchFilters[column.CodeCode]=''"
+                            pTooltip="clear" tooltipPosition="bottom" placeholder="Bottom" showDelay="1000"
+                            hideDelay="500"></i>
+                    </div> -->
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <section class="groupable" *ngIf="dataSource && dataSource.length">
+        <!-- <div class="group-data" *ngif="isGroupable" *ngFor="let loop of dataSource"> -->
+        <section class="cards-layout row">
+            <section *ngIf="isGroupable" class="w-100">
+                <div class="group-data" *ngFor="let groupData of dataSource">
+                    <button
+                        type="button"
+                        class="not-a-btn group-header"
+                        (click)="groupData.isExpanded = !groupData.isExpanded"
+                    >
+                        <span class="group-header-text font-caption-alt">
+                            <i
+                                class="fa"
+                                [ngClass]="[
+                                    groupData.isExpanded
+                                        ? 'fa-chevron-circle-down'
+                                        : 'fa-chevron-circle-right'
+                                ]"
+                            ></i>
+                            {{ groupData._id }} ({{ groupData.count }})
+                        </span>
+                    </button>
+                    <section *ngIf="groupData.isExpanded">
+                        <ng-container
+                            [ngTemplateOutlet]="cardsTemplate"
+                            [ngTemplateOutletContext]="{
+                                cards: groupData.data,
+                                headers: selectedColumns
+                            }"
+                        >
+                        </ng-container>
+                    </section>
+                </div>
+            </section>
+            <section *ngIf="!isGroupable">
+                <ng-container
+                    [ngTemplateOutlet]="cardsTemplate"
+                    [ngTemplateOutletContext]="{ cards: dataSource, headers: selectedColumns }"
+                ></ng-container>
+            </section>
+            <section></section>
+        </section>
+        <!-- </div> -->
+    </section>
+</section>
+<ng-template #cardsTemplate let-cards="cards" let-headers="headers">
+    <div
+        class="ui-card"
+        *ngFor="let card of cards"
+        (click)="onCardSelection(card)"
+        [ngClass]="selectedCard && selectedCard._id === card._id ? 'selected-card' : ''"
+    >
+        <section *ngFor="let header of headers" class="pd-b-6 row">
+            <div class="font-caption pd-b-10 col-md-4 header{{ header._id }}">
+                {{ header['CodeDescription'] }}
+            </div>
+            <div
+                class="font-caption-alt elipssis-text col-md-8 data{{ currentView._id }}{{
+                    header._id
+                }}"
+                process-settings
+                [record]="card"
+                [column]="header"
+                [value]="card[header.CodeCode]"
+                title="{{ card[header.CodeCode] }}"
+            >
+                <ng-container *ngIf="isEditableGrid && header.CodeEnabled === 'Yes'">
+                    <editable-cell
+                        [row]="card"
+                        [col]="header"
+                        [calculatedFields]="calculatedFields"
+                        [parentChildMap]="parentChildMap"
+                        [layoutView]="layoutView"
+                        [currentPage]="currentPage"
+                        [currentView]="currentView"
+                    ></editable-cell>
+                </ng-container>
+                <ng-container *ngIf="!(isEditableGrid && header.CodeEnabled === 'Yes')">
+                    <span
+                        *ngIf="!(header.allActions && header.allActions.length); else linkTemplate"
+                        [innerHTML]="card | ContentProcessor: header"
+                    ></span>
+                    <ng-template #linkTemplate>
+                        <a
+                            class="link"
+                            (click)="header.isClick && handleActions(header, card, $event)"
+                            [contextKey]="currentPage.contextKey"
+                            [event-manager]="header.actions"
+                            [column]="header"
+                            [data]="card"
+                            href="javascript:;"
+                            [innerHTML]="card | ContentProcessor: header"
+                        ></a>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </section>
+    </div>
+</ng-template>

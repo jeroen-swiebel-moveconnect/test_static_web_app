@@ -1,0 +1,103 @@
+<section
+    [ngSwitch]="field.CodeElement"
+    class="ui-element h-100 {{ field._id }}"
+    [hidden]="!field.CodeVisible"
+    [ngClass]="{ hideHeader: field.CodeHideLabel && field.CodeCollapsible != 'Yes' }"
+>
+    <section class="h-100">
+        <div *ngSwitchCase="'Field Group'" class="h-100">
+            <div class="description {{ field.groupHeaderClass }}">
+                <span (click)="isToggled = !isToggled" id="groupHeading">
+                    <section *ngIf="field.CodeEnabled !== 'No'" class="adjust-heading">
+                        <i
+                            class="fa fa-plus collapsible-icon"
+                            aria-hidden="true"
+                            *ngIf="!isToggled"
+                        ></i>
+                        <i
+                            class="fa fa-minus collapsible-icon"
+                            aria-hidden="true"
+                            *ngIf="isToggled"
+                        ></i>
+                        {{ fieldGroupHeading }}
+                    </section>
+                </span>
+            </div>
+
+            <gridster
+                id="field-group{{ field._id }}"
+                [handle-keydown]
+                [options]="options"
+                #gridster_form
+                class="form-gridster {{ field._id }}"
+            >
+                <gridster-item
+                    class="item"
+                    [hidden]="UIElements[element].CodeCollapsible !== 'No' && !isToggled"
+                    [item]="UIElements[element]"
+                    *ngFor="let element of field.Children"
+                    [ngClass]="{ 'pd-f-5': UIElements[element].CodeEnabled === 'No' }"
+                >
+                    <!-- {{UIElements[element].x}}.{{UIElements[element].y}}.{{UIElements[element].rows}}.{{UIElements[element].cols}} -->
+                    <ng-container
+                        dynamicField
+                        [field]="UIElements[element]"
+                        [globalEventsNames]="globalEventsNames"
+                        [currentPage]="currentPage"
+                        [currentView]="currentView"
+                        [parentPageCode]="parentPageCode"
+                        [currentRecord]="currentRecord"
+                        [viewSelector]="viewSelector"
+                        [dataFields]="dataFields"
+                        [currentType]="currentType"
+                    >
+                    </ng-container>
+                </gridster-item>
+            </gridster>
+            <!-- <div *ngFor="let element of field.Children" 
+                [hidden]="UIElements[element].CodeCollapsible !== 'No' && !isToggled">
+                <ng-container dynamicField [field]="UIElements[element]" [globalEventsNames]="globalEventsNames"
+                    [currentPage]="currentPage" [currentView]="currentView" [parentPageCode]="parentPageCode"
+                    [currentRecord]="currentRecord" [viewSelector]="viewSelector" [dataFields]="dataFields"
+                    [currentType]="currentType">
+                </ng-container>
+            </div> -->
+        </div>
+
+        <div *ngSwitchCase="'Horizontal Ruler'">
+            <hr class="horizontal-ruler {{ field.groupHeaderClass }}" />
+        </div>
+        <div
+            *ngSwitchCase="'Html'"
+            class="{{ field.groupHeaderClass }}"
+            [innerHTML]="parseHtmlContent(field.CodeDescription)"
+        ></div>
+        <div *ngSwitchCase="'Field Group Heading'" class="{{ field.groupHeaderClass }}">
+            <h4 *ngIf="currentView.isDesigner">
+                {{ translationContext + '.' + field.CodeCode | translate }}
+            </h4>
+        </div>
+        <div *ngSwitchCase="'Divider'" class="divider {{ field.groupHeaderClass }}"></div>
+        <div *ngSwitchCase="'Heading 1'" class="{{ field.groupHeaderClass }}">
+            <h1>{{ translationContext + '.' + field.CodeCode | translate }}</h1>
+        </div>
+        <div *ngSwitchCase="'Heading 2'" class="{{ field.groupHeaderClass }}">
+            <h2>{{ translationContext + '.' + field.CodeCode | translate }}</h2>
+        </div>
+        <div *ngSwitchCase="'Heading 3'" class="{{ field.groupHeaderClass }}">
+            <h3>{{ translationContext + '.' + field.CodeCode | translate }}</h3>
+        </div>
+        <div *ngSwitchCase="'Heading 4'" class="{{ field.groupHeaderClass }}">
+            <h4>{{ translationContext + '.' + field.CodeCode | translate }}</h4>
+        </div>
+        <div *ngSwitchCase="'Heading 5'" class="{{ field.groupHeaderClass }}">
+            <h5>{{ translationContext + '.' + field.CodeCode | translate }}</h5>
+        </div>
+        <div *ngSwitchCase="'Heading 6'" class="{{ field.groupHeaderClass }}">
+            <h6>{{ translationContext + '.' + field.CodeCode | translate }}</h6>
+        </div>
+        <div *ngSwitchCase="'Image'" class="{{ field.groupHeaderClass }}">
+            <img src="{{ field.imageUrl }}" alt="" class="image" />
+        </div>
+    </section>
+</section>

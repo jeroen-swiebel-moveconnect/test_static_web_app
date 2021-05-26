@@ -1,0 +1,32 @@
+<section
+    class="row form-field-section mw-togglebutton"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView['CodeType'] === 'Data Form'
+        "
+        class="col-md-3 {{ field.headerClass }}"
+        >{{ translationContext + field.CodeCode | translate }}
+    </span>
+    <div class="demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <button
+            tabindex="{{ field.tabIndex }}"
+            #toggleBtn
+            ejs-button
+            cssClass="e-flat"
+            [isToggle]="true"
+            [isPrimary]="true"
+            (click)="markDirty()"
+            iconCss="{{
+                value === 'No' ? 'e-btn-sb-icons fa fa-times' : 'e-btn-sb-icons fa fa-check'
+            }}"
+        >
+            {{ value }}
+        </button>
+    </div>
+</section>

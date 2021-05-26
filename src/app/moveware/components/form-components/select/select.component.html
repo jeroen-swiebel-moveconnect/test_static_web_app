@@ -1,0 +1,76 @@
+<section
+    class="row form-field-section ms-select"
+    id="{{ field._id }}"
+    [ngClass]="{
+        'combo-box-empty': isEmptyObject(value),
+        'editable-cell': field.isEditableCell,
+        'editable-field': viewMode == editMode
+    }"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView['CodeType'] === 'Data Form'
+        "
+        class="col-md-3  {{ field.groupHeaderClass }} "
+        [ngClass]="isTableHeader ? '' : field.headerClass"
+        >{{ fieldLabel | translate }}
+    </span>
+    <!-- <ejs-tooltip
+        class="col-md-9 demo-full-width margin-top {{ field.CodeCode }}"
+        id="tooltip"
+        content="{{ field.CodeHelp }}"
+        (beforeOpen)="beforeOpenToolTip($event, field.CodeHelp)"
+        position="BottomCenter"
+    > -->
+    <section
+        class="col-md-9 demo-full-width margin-top {{ field.CodeCode }} {{ field.dataClass }} {{
+            field.groupDataClass
+        }}"
+    >
+        <ejs-dropdownlist
+            (focus)="onFocus($event)"
+            [htmlAttributes]="{ tabindex: field.tabIndex }"
+            *ngIf="
+                field.CodeEnabled === 'Yes' ||
+                (field.CodeEnabled !== 'Yes' && viewMode === 'CREATE_MODE')
+            "
+            id="selectelement{{ field._id }}"
+            #selectelement
+            [dataSource]="field.options"
+            filterType="contains"
+            (contextmenu)="onRightClick($event, selectelement)"
+            (select)="optionChanged($event)"
+            [ngClass]="{ 'clear-icon': field.CodeValue != null }"
+            [enabled]="field.CodeEnabled === 'Yes'"
+            [fields]="fields"
+            [(value)]="fieldCodeValueId"
+            (beforeOpen)="onOptionsOpen($event)"
+            placeholder="{{ field.CodePlaceholder }}"
+            [allowFiltering]="true"
+            (change)="stateChange($event)"
+            [showClearButton]="true"
+            (keydown)="handleKeyboardEvent($event)"
+            [readonly]="field.CodeEnabled === 'No'"
+            [popupWidth]="popupWidth"
+        >
+        </ejs-dropdownlist>
+
+        <div class="error-info-icon"><i class="fa fa-info"></i></div>
+        <!-- <button class="mode-icon e-btn-save e-lib e-btn e-control e-icon-btn">
+            <span class="e-btn-icon e-icons e-save-icon"></span>
+        </button> -->
+        <span
+            *ngIf="field.CodeEnabled !== 'Yes' && viewMode !== 'CREATE_MODE'"
+            class="col-md-9 {{ field.CodeFieldType }} {{ field.CodeDescription }} {{
+                field.dataClass
+            }} {{ field.groupDataClass }} readonly-padding"
+        >
+            {{ label }}
+        </span>
+    </section>
+    <!-- </ejs-tooltip> -->
+</section>

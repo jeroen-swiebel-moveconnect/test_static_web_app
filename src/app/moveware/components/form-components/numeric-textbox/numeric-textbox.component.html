@@ -1,0 +1,38 @@
+<section class="row form-field-section input" id="{{ field._id }}" [hidden]="!field?.CodeVisible">
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView.CodeType === 'Data Form' &&
+            !field.CodeHideLabel
+        "
+        class="col-md-3 {{ field.dataClass }} {{ field.groupDataClass }}"
+        >{{ field['CodeCode'] | translate }}</span
+    >
+
+    <span
+        class="col-md-9 demo-full-width  {{ field.CodeCode }} {{ field.dataClass }} {{
+            field.groupDataClass
+        }} "
+        *ngIf="field.CodeEnabled !== 'No'"
+    >
+        <ejs-numerictextbox
+            [htmlAttributes]="{ tabindex: field.tabIndex }"
+            (focusout)="onFocusOut()"
+            format="###.##"
+            value="{{ field.CodeValue }}"
+            (focus)="onFocus($event)"
+            step="1"
+            locale="{{ languageCode }}"
+            [showClearButton]="true"
+            (change)="onChange($event)"
+            [(ngModel)]="field.CodeValue"
+            (keydown)="handleKeyEvent($event)"
+            (keyup.enter)="searchColumnFilter($event)"
+        >
+        </ejs-numerictextbox>
+        <div class="error-info-icon"><i class="fa fa-info"></i></div>
+    </span>
+    <span *ngIf="field.CodeEnabled === 'No'" class="col-md-9 padding">{{ field.CodeValue }}</span>
+</section>

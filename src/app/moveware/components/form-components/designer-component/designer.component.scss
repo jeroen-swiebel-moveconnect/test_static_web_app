@@ -1,0 +1,442 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+img {
+    width: 60px;
+    height: 60px;
+    align-content: center;
+    margin: 20px;
+}
+
+.pd-0 {
+    padding: 0 !important;
+}
+
+.oy-auto {
+    overflow: auto;
+}
+
+app-action-handler {
+    float: left;
+    padding-right: 10px;
+    width: 0px;
+}
+
+.selected-item {
+    border: solid 2px $PRIMARY-COLOR;
+}
+
+.mode-icon {
+    padding: 3.5px 8px 3px 9px;
+    background: transparent;
+    border: none;
+    top: 9px;
+    right: 70px;
+    position: relative;
+
+    &:hover {
+        background-color: $BLACK_01;
+    }
+
+    i {
+        font-size: 16.5px;
+        color: $PRIMARY_COLOR;
+    }
+}
+
+.designer-btns {
+    width: 75px;
+}
+
+.collapsedField {
+    background-color: $PINK-9E;
+}
+
+.edit-mode {
+    .desiger-gridster {
+        .gridster-item {
+            &:hover {
+                background-color: $WHITE-05;
+            }
+        }
+    }
+}
+
+.form-desingeritem {
+    width: 100%;
+    float: left;
+    height: 100%;
+
+    /deep/ dynamic-form {
+        padding-right: 0;
+
+        .form-gridster {
+            padding: 0 !important;
+            overflow-y: hidden;
+        }
+    }
+}
+
+.pd-r-20 {
+    padding-right: 20px;
+}
+
+.mw-designer {
+    padding: 10px;
+    float: left;
+    height: calc(100% - 50px);
+    overflow: auto;
+
+    .gridster-grid {
+        padding-left: 15px;
+        padding-right: 10px;
+    }
+
+    .gridster-component {
+        box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.card {
+    margin: 5px;
+    padding: 15px;
+    border-radius: 0;
+}
+
+.card-container {
+    padding: 0 15px;
+}
+
+.card-title {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.card-header {
+    background-color: transparent;
+    padding: 10px 20px;
+    margin-bottom: 1em;
+}
+
+.card-subtitle {
+    padding-top: 10px;
+}
+
+.card-text {
+    color: green;
+}
+
+.checkbox-text {
+    margin-left: 10px;
+}
+
+.task-icon {
+    align-items: right;
+    justify-content: right;
+}
+
+.scroll {
+    max-height: 500px;
+    overflow-y: auto;
+
+    &.calendar-scroll {
+        overflow-y: hidden;
+    }
+}
+
+.grid-container {
+    padding: 0px 15px 15px 15px;
+}
+
+.designer-elements {
+    list-style: none;
+
+    li {
+        padding: 5px;
+
+        a {
+            color: $PRIMARY_COLOR;
+        }
+
+        &:hover {
+            background: $BLACK_01;
+        }
+    }
+}
+
+.chart-title {
+    text-align: center;
+    padding-top: 13px;
+}
+
+//temporary
+.status-img {
+    height: auto;
+    width: 95%;
+}
+
+.up-arrow {
+    font-size: 20px;
+    line-height: 43px;
+    padding-left: 10px;
+    color: green;
+}
+
+.calendar-card {
+    height: 100%;
+}
+
+.graph {
+    width: 100%;
+    padding: 10px;
+
+    img {
+        width: 100%;
+    }
+
+    .graph-title {
+        display: block;
+        font-size: 16px;
+        color: #777777;
+    }
+
+    .graph-value {
+        display: block;
+        margin: 10px 0;
+        font-size: 24px;
+        font-weight: bold;
+        color: green;
+    }
+}
+
+.timeline > .ui-g {
+    .ui-g-3 {
+        font-size: 14px;
+        position: relative;
+        border-right: 1px solid #dce2e7;
+
+        i {
+            background-color: transparent;
+            font-size: 24px;
+            position: absolute;
+            top: 6px;
+            right: -12px;
+        }
+    }
+
+    .ui-g-9 {
+        padding-left: 1.5em;
+    }
+
+    .event-text {
+        color: #647585;
+        font-size: 14px;
+        display: block;
+        padding-bottom: 20px;
+    }
+}
+
+.filter-pane {
+    background: $WHITE;
+    width: 189px;
+    height: calc(100% - 34px);
+    top: 0;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    z-index: 1;
+    position: relative;
+    float: left;
+    border-right: 2px solid $PRIMARY-COLOR;
+
+    .options-header {
+        border: 1px solid $GREY-DB;
+        padding: 0.2em 1.5em 0.25em 1.5em;
+        background: $GREY-L4;
+        border-right: none;
+
+        button {
+            height: 30px;
+            float: right;
+            top: -5px;
+            line-height: 26px;
+        }
+
+        span {
+            padding-left: 32px;
+        }
+    }
+
+    .accordion-pane {
+        width: 100%;
+        overflow: hidden;
+        height: calc(100vh - 186px);
+
+        .more-filters-btn {
+            margin-top: -2px;
+            margin-right: 0;
+            z-index: 10;
+        }
+
+        &--body {
+            width: 100%;
+            //  width: calc(100% - 11px);
+
+            overflow: hidden;
+            height: calc(100vh - 186px);
+        }
+
+        ::ng-deep .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+            background-color: $BLACK-04 !important;
+        }
+
+        // ::ng-deep  .mCSB_inside>.mCSB_container {
+        //     margin-right: 13px !important;
+        // }
+
+        ::ng-deep .ui-dropdown-clear-icon {
+            right: 25px !important;
+        }
+
+        .accordion-header {
+            color: $BLACK-016;
+            background: $GREY-L4;
+            padding: 5px 10px;
+            border-style: solid;
+            border-width: thin;
+            border-bottom: none;
+            border-color: $GREY-LIGHT;
+        }
+
+        .filters-accordion {
+            background: transparent;
+
+            .menu-description {
+                margin-bottom: 0px;
+            }
+        }
+
+        .view-accordion {
+            background: transparent;
+
+            .view-header {
+                i {
+                    width: 20px;
+                }
+            }
+        }
+
+        .filters-text {
+            color: $PRIMARY-COLOR;
+            font-size: 14px;
+            margin-left: 9px;
+            padding-bottom: 5px;
+
+            span {
+                padding-left: 10px;
+            }
+
+            i {
+                width: 10px;
+            }
+        }
+    }
+
+    .chevron-arrow {
+        position: absolute;
+        right: -12px;
+        display: none;
+        z-index: 10;
+    }
+
+    &:hover {
+        .chevron-arrow {
+            display: block;
+        }
+    }
+}
+
+#filter-btn,
+.card-view,
+.table-view {
+    border: none;
+    background: none;
+    font-size: 15px;
+    background: transparent;
+    height: 25px;
+    width: 23px;
+    float: left;
+
+    i {
+        color: $PRIMARY-COLOR;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background: $WHITE-05;
+        border-radius: 50%;
+    }
+
+    &:focus {
+        outline: 1px dotted $BLACK-06;
+    }
+}
+
+::ng-deep {
+    .content-pane-header {
+        text-transform: capitalize;
+        //   width: 25%;
+        float: left;
+        color: $PRIMARY-COLOR;
+        min-width: 7%;
+        transform: none;
+        line-height: 32px !important;
+        margin-top: 6px;
+        padding-bottom: 5px;
+    }
+
+    .top-pagebar {
+        display: inline-flex;
+        justify-content: flex-end;
+        float: right;
+        //padding-left: 20px;
+        color: $PRIMARY-COLOR;
+        width: 75%;
+
+        button:hover {
+            &:hover {
+                cursor: pointer;
+                background: $WHITE-05;
+            }
+        }
+
+        .button-margin {
+            padding-right: 15px;
+        }
+    }
+}
+
+:host ::ng-deep {
+    .ui-accordion .ui-accordion-header {
+        border: none;
+
+        a {
+            color: $PRIMARY-COLOR;
+        }
+    }
+
+    .mCSB_dragger_bar {
+        background-color: $BLACK-04 !important;
+    }
+}
+div.text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.text:hover {
+    white-space: normal;
+}
+.pad-15 {
+    padding-left: 15px !important;
+}

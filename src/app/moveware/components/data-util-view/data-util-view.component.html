@@ -1,0 +1,229 @@
+<article fxflex class="attribute-grid page-body app-page-container">
+    <section
+        class="h-100"
+        [ngClass]="{ 'hidden-filter': filterPaneHidden, 'overlay-filter': !filterPanePinned }"
+    >
+        <section class="col-md-12 h-100 no-padding">
+            <section
+                class="h-100"
+                [ngClass]="{
+                    'no-header': isHeaderAvailable(),
+                    'no-colum-filter-grid': !isColumnFiltersVisible
+                }"
+            >
+                <section
+                    class="h-100 col-md no-padding"
+                    [ngClass]="{
+                        filterbar: isFilterBarVisible,
+                        'data-view--wrapper': !isFilterBarVisible,
+                        scrollbars: viewType === 'Data Menu'
+                    }"
+                >
+                    <div class="accordion-pane-head">
+                        <div
+                            class="col-md-12 toolbar-div"
+                            *ngIf="
+                                selectedColumns &&
+                                selectedColumns.length &&
+                                primaryActions &&
+                                primaryActions.length &&
+                                secondaryActions &&
+                                secondaryActions.length
+                            "
+                        >
+                            <toolbar
+                                [viewList]="viewList"
+                                [currentPage]="currentPage"
+                                [layoutSizeOptions]="layoutSizeOptions"
+                                [primaryActions]="primaryActions"
+                                [secondaryActions]="secondaryActions"
+                                (actionEvent)="handleGridAction($event)"
+                                (handleRightClick)="onRightClick($event)"
+                                [displayedColumns]="displayedColumns"
+                                [filtersList]="filtersList"
+                                [selectedColumns]="selectedColumns"
+                                (customiseView)="applyCustomisation($event)"
+                                [currentView]="currentView"
+                                [parentPageCode]="parentPageCode"
+                                [currentRecord]="currentRecord"
+                                [currentType]="currentType"
+                                (loadFilter)="loadFilter($event)"
+                                [rowGroupOptions]="rowGroupOptions"
+                                [colGroupOptions]="colGroupOptions"
+                                [translationContext]="translationContext"
+                                [viewTranslationContext]="viewTranslationContext"
+                                [selectedFilters]="selectedFilters"
+                                [isFilterBarVisible]="isFilterBarVisible"
+                                (resetDeafaultFilters)="resetDeafaultView()"
+                            ></toolbar>
+                        </div>
+                        <div
+                            class="top-pagebar"
+                            [ngClass]="{
+                                'full-width':
+                                    currentPage &&
+                                    (!currentPage.CodeDescription ||
+                                        (currentPage.CodeDescription &&
+                                            !currentPage.CodeDescription.trim()))
+                            }"
+                        >
+                            <div class="quickSearchField" *ngIf="quickSearchField">
+                                <mw-search
+                                    *ngIf="quickSearchField.CodeCollapsed != 'Yes' || collapse"
+                                    (onFocusOut)="collapse = false"
+                                    [field]="quickSearchField"
+                                    [currentPage]="currentPage"
+                                    [currentView]="currentView"
+                                    [currentContainerID]="currentContainerID"
+                                >
+                                </mw-search>
+                                <i
+                                    style="margin: 14px; float: right"
+                                    *ngIf="quickSearchField.CodeCollapsed === 'Yes' && !collapse"
+                                    (click)="collapse = true"
+                                    class="fa fa-search"
+                                ></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dummy div to stop the elements below to occupy the floating positions-->
+                    <div style="clear: both"></div>
+                    <section
+                        class="content-pane--body data-view--{{ currentView._id }}"
+                        [ngClass]="{ 'no-paginators': !isPaginatorVisible }"
+                    >
+                        <section
+                            class="grid-table"
+                            *ngIf="
+                                !(groupByColumns && groupByColumns.length) ||
+                                (groupByColumns.length && viewType !== 'Data Grid')
+                            "
+                            [ngClass]="{ 'no-paginator': !isPaginatorVisible }"
+                        >
+                            <section
+                                class="content-pane--table {{ currentView._id }}"
+                                *ngIf="dataViewMetaData"
+                            >
+                                <ng-container #dataView> </ng-container>
+                            </section>
+                        </section>
+
+                        <section class="reports-view-container" *ngIf="viewType == 'Org Chart'">
+                            <app-tree-view
+                                [currentView]="currentView"
+                                [pageIndex]="pageIndex"
+                                [currentPageSize]="currentPageSize"
+                                [actions]="actions"
+                                [gridData]="dataSource"
+                                [gridHeaders]="selectedColumns"
+                                (onNodeSelect)="onNodeSelect($event)"
+                                [viewData]="currentView"
+                                [selectedNode]="selectedRow"
+                                [columnSearchFilter]="columnSearchFilter"
+                                (onTreeNodeSort)="sortGrid($event)"
+                                [filters]="selectedFilters"
+                                [sortState]="sortState"
+                                (onTreeSearch)="searchOnGrid($event)"
+                                [currentPage]="currentPage"
+                                [metaData]="metaData"
+                            ></app-tree-view>
+                        </section>
+
+                        <section
+                            class="content-pane--treetable"
+                            *ngIf="
+                                viewType == 'Data Grid' && groupByColumns && groupByColumns.length
+                            "
+                        >
+                            <groupby-grid
+                                [gridsterCelWidth]="gridsterCelWidth"
+                                [headerVisible]="headerVisible"
+                                [gridData]="dataSource"
+                                [gridHeaders]="selectedColumns"
+                                [densityIndex]="densityIndex"
+                                [allColumns]="displayedColumns"
+                                [columnSearchFilter]="columnSearchFilter"
+                                [searchFilters]="searchFilters"
+                                [selectedFilters]="selectedFilters"
+                                (onRecordSelect)="onCardSelect($event)"
+                                (onGridSort)="sortGrid($event)"
+                                (onGridSearch)="searchOnGrid($event)"
+                                [selectedRecord]="selectedRow"
+                                [gridLines]="gridLines"
+                                [rowHeight]="rowHeight"
+                                [sortState]="sortState"
+                                [showColumnFilter]="isColumnFiltersVisible"
+                                [limit]="currentPageSize"
+                                [currentPage]="currentPage"
+                                [currentView]="currentView"
+                                [isLoading]="isLoading"
+                                [groupByColumns]="groupByColumns"
+                                [metaData]="metaData"
+                                [isEditableGrid]="isEditableGrid"
+                                [gridRowShading]="gridRowShading"
+                                [contextMenus]="contextMenus"
+                                (onContextMenuSelect)="onContextMenuSelect($event)"
+                            >
+                            </groupby-grid>
+                        </section>
+                        <section
+                            *ngIf="
+                                viewType !== 'Data Schedule' &&
+                                viewType !== 'Data Pivot' &&
+                                viewType !== 'Data Kanban' &&
+                                viewType !== 'Data Gantt'
+                            "
+                        >
+                            <pagination
+                                [hidden]="errorMsg"
+                                (goPage)="matPageEventHandler($event)"
+                                *ngIf="
+                                    isPaginatorVisible &&
+                                    dataSource &&
+                                    dataSource.length &&
+                                    totalRecords > 0 &&
+                                    selectedColumns.length &&
+                                    dataViewInstance &&
+                                    !groupByInstance
+                                "
+                                [pageSizeOptions]="pageSizeOptions"
+                                [density]="densityIndex"
+                                [pagesToShow]="3"
+                                [page]="pageIndex"
+                                [perPage]="currentPageSize"
+                                [count]="totalRecords"
+                                [viewId]="currentView._id"
+                            >
+                            </pagination>
+                        </section>
+                        <section
+                            class="no-data no-data-msg"
+                            *ngIf="
+                                viewType == 'Data Grid' &&
+                                dataSource &&
+                                dataSource.length == 0 &&
+                                !isLoading &&
+                                !isDashboard &&
+                                !restrictAPI
+                            "
+                        >
+                            <i class="fa-exclamation-triangle fa"></i> No Data available
+                        </section>
+                        <section
+                            class="reports-view-container"
+                            *ngIf="viewType == 'Cross Tab' || viewType == 'Report'"
+                        >
+                            <div id="reportContent" report-row-event></div>
+                        </section>
+                        <section *ngIf="!isLoading && errorMsg && !isDashboard">
+                            <div class="no-data">
+                                <i class="fa-exclamation-triangle fa"></i>
+                                <span> {{ errorMsg }}</span>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+</article>

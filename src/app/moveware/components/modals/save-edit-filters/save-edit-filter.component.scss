@@ -1,0 +1,81 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.dialog-title {
+    display: inline-flex;
+    padding-left: 15px;
+}
+
+.save-edit-filter-content {
+    height: 100%;
+
+    .form-field-section {
+        padding-left: 40px;
+    }
+}
+
+::ng-deep {
+    .ui-dialog.ui-dynamicdialog.ui-widget-content {
+        background-color: $WHITE !important;
+    }
+}
+
+::ng-deep .form-field-section {
+    [required].ng-invalid {
+        background: $PINK-FF;
+    }
+}
+
+.pd-l-60 {
+    padding-left: 60px !important;
+}
+
+lookup {
+    width: 100%;
+}
+
+.hideTab {
+    display: none;
+
+    &.showTab {
+        height: 250px;
+        width: 400px;
+        display: block;
+        position: relative;
+        -webkit-animation-name: animateFromRight;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animateFromRight;
+        animation-duration: 0.4s;
+    }
+}
+
+.right {
+    float: right;
+
+    &.w-44 {
+        width: 44px !important;
+    }
+}
+
+@-webkit-keyframes animateFromRight {
+    from {
+        right: -120px;
+        opacity: 0;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}
+
+@keyframes animateFromRight {
+    from {
+        right: -120px;
+        opacity: 0;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}

@@ -1,0 +1,13 @@
+<div *ngIf="settingFields.length">
+    <section class="btn-wrapper">
+        <button (click)="ApplySettings()" class="setting-btn pull-right btn-display">
+            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </button>
+    </section>
+    <dynamic-form
+        [dataFields]="dataFields"
+        class="display-settings"
+        [CodeFields]="settingFields"
+        [currentView]="currentView"
+    ></dynamic-form>
+</div>

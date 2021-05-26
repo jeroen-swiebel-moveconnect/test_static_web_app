@@ -1,0 +1,44 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.ms-select {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .mat-form-field {
+        display: block !important;
+    }
+
+    .hint {
+        text-align: center;
+        width: 100%;
+    }
+
+    &.combo-box-empty {
+        .required {
+            ::ng-deep {
+                .ui-dropdown-trigger,
+                .ui-dropdown-label {
+                    background: $PINK-FF;
+                }
+            }
+        }
+    }
+
+    .demo-full-width {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+
+        ::ng-deep .ui-dropdown-panel.ui-widget.ui-widget-content {
+            position: absolute;
+            z-index: 200;
+        }
+
+        ::ng-deep .ui-dropdown-label {
+            border: 0.2px solid #dce2e7 !important;
+        }
+    }
+}
+
+::ng-deep .dropdown-list {
+    display: none;
+}

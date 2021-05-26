@@ -1,0 +1,127 @@
+<div
+    class="control-section h-100 tree-grid"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No',
+        'rm-no-records-template': dataSource && dataSource.length
+    }"
+>
+    <ejs-treegrid
+        #treeGridView
+        (expanding)="expanding($event)"
+        expandStateMapping="expanded"
+        [allowReordering]="true"
+        [allowFiltering]="true"
+        [allowSelection]="true"
+        [allowResizing]="true"
+        [selectionSettings]="selectionSettings"
+        height="100%"
+        width="auto"
+        [dataSource]="data | async"
+        parentIdMapping="ParentId"
+        idMapping="_id"
+        [loadChildOnDemand]="true"
+        (dataStateChange)="dataStateChange($event)"
+        hasChildMapping="isParent"
+        [treeColumnIndex]="firstVisibleColumnIndex"
+        (rowSelected)="onNodeSelection($event)"
+        (dataBound)="dataBound($event)"
+        [editSettings]="editSettings"
+        (actionFailure)="actionFailure($event)"
+        (actionBefore)="actionBefore($event)"
+        [rowHeight]="rowHeight"
+        [gridLines]="gridLines"
+        (dataSourceChanged)="dataSourceChanged($event)"
+        (collapsed)="onNodeCollapsed($event)"
+        [selectionSettings]="selectionsettings"
+        (rowDeselected)="onNodeUnSelection($event)"
+    >
+        <e-columns>
+            <e-column
+                *ngIf="multiSelection"
+                type="checkbox"
+                width="4"
+                maxWidth="4"
+                minWidth="4"
+            ></e-column>
+            <ng-template ngFor let-column [ngForOf]="allColumnsCopy">
+                <e-column
+                    clipMode="Ellipsis"
+                    field="{{ column.CodeCode }}"
+                    headerText="{{ column.CodeDescription }}"
+                    clipMode="EllipsisWithTooltip"
+                    width="{{ gridsterCelWidth * column.CodeColumns }}"
+                    textAlign="{{ column.align }}"
+                    [visible]="column.isChecked ? true : false"
+                >
+                    <ng-template #headerTemplate>
+                        <div class="header{{ currentView._id }}{{ column._id }}">
+                            <span
+                                class="sort-selected"
+                                (click)="onSort(column)"
+                                translate
+                                [innerHTML]="
+                                    translationContext[this.currentPage._id] + '.' + column.CodeCode
+                                "
+                            ></span>
+
+                            <span class="sort-span">
+                                <span class="chevron-div-up">
+                                    <i
+                                        class="fa fa-sort-asc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'ASC'"
+                                        matTooltip="Sort Increasing"
+                                    ></i>
+                                    <i
+                                        class="fa fa-sort-desc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'DESC'"
+                                        matTooltip="Sort Decreasing"
+                                    ></i>
+                                </span>
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template #filterTemplate let-data>
+                        <div id="{{ column.CodeCode }}_filterBarcell">
+                            <ng-container
+                                dynamicField
+                                [field]="column"
+                                [codeValue]="column.CodeValue"
+                                [currentView]="currentView"
+                            >
+                            </ng-container>
+                        </div>
+                    </ng-template>
+                    <ng-template #template let-data>
+                        <span
+                            process-settings
+                            [record]="data"
+                            [column]="column"
+                            [value]="data.data[column.CodeCode]"
+                            class="d-block data{{ currentView._id }}{{ column._id }}"
+                            [innerHTML]="data.data | ContentProcessor: column"
+                        ></span>
+                    </ng-template>
+                    <ng-template #editTemplate let-data>
+                        <ng-container
+                            dynamicField
+                            [field]="column"
+                            [codeValue]="data[column.CodeCode]"
+                            [currentView]="currentView"
+                        >
+                        </ng-container>
+                    </ng-template>
+                </e-column>
+            </ng-template>
+            <e-column
+                clipMode="Ellipsis"
+                field="_id"
+                headerText="_id"
+                clipMode="EllipsisWithTooltip"
+                isPrimaryKey="true"
+                [visible]="false"
+            >
+            </e-column>
+        </e-columns>
+    </ejs-treegrid>
+</div>

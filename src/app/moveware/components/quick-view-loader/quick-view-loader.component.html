@@ -1,0 +1,57 @@
+<ejs-contextmenu
+    #quickmenucontextmenu
+    [items]="contextMenus"
+    (select)="select($event.item.Task)"
+></ejs-contextmenu>
+
+<!-- Syncfusion Menu bar  -->
+<ejs-menu
+    #menu
+    *ngIf="menuBarType !== MENU_BAR_TYPE_EXPANDED"
+    [items]="quickMenus"
+    (select)="handleAction($event.item.menu)"
+    class="quick-menu"
+>
+    <ng-template #template let-menu>
+        <div
+            (contextmenu)="openContextmenu($event, menu.menu)"
+            class="nav-link dropdown-toggle link"
+        >
+            <span
+                *ngIf="
+                    menu.menu.MenuType.toLowerCase() === DISPLAY_ICON.toLowerCase() ||
+                    menu.menu.MenuType.toLowerCase() === DISPLAY_ICONANDTEXT.toLowerCase()
+                "
+            >
+                <i
+                    *ngIf="menu.iconCss"
+                    class="pad-t-18 {{ menu.iconCss }}"
+                    [style.font-size.px]="menu.menu.CodeIcon.fontSize"
+                    [ngStyle]="{ color: menu.menu.CodeIcon.color }"
+                ></i>
+            </span>
+            <span
+                *ngIf="
+                    menu.menu.MenuType.toLowerCase() === DISPLAY_TEXT.toLowerCase() ||
+                    menu.menu.MenuType.toLowerCase() === DISPLAY_ICONANDTEXT.toLowerCase() ||
+                    !menu.menu.MenuType
+                "
+                class="pad-t-18"
+                [ngClass]="{
+                    'pad-l-8':
+                        menu.menu.MenuType.toLowerCase() === DISPLAY_ICONANDTEXT.toLowerCase()
+                }"
+            >
+                <span>{{ menu.text | translate }}</span>
+            </span>
+        </div>
+    </ng-template>
+</ejs-menu>
+
+<!-- Mega Menu -->
+<mega-menu
+    *ngIf="menuBarType === MENU_BAR_TYPE_EXPANDED"
+    (selectContextMenu)="megaMenuSelectContextMenu($event)"
+    (selectMenu)="megaMenuSelectMenu($event)"
+>
+</mega-menu>

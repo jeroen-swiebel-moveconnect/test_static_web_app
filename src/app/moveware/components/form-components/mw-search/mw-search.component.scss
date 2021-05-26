@@ -1,0 +1,112 @@
+@import '../../../../../assets/scss/vars.scss';
+$BLUE-06: rgba(#0171c1, 0.6);
+$WHITE: #fff;
+
+.input {
+    display: block !important;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+
+    &:hover {
+        border: 1px solid $BLACK-08;
+    }
+
+    &:focus {
+        outline: 1px dotted $BLACK-03;
+    }
+}
+
+.pd-10 {
+    padding: 10px;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 1002;
+}
+
+.demo-full-width {
+    display: block;
+    top: 1px;
+    line-height: 0.125 !important;
+    height: 26px !important;
+}
+
+.pd-t-10 {
+    padding-top: 10pxs;
+}
+
+.search-result-item {
+    padding: 0;
+    margin: 0 !important;
+    background: $WHITE;
+    border-bottom: 1px solid $BLACK-01;
+
+    &:hover {
+        background: $PRIMARY-COLOR;
+    }
+}
+
+mwlResizable {
+    box-sizing: border-box; // required for the enableGhostResize option to work
+}
+
+.mw-search {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    position: relative;
+
+    .w-100 {
+        width: 100%;
+    }
+}
+
+.searchItem-json {
+    max-width: 300px;
+}
+
+.go-back {
+    color: $FONT-COLOR !important;
+}
+
+.pd-5 {
+    padding: 5px;
+}
+
+.icon {
+    float: right;
+    position: relative;
+    z-index: 2;
+    bottom: 20px;
+    padding-right: 5px;
+}
+
+.button {
+    border: none;
+    background: none;
+    padding-left: 12px;
+}
+
+::ng-deep {
+    .ui-overlaypanel-content {
+        width: 500px;
+        padding: 0 !important;
+        margin: 0px !important;
+        background-color: grey !important;
+        border: 1px solid rgb(179, 176, 176);
+    }
+    .ui-overlaypanel {
+        margin: 0px !important;
+    }
+    .mw-search {
+        .row {
+            min-height: 43px !important;
+        }
+    }
+    p {
+        word-break: normal;
+    }
+}

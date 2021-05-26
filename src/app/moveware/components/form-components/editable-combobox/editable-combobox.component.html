@@ -1,0 +1,34 @@
+<section
+    class="row form-field-section ms-select"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="!field.CodeHideLabel && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.headerClass }}"
+        >{{ fieldLabel | translate }}</span
+    >
+    <!-- <ejs-tooltip
+        class="col-md-9 demo-full-width margin-top {{ field.dataClass }}"
+        id="tooltip"
+        content="{{ field.CodeHelp }}"
+        (beforeOpen)="beforeOpenToolTip($event, field.CodeHelp)"
+        position="BottomCenter"
+    > -->
+    <ejs-combobox
+        [htmlAttributes]="{ tabindex: field.tabIndex }"
+        id="comboelement{{ field._id }}"
+        #comboBox
+        class="col-md-9 demo-full-width margin-top {{ field.dataClass }}"
+        [dataSource]="field.options"
+        placeholder="{{ field.CodePlaceholder }}"
+        filterType="contains"
+        [enabled]="field.CodeEnabled === 'Yes'"
+        [showClearButton]="true"
+        [allowFiltering]="true"
+        (select)="optionChanged($event.itemData)"
+        [fields]="fields"
+        [(value)]="fieldCodeValueId"
+    ></ejs-combobox>
+    <!-- </ejs-tooltip> -->
+</section>

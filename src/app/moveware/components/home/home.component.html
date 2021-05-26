@@ -1,0 +1,16 @@
+<section class="h-100">
+    <dashboard-renderer
+        *ngIf="viewType === 'dashboard'"
+        class="h-100"
+        [currentRecord]="currentRecord"
+        [currentPage]="currentPage"
+        [windowSize]="windowSize"
+    >
+    </dashboard-renderer>
+    <app-container
+        class="h-100"
+        [containerID]="containerID"
+        [defaultViewId]="defaultViewId"
+        *ngIf="viewType === 'container'"
+    ></app-container>
+</section>

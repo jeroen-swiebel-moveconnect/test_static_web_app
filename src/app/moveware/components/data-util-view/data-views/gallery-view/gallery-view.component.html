@@ -1,0 +1,14 @@
+<div class="gallery-view row align-items-center">
+    <button
+        (click)="onSelection(record)"
+        *ngFor="let record of dataSource"
+        [ngClass]="{ 'adjust-selected-imageSize': selectedRecord?._id == record._id }"
+        class="ui-file not-a-btn"
+    >
+        <span *ngIf="selectedRecord?._id == record._id" class="selected">
+            <div class="ui-radiobutton ui-widget"></div>
+        </span>
+        <span [innerHTML]="record['FileSearchName'] | ContentProcessor: record"></span>
+        <figcaption class="caption">{{ record.FileSearchName }}</figcaption>
+    </button>
+</div>

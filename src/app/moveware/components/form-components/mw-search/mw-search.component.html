@@ -1,0 +1,71 @@
+<mw-slide-panel [activePane]="isLeftVisible ? 'left' : 'right'" [hidden]="!field.CodeVisible">
+    <div leftPane>
+        <section class="mw-search w-100" id="{{ field._id }}">
+            <section class="row form-field-section">
+                <section class="col-md-12 demo-full-width pd-5">
+                    <input
+                        #input
+                        (contextmenu)="onRightClick($event, input)"
+                        type="text"
+                        (keyup)="onInputChanged($event)"
+                        (focusout)="onFocusOut.emit($event)"
+                        class="input ui-inputtext"
+                        [(ngModel)]="searchKey"
+                        autocomplete="off"
+                    />
+                    <i
+                        *ngIf="searchKey && !isSearchLoading"
+                        (click)="clearSearchText()"
+                        class="fa fa-times icon"
+                        aria-hidden="true"
+                    ></i>
+                    <i *ngIf="!isSearchLoading" class="fa fa-search icon" aria-hidden="true"></i>
+                    <p-progressSpinner
+                        *ngIf="isSearchLoading"
+                        [style]="{ width: '25px', height: '25px' }"
+                        strokeWidth="4"
+                    ></p-progressSpinner>
+                </section>
+            </section>
+            <p-overlayPanel
+                *ngIf="
+                    typeaHeadAction &&
+                    typeaHeadAction.CodeUILocation &&
+                    typeaHeadAction.CodeUILocation === 'Overlay'
+                "
+                appendTo="body"
+                styleClass="{{ field._id }}"
+            >
+                <!-- <div *ngIf="options && options.length" class="pd-t-10">
+                    <ng-container *ngFor="let option of options">
+                        <button class="row col-md-12 not-a-btn search-result-item" style="max-height: 64px !important; white-space: nowrap;" (click)="loadAction(option)">
+                            <div class="font-caption-alt pd-10">{{option.CodeDescription}}&nbsp;<span *ngIf="option.CodeType">({{option.CodeType}})</span></div>
+                            <div style="font-size: 10px; width: 400px; padding-left: 10px;" [innerHTML]="option.CodeHelp | ContentProcessor:'FTSText'"></div>
+                        </button>
+                    </ng-container>
+                </div>      -->
+                <!-- <section style="height: 400px;width:400px">Sangameshwar</section> -->
+                <data-list-view
+                    *ngIf="
+                        typeaHeadAction &&
+                        typeaHeadAction.ResultComponent['CodeType'] === 'Data List'
+                    "
+                    [currentPage]="typeaHeadAction"
+                    [isProcessHighlights]="isProcessHighlights"
+                    [currentContainerID]="currentContainerID"
+                    [currentViewCodeUIContainerDesignerCode]="currentView.CodeElement"
+                    [overlayPanel]="overlayPanel"
+                ></data-list-view>
+            </p-overlayPanel>
+        </section>
+    </div>
+    <!-- <div rightPane>
+        <h6><a href="javascript:;" (click)="closeRightSlide()" class="go-back"><i class="fa fa-arrow-left"></i> Go
+                Back</a>
+        </h6>
+        <div *ngIf="!isLeftVisible">
+            <view-renderer [currentRecord]="currentRecord" [collectionFromRoute]="collectionFromRoute"
+                [(viewMode)]="viewMode"></view-renderer>
+        </div>
+    </div> -->
+</mw-slide-panel>

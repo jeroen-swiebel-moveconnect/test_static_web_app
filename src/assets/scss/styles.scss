@@ -1,0 +1,582 @@
+/* Global Styling */
+
+@import './vars.scss';
+@import './mixins.scss';
+/*
+load all the fonts required here
+*/
+
+a:hover {
+    cursor: pointer !important;
+    text-decoration: none !important;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('/assets/fonts/segoeui/segoeui.eot'),
+        url('/assets/fonts/segoeui/segoeui.svgz#SegoeUINormal') format('svg'),
+        url('/assets/fonts/segoeui/segoeui.svg#SegoeUINormal') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    color: $FONT-COLOR;
+    font-family: 'Segoe UI' !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+//common styles
+
+.pd-l-19 {
+    padding-left: 19px;
+}
+
+.pd-l-2 {
+    padding-left: 2px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.margin-gridlist {
+    margin: 5% 0;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.margin-right-auto {
+    margin-right: auto;
+}
+
+td {
+    &.Number,
+    &.Currency,
+    &.Decimal {
+        text-align: right;
+    }
+}
+
+.card {
+    border: 0;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    border-radius: 6px;
+    color: $BLACK-33;
+    background: $WHITE;
+    width: 100%;
+    -webkit-box-shadow: 0 2px 2px 0 $BLACK-014, 0 3px 1px -2px $BLACK-02, 0 1px 5px 0 $BLACK-012;
+    box-shadow: 0 2px 2px 0 $BLACK-014, 0 3px 1px -2px $BLACK-02, 0 1px 5px 0 $BLACK-012;
+}
+
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $BLACK-015;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.is-selected {
+    background-color: $PRIMARY-BLUE;
+}
+
+.action-button {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.profileimage {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.left-label {
+    width: 150px;
+    display: inline-flex;
+}
+
+.attribute-list-small {
+    list-style: none;
+    margin-left: -35px;
+
+    li {
+        float: left;
+        margin: 2px;
+    }
+}
+
+/* Mat overrides */
+
+.slimScrollBar {
+    margin-top: 8px;
+    margin-right: 3px;
+}
+
+.render-container {
+    .slimScrollBar {
+        margin-right: 10px;
+    }
+
+    .picklist-container {
+        .slimScrollBar {
+            margin-right: 2px !important;
+        }
+    }
+}
+
+.expand-arrows {
+    border: 1px solid $BLACK-02 !important;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    font-size: 14px !important;
+    position: fixed;
+    margin-left: -14px;
+    margin-top: 10px;
+    background-color: $WHITE !important;
+    display: none;
+    z-index: 10;
+
+    i.fa-angle-right {
+        width: 20px;
+        margin-left: -4px;
+    }
+
+    &:hover {
+        background-color: $PRIMARY-COLOR !important;
+        border: 1px solid $WHITE !important;
+
+        i {
+            color: $PRIMARY-FONT-COLOR !important;
+        }
+    }
+
+    i.fa-angle-left {
+        width: 20px;
+        margin-left: -5px;
+    }
+}
+
+.expand-arrows {
+    &.right {
+        margin-top: 0;
+    }
+}
+
+.quick-add-container {
+    .expand-arrows {
+        display: none !important;
+    }
+
+    ::ng-deep dynamic-form {
+        height: 100% !important;
+    }
+
+    height: 100%;
+}
+
+.column-pages {
+    &:hover {
+        .expand-arrows {
+            display: block;
+        }
+    }
+
+    .expand-arrows {
+        top: 50px;
+    }
+
+    //  background: $WHITE-F1 !important;
+}
+
+.container-row {
+    position: relative;
+    overflow: initial !important;
+    min-height: 0%;
+
+    &:hover > .vertical-arrows {
+        .vertical.expand-arrows {
+            display: block;
+        }
+    }
+
+    .vertical-arrows {
+        .expand-arrows {
+            margin-top: -10px !important;
+            top: 0 !important;
+
+            &.up {
+                right: 50%;
+            }
+
+            &.down {
+                right: calc(50% - 40px);
+            }
+        }
+    }
+}
+
+.cdk-overlay-container {
+    z-index: 1001 !important;
+}
+
+.overrides {
+    .expand-arrows {
+        margin-left: -10px;
+    }
+}
+
+split-gutter {
+    cursor: col-resize;
+}
+
+.table-img {
+    max-height: 40px;
+    max-width: 40px;
+}
+
+split-area {
+    -webkit-transition: flex 0.04s ease-in-out;
+    -o-transition: flex 0.04s ease-in-out;
+    transition: flex 0.04s ease-in-out;
+}
+
+.calendar-container {
+    ::ng-deep {
+        .cal-time-events,
+        .cal-hour-rows,
+        .cal-month-view {
+            @include scrollBars();
+        }
+    }
+}
+
+//moveware table scss
+// .density-wide {
+//     font-family: 'Segoe UI';
+//     font-size: 15px;
+//     line-height: 20px !important;
+//     padding: 1em 0.5em 1em 0.5em !important;
+// }
+
+// .density-medium {
+//     font-family: 'Segoe UI' !important;
+//     font-size: 14px;
+//     line-height: 16px !important;
+//     padding: 0.75em 0.5em 0.75em 0.5em !important;
+// }
+
+// .density-narrow {
+//     font-family: 'Segoe UI';
+//     font-size: 13px;
+//     line-height: 16px !important;
+//     padding: 0.4em 0.5em 0.4em 0.5em !important;
+// }
+
+// .density-very-narrow {
+//     font-family: 'Segoe UI';
+//     font-size: 12px;
+//     line-height: 15px !important;
+//     padding: 0.3em 0.4em 0.3em 0.4em !important;
+// }
+.table-cell {
+    padding: 0.25em 0em -0.5em 0em !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+table thead tr td.search-cell {
+    padding: 3px !important;
+
+    // border-style: solid !important;
+    // border-width: thin !important;
+    // border-color: $GREY-LIGHT !important;
+    // border-bottom: none !important;
+    // border-top: none !important;
+    input.mw-ui-inputtext {
+        border: 1px solid $BLACK-03 !important;
+        //padding: 3px;
+        padding: 5.5px !important;
+    }
+
+    .close-icon {
+        background: $WHITE;
+        opacity: 1 !important;
+        line-height: 24px;
+        color: $FONT-COLOR;
+        opacity: 1 !important;
+        padding-right: 3px;
+        right: 4px;
+        top: 1px;
+        margin-top: 0.5px;
+        margin-bottom: 0.5px;
+    }
+
+    // input:not(.ui-dropdown-filter):not(:hover) {
+    //     border: 1px solid transparent;
+    //     border-bottom: 1px solid $GREY-L4;
+    //     border-top: 1px solid $GREY-L4;
+
+    // }
+
+    ::ng-deep {
+        .ui-dropdown {
+            border: none;
+        }
+
+        .ui-dropdown-filter-icon {
+            left: calc(100% - 25px);
+            top: 8px !important;
+
+            &.pi-search {
+                left: calc(100% - 35px);
+                top: 15px !important;
+            }
+        }
+
+        .ui-dropdown-filter-container {
+            padding: 2px;
+        }
+
+        .ui-dropdown-filter {
+            padding-right: 0px;
+            border: 1px solid $BLACK-06;
+        }
+    }
+
+    &:last-of-type {
+        border-right: none !important;
+    }
+
+    &:hover {
+        cursor: auto;
+    }
+
+    ::ng-deep span {
+        // border-radius: 0.25em !important;
+        border-width: 1.2px;
+        // border-style: solid;
+        border-color: $GREY-F1;
+        transition: border-color 0.2em;
+        transition-property: border-color;
+        transition-duration: 0.2s;
+        transition-timing-function: ease;
+        transition-delay: 0s;
+        display: flex;
+        width: 100%; // padding: 0.25em 0em 0.25em 0em !important;
+
+        &:focus-within {
+            border-color: $PRIMARY-COLOR !important;
+            transition: border-color 0.2em;
+            transition-property: border-color;
+            transition-duration: 0.2s;
+            transition-timing-function: ease;
+            transition-delay: 0s;
+        }
+    }
+
+    ::ng-deep input {
+        text-overflow: ellipsis;
+        color: $FONT-COLOR;
+        font-size: smaller;
+        padding-left: 0.5em;
+        border: none;
+        width: 100%;
+    }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.left-padding-0 {
+    padding-left: 0px !important;
+}
+
+.ui-chkbox-label {
+    width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.designer-gridster {
+    background: $BLACK-01 !important;
+}
+
+.form-gridster,
+.list-gridster {
+    background: transparent !important;
+    @include scrollBars;
+}
+
+.cell-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+
+.dashboard-gridster {
+    background: transparent !important;
+    @include scrollBars;
+
+    .page-body {
+        padding: 5px 10px 5px 5px;
+    }
+
+    .form-gridster {
+        overflow: initial;
+        height: initial;
+    }
+}
+
+.preview-form {
+    gridster {
+        background: grey !important;
+    }
+}
+
+.pd-r-0 {
+    padding-right: 0 !important;
+}
+
+.mw-dashboard {
+    gridster-item.dashboard-gridster-item {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+            0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+}
+
+.edit-mode {
+    .desiger-gridster {
+        background-color: $BLACK-01;
+    }
+}
+
+.dynamic-form .mobile gridster-item {
+    height: auto !important;
+}
+
+.l-h-15 {
+    line-height: 15px;
+}
+
+.stiJsViewerPage {
+    height: calc(100vh - 312px) !important;
+    overflow: auto !important;
+}
+
+.fr-element {
+    padding-top: 0 !important;
+
+    &.fr-view {
+        &.fr-disabled {
+            padding: 0px !important;
+        }
+    }
+}
+
+.fr-box.fr-basic .fr-element {
+    padding: 0px !important;
+}
+
+.ui-location-modal .h-auto {
+    height: auto !important;
+}
+
+.e-hide {
+    display: none;
+}
+
+.hide-header .e-grid .e-gridheader {
+    display: none !important;
+}
+.hide-header .e-gridcontent .e-content col.e-drag-intent {
+    width: 2px !important; //set width for the drag intent
+}
+
+.hide-header .e-gridcontent .e-content td.e-rowdragdrop {
+    padding: 0px !important; //set width for the drag intent
+}
+
+.e-gridcontent .e-content td.e-rowdragdrop {
+    padding: 0px !important; //set width for the drag intent
+}
+
+.remove-alt-row-shadding {
+    tr:nth-of-type(odd) {
+        background-color: transparent !important;
+    }
+}
+
+.window-mask {
+    pointer-events: none !important;
+}
+
+.error-info-icon {
+    position: absolute;
+    right: 0px;
+    height: 30px;
+    width: 30px;
+    top: 0px;
+    padding-left: 11px;
+    padding-top: 3px;
+    display: none;
+    cursor: pointer;
+}
+
+app-select {
+    .error-info-icon {
+        right: 29px;
+    }
+}
+
+.error {
+    .error-info-icon {
+        color: $RED-01;
+        display: block;
+    }
+
+    .e-input-group.e-control-wrapper {
+        border-color: $RED-01 !important;
+    }
+
+    textarea {
+        border-color: $RED-01 !important;
+    }
+}
+.d-block {
+    display: block;
+}

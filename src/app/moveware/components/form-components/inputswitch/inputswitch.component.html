@@ -1,0 +1,37 @@
+<section
+    class="row form-field-section mw-inputswitch"
+    [hidden]="!field.CodeVisible"
+    id="{{ field._id }}"
+>
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView['CodeType'] === 'Data Form'
+        "
+        class="col-md-3 {{ field.headerClass }}"
+    >
+        {{ translationContext + field.CodeCode | translate }}
+    </span>
+
+    <div class="demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <ejs-switch
+            #switch
+            [disabled]="field.CodeEnabled === 'No'"
+            (created)="created($event)"
+            (change)="onChange($event)"
+            [(checked)]="value"
+        ></ejs-switch>
+        <!--        <p-inputSwitch [(ngModel)]="value"-->
+        <!--                       [disabled]="field.CodeEnabled==='No'"-->
+        <!--                       required="{{field.CodeRequired?true:false}}"-->
+        <!--                       (ngModelChange)="markDirty()"-->
+        <!--                       pTooltip={{field.CodeHelp}}-->
+        <!--                       [escape]="false"-->
+        <!--                       tooltipPosition="bottom"-->
+        <!--                       placeholder="Bottom"-->
+        <!--                       showDelay="1000"-->
+        <!--                       hideDelay="500"></p-inputSwitch>-->
+    </div>
+</section>

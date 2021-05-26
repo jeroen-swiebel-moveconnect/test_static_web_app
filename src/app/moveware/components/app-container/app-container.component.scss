@@ -1,0 +1,92 @@
+@import '../../../../assets/scss/moveware.scss';
+
+.column {
+    // height: 100%;
+    flex: 1;
+    padding: 2px;
+}
+
+.container-wrapper {
+    overflow: auto;
+    max-height: 100%;
+    padding: 10px 10px 0 10px;
+
+    &.single-column {
+        ::ng-deep {
+            .as-horizontal {
+                display: block;
+
+                .as-split-gutter {
+                    height: 0 !important;
+                }
+            }
+        }
+    }
+
+    ::ng-deep {
+        .as-horizontal {
+            .as-split-gutter {
+                min-height: 100vh !important;
+            }
+        }
+    }
+}
+
+#app-container {
+    height: 100%;
+
+    .container-row {
+        width: 100%;
+        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.one-row {
+    height: 100%;
+}
+
+.column-spliter {
+    overflow-y: hidden !important;
+}
+
+.expand-arrows {
+    border: 1px solid $BLACK-02 !important;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    font-size: 14px !important;
+    position: absolute;
+    //margin-left: -16px;
+    z-index: 10;
+    background-color: $WHITE !important;
+
+    &:nth-of-type(2) {
+        margin-top: -9px;
+    }
+
+    &:nth-of-type(1) {
+        margin-top: 0px;
+        top: 10px;
+    }
+
+    &:hover {
+        background-color: $PRIMARY-COLOR !important;
+        border: 1px solid $WHITE !important;
+
+        i {
+            color: $PRIMARY-FONT-COLOR !important;
+        }
+    }
+}
+
+.back-btn {
+    border: none;
+    background: transparent;
+    color: $PRIMARY-COLOR;
+
+    i {
+        font-size: 16px;
+    }
+}

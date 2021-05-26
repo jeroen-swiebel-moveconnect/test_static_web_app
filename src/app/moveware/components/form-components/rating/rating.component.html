@@ -1,0 +1,38 @@
+<section class="row form-field-section mw-checkbox" [hidden]="!field.CodeVisible">
+    <span
+        *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}"
+        >{{ translationContext + field.CodeCode | translate }}
+    </span>
+    <div class="col-md-9 demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <div
+            *ngIf="
+                field.CodeRatingIconOn &&
+                field.CodeRatingIconOn.class &&
+                field.CodeRatingIconOff &&
+                field.CodeRatingIconOn.class
+            "
+        >
+            <p-rating
+                tabindex="{{ field.tabIndex }}"
+                [(ngModel)]="field.CodeValue"
+                iconCancelClass="fa fa-ban"
+                [readonly]="field.CodeEnabled === 'No'"
+                [stars]="field.CodeMax"
+                [iconOnClass]="field.CodeRatingIconOn.class"
+                [iconOffClass]="field.CodeRatingIconOff.class"
+                [iconOnStyle]="{ color: field.CodeRatingIconOn.color }"
+                [iconOffStyle]="{ color: field.CodeRatingIconOff.color }"
+                (onRate)="addRating($event)"
+                (onCancel)="cancelRating($event)"
+            ></p-rating>
+        </div>
+        <div *ngIf="!field.CodeRatingIconOn && !field.CodeRatingIconOff">
+            <p-rating
+                [(ngModel)]="field.CodeValue"
+                (onRate)="addRating($event)"
+                (onCancel)="cancelRating($event)"
+            ></p-rating>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,73 @@
+<section
+    class="row form-field-section mw-checkbox"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="
+            !field.CodeHideLabel &&
+            !field.isTableCell &&
+            currentView &&
+            currentView['CodeType'] === 'Data Form'
+        "
+        class="col-md-3 {{ field.headerClass }}"
+    >
+        {{ fieldLabel | translate }}
+    </span>
+    <div class="col-md-9 demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <div
+            class="pos-relative"
+            *ngIf="field.options"
+            [ngClass]="[field.values && field.values.length > 10 ? 'mar-b-30' : 'mar-b-20']"
+        >
+            <ng-container *ngFor="let option of field.options; let i = index; trackBy: getTrackBy">
+                <div *ngIf="i < fieldOptionsLength || field.showAll">
+                    <ejs-checkbox
+                        [htmlAttributes]="{ tabindex: field.tabIndex }"
+                        #checkbox
+                        [ngModelOptions]="{ standalone: true }"
+                        required="{{ field.CodeRequired }}"
+                        [(ngModel)]="option.isChecked"
+                        [checked]="option.isChecked"
+                        [disabled]="field.CodeEnabled === 'No'"
+                        (ngModelChange)="markDirty($event, option)"
+                        (focus)="showNotes = true"
+                        (focusout)="showNotes = !showNotes"
+                        label="{{ option.label }}"
+                    >
+                    </ejs-checkbox>
+                </div>
+            </ng-container>
+            <section class="more-items-link font-caption-alt">
+                <button
+                    ejs-button
+                    *ngIf="field.values && field.values.length > 10 && !field.showAll"
+                    (click)="showAll(field)"
+                    class="not-a-btn more-items-link-font"
+                >
+                    Show More
+                </button>
+                <button
+                    ejs-button
+                    *ngIf="field.values && field.values.length > 10 && field.showAll"
+                    (click)="showAll(field)"
+                    class="not-a-btn more-items-link-font"
+                >
+                    Show Less
+                </button>
+            </section>
+        </div>
+        <div *ngIf="!field.options">
+            <ejs-checkbox
+                [ngModelOptions]="{ standalone: true }"
+                required="{{ field.CodeRequired }}"
+                [(ngModel)]="field.CodeValue"
+                [disabled]="field.CodeEnabled === 'No'"
+                (ngModelChange)="markDirty($event, field.CodeValue)"
+                (focus)="showNotes = true"
+                (focusout)="showNotes = !showNotes"
+            >
+            </ejs-checkbox>
+        </div>
+    </div>
+</section>

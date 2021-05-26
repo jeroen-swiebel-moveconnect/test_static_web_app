@@ -1,0 +1,68 @@
+<section class="textarea-zoom-in">
+    <h2 class="dialog-title">{{ title }}</h2>
+    <!-- <div class="close-btn-container"> -->
+
+    <!-- </div> -->
+    <section class="button-bar">
+        <button type="button" class="right close-btn" (click)="onCancel()">
+            <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+        </button>
+        <button class="pull-right more-btn" (click)="onSave()">
+            <i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i>
+        </button>
+    </section>
+    <section *ngIf="position === 'Dialog Left'" class="dialog-left pull-right">
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption"
+            *ngIf="expanded"
+            (click)="resizeOverlayToRight(true); expanded = false"
+        >
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption right"
+            *ngIf="!expanded"
+            (click)="resizeOverlayToRight(false); expanded = true"
+        >
+            <i class="fa fa-angle-right"></i>
+        </button>
+    </section>
+    <section *ngIf="position === 'Dialog Right'">
+        <button
+            type="button"
+            class="pull-left chevron-arrow expand-arrows font-caption"
+            *ngIf="!expanded"
+            (click)="resizeOverlay(true); expanded = true"
+        >
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption right"
+            *ngIf="expanded"
+            (click)="resizeOverlay(false); expanded = false"
+        >
+            <i class="fa fa-angle-right"></i>
+        </button>
+    </section>
+    <section class="row form-field-section rich-text-field" [hidden]="!field.CodeVisible">
+        <span class="col-md-3 form-label-c"> {{ field.CodeCode | translate }}</span>
+        <textarea
+            autoResize="autoResize"
+            class="demo-full-width"
+            [ngStyle]="{ width: expanded ? '90%' : '75%' }"
+            handle-keydown
+            pInputTextarea
+            placeholder="{{ field.CodePlaceholder }}"
+            [disabled]="field.CodeEnabled === 'No'"
+            [ngModelOptions]="{ standalone: true }"
+            [ngModel]="field.CodeValue | jsonParser"
+            (ngModelChange)="markDirty($event)"
+            required="{{ field.CodeRequired ? true : false }}"
+            (focus)="showNotes = true"
+            (focusout)="showNotes = !showNotes"
+        ></textarea>
+    </section>
+</section>

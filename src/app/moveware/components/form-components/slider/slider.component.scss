@@ -1,0 +1,16 @@
+@import '../../../../../assets/scss/moveware.scss';
+::ng-deep .ui-rating-icon {
+    color: $RED-5F;
+}
+.slider-field {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.Slider {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    flex: 0 0 75%;
+    max-width: 75%;
+}

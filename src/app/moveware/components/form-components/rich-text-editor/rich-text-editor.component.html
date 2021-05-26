@@ -1,0 +1,67 @@
+<section
+    class="row form-field-section rich-text-editor"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span
+        *ngIf="currentView && currentView['CodeType'] === 'Data Form' && !field.CodeHideLabel"
+        class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}"
+    >
+        {{ field.CodeDescription }}</span
+    >
+    <span
+        class="col-md-9 demo-full-width {{ field.dataClass }} {{ field.groupDataClass }} "
+        [ngClass]="{ 'max-width': field.CodeHideLabel }"
+    >
+        <ejs-richtexteditor
+            [htmlAttributes]="{ tabindex: field.tabIndex }"
+            id="richTextEditor"
+            #rte
+            [(ngModel)]="field.CodeValue"
+            (keyup)="onKeyUp($event)"
+            [floatingToolbarOffset]="false"
+            [readonly]="field.CodeEnabled !== 'Yes'"
+            (actionEvent)="handleSpecificKeyStroke($event)"
+            (keydown)="handleKeyboardEvent($event)"
+            (imageUploadSuccess)="markDirty()"
+            (created)="onCreate($event)"
+            [ngClass]="{ 'no-border': field.CodeEnabled !== 'Yes' }"
+        >
+        </ejs-richtexteditor>
+
+        <ejs-dialog
+            id="dialog"
+            #ejDialog
+            *ngIf="isQuickText"
+            [position]="position"
+            width="363px"
+            [closeOnEscape]="true"
+            [selectedItemIndex]="0"
+            (open)="onDialogOpen($event)"
+            [visible]="false"
+        >
+            <ng-template #content>
+                <div class="ui-dropdown-items-wrapper adjust">
+                    <ul
+                        class="ui-dropdown-items ui-dropdown-list ui-widget-content ui-widget ui-corner-all ui-helper-reset"
+                    >
+                        <li
+                            *ngFor="let selected of filteredTexts; let $index = index"
+                            [ngClass]="{ 'selected-item': $index == currentListIndex }"
+                            (click)="onValueSelect(selected)"
+                            class="font-description ui-helper-reset items"
+                        >
+                            {{
+                                selected.label
+                                    ? selected.label
+                                    : selected.CodeCode
+                                    ? (selected.CodeCode | translate)
+                                    : (selected | translate)
+                            }}
+                        </li>
+                    </ul>
+                </div>
+            </ng-template>
+        </ejs-dialog>
+    </span>
+</section>

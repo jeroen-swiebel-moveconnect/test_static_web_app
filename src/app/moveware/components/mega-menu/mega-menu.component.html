@@ -1,0 +1,107 @@
+<div
+    [ngClass]="[displayMenu ? 'mega-menu-overlay' : 'no-display']"
+    (click)="lockMenu($event, -1)"
+></div>
+<section class="mega-menu">
+    <div class="menu-container">
+        <ul
+            class="menu-main"
+            id="mainmenu"
+            [ngClass]="{ activatehorizontalmenu: menuLayout === 'Horizontal' }"
+        >
+            <li *ngFor="let menu of menus; let index = index">
+                <!-- label of header menu without sub-menus -->
+                <a
+                    *ngIf="!(menu.subMenus && menu.subMenus.length)"
+                    href="javascript:;"
+                    [ngClass]="{ whiteBG: menu.show }"
+                    (click)="checkAction(menu, index, UI_ACTION_CLICK)"
+                    (mouseenter)="checkAction(menu, index, UI_ACTION_MOUSEOVER)"
+                    (mouseleave)="removeModal($event, index)"
+                    (contextmenu)="openContextmenu($event, menu)"
+                    class="header-menu no-submenu"
+                >
+                    <span
+                        *ngIf="
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICON) ||
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT)
+                        "
+                    >
+                        <i
+                            *ngIf="menu.CodeIcon"
+                            class="fa {{ menu.CodeIcon.class }}"
+                            [style.font-size.px]="menu.CodeIcon.fontSize"
+                            [ngStyle]="{ color: menu.CodeIcon.color }"
+                        ></i>
+                        <i *ngIf="!menu.CodeIcon" class="fa fa-question"></i>
+                    </span>
+                    <span
+                        *ngIf="
+                            equalIgnoreCase(menu.MenuType, DISPLAY_TEXT) ||
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT) ||
+                            !menu.MenuType
+                        "
+                        [ngClass]="{
+                            'pad-l-8': equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT)
+                        }"
+                    >
+                        <span *ngIf="menu.CodeDescription" class="menudescription">
+                            {{ menu.CodeCode | translate }}
+                        </span>
+                    </span>
+                </a>
+                <!-- label of header menu with sub-menus -->
+                <a
+                    id="menutext_{{ index }}"
+                    *ngIf="menu.subMenus && menu.subMenus.length"
+                    (contextmenu)="openContextmenu($event)"
+                    (click)="lockMenu($event, index)"
+                    class="header-menu"
+                    [ngClass]="{ whiteBG: menu.show }"
+                    (mouseenter)="applyModal($event, index)"
+                    (mouseleave)="removeModal($event, index)"
+                >
+                    <span
+                        *ngIf="
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICON) ||
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT)
+                        "
+                    >
+                        <i
+                            *ngIf="menu.CodeIcon"
+                            class="fa {{ menu.CodeIcon.class }}"
+                            [style.font-size.px]="menu.CodeIcon.fontSize"
+                            [ngStyle]="{ color: menu.CodeIcon.color }"
+                        ></i>
+                        <i *ngIf="!menu.CodeIcon" class="fa fa-question"></i>
+                    </span>
+                    <span
+                        *ngIf="
+                            equalIgnoreCase(menu.MenuType, DISPLAY_TEXT) ||
+                            equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT) ||
+                            !menu.MenuType
+                        "
+                        [ngClass]="{
+                            'pad-l-8': equalIgnoreCase(menu.MenuType, DISPLAY_ICONANDTEXT)
+                        }"
+                    >
+                        <span *ngIf="menu.CodeDescription" class="menudescription">
+                            {{ menu.CodeCode | translate }}
+                        </span>
+                    </span>
+                </a>
+                <!-- mega-menu panel -->
+                <mega-menu-panel
+                    [index]="index"
+                    [menu]="menu"
+                    [partMenu]="partMenus[index]"
+                    [fullMenu]="fullMenus[index]"
+                    [menuLayout]="menuLayout"
+                    (updateShow)="updateShow($event)"
+                    (selectMenu)="emitSelectMenu($event)"
+                    (selectContextMenu)="emitSelectContextMenu($event)"
+                ></mega-menu-panel>
+            </li>
+        </ul>
+    </div>
+</section>

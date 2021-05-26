@@ -1,0 +1,12 @@
+<section
+    class="row form-field-section input"
+    [hidden]="!field.CodeVisible"
+    [ngClass]="{ notEmpty: field.CodeValue && field.CodeEnabled !== 'No' }"
+>
+    <span class="col-md-3 {{ field.headerClass }} {{ field.groupHeaderClass }}">{{
+        translationContext + field.CodeCode | translate
+    }}</span>
+    <span class="col-md-8 link-container {{ field.dataClass }} {{ field.groupDataClass }} ">
+        <a class="link" (click)="loadDetails(field)" href="javascript:;">{{ field.CodeValue }}</a>
+    </span>
+</section>

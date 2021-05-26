@@ -1,0 +1,36 @@
+<div class="page-brand">
+    <section class="no-padding">
+        <!-- <button class="left-menu-toggle nav-link sidebar-toggler js-sidebar-toggler not-a-btn"
+        [ngClass]="{'displaying':menuLayout==='Horizontal'}" (click)="updateLeftNavStatus(!leftNavExpanded)">
+            <i class="fa fa-bars"></i>
+        </button> -->
+    </section>
+    <a class="link" routerLink="/mw/menu/Home">
+        <span class="brand--">
+            <img src="{{ primaryLogo }}" class="logo" *ngIf="primaryLogo" />
+        </span>
+    </a>
+</div>
+<nav
+    *ngIf="menuLayout && menuLayout === 'Horizontal'"
+    class="page-sidebar activatehorizontalmenu"
+    id="sidebar"
+    mw-left-nav
+    [menuLayout]="menuLayout"
+></nav>
+<!-- START QUICK-NAV TOOLBAR-->
+<ul class="nav navbar-toolbar" *ngIf="collectionMenus.quickMenus.length">
+    <li class="dropdown dropdown-notification dropdown-add" [ngClass]="{ show: showSearchOverlay }">
+        <quick-view-loader
+            [menuBar]="quickMenuBar"
+            [menu]="collectionMenus.quickMenus"
+        ></quick-view-loader>
+    </li>
+</ul>
+<!-- <p-megaMenu
+    [model]="items"
+    *ngIf="menuBarType == 'Expanded'"
+    class="nav navbar-toolbar"
+    (contextmenu)="openContextmenu($event, null)"
+></p-megaMenu> -->
+<!-- END QUICK-NAV TOOLBAR-->

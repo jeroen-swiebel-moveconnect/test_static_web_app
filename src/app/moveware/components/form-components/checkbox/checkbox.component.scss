@@ -1,0 +1,19 @@
+@import '../../../../../assets/scss/vars.scss';
+
+.mw-checkbox {
+    padding-left: 15px;
+    padding-right: 15px;
+    &.form-field-section {
+        padding-top: 4px;
+        padding-bottom: 10px;
+
+        .demo-full-width {
+            padding-left: 0px;
+        }
+    }
+
+    .e-checkbox-wrapper .e-frame.e-check {
+        background-color: $PRIMARY-COLOR;
+        border-color: $PRIMARY-COLOR;
+    }
+}

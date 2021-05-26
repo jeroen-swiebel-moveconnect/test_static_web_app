@@ -1,0 +1,199 @@
+@import '../../../../../../assets/scss/moveware.scss';
+
+.icon-picker {
+    position: relative;
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .w-input-btn {
+        width: calc(100% - 35px);
+    }
+
+    .close-btn {
+        background-color: transparent !important;
+        border: none;
+        padding-right: 20px;
+    }
+
+    .icon-close {
+        color: $PRIMARY-COLOR;
+    }
+
+    .clear-btn {
+        padding: 5px;
+        right: 0;
+        border: none;
+        position: absolute;
+        right: 15px;
+        background-color: transparent;
+    }
+
+    &--container {
+        position: absolute; // max-height: 300px;
+        width: 99%;
+        z-index: 1000;
+        right: 4px;
+        top: 24px;
+        display: block;
+        margin-top: 10px;
+        ::ng-deep .p-tabView {
+            min-height: 750px !important;
+        }
+
+        .icon-search {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: auto;
+            border-bottom: 1px solid rgb(226, 228, 233);
+            max-height: 750px !important;
+        }
+    }
+
+    &--meta {
+        width: 90%;
+        padding-top: 20px;
+    }
+
+    .mr-r-20 {
+        margin-right: 20px;
+    }
+
+    .pd-20 {
+        padding: 0 20px 15px 20px;
+    }
+
+    .mr-b-10 {
+        margin-bottom: 10px;
+    }
+
+    .pd-l-28 {
+        padding-left: 28px;
+    }
+
+    &--all,
+    &--list,
+    &--tabs {
+        list-style: none;
+        padding: 20px 0px 0px 10px;
+        float: left;
+        li {
+            float: left;
+        }
+
+        button {
+            border: 1px solid $PRIMARY-COLOR;
+            margin: 5px;
+            height: 35px;
+            width: 35px;
+            background: $WHITE;
+
+            i {
+                color: $PRIMARY-COLOR;
+            }
+
+            &:hover,
+            &.active {
+                background: $PRIMARY-COLOR;
+
+                i {
+                    color: $WHITE;
+                }
+            }
+
+            span {
+                display: none;
+            }
+        }
+    }
+    &--list.add-scroll {
+        overflow-y: scroll !important;
+        height: calc(100% - 30px) !important;
+    }
+    &--all {
+        padding: 5px 0px 0px 5px;
+    }
+
+    .icons {
+        ::ng-deep .ui-tabview.ui-widget.ui-widget-content {
+            min-height: 750px !important;
+        }
+    }
+}
+::ng-deep {
+    .icons {
+        .ui-widget-header {
+            height: 100% !important;
+            overflow: hidden !important;
+            border-bottom: 1px solid rgb(226, 228, 233);
+        }
+        .ui-tabview .ui-tabview-panel {
+            border: none !important;
+            position: absolute;
+        }
+    }
+}
+.pull-right {
+    border: none !important;
+}
+::ng-deep {
+    .ui-state-default {
+        font-style: normal !important;
+    }
+    .header-panel {
+        display: none !important;
+    }
+}
+.left-nav {
+    width: 29px;
+    position: absolute;
+    height: 38px;
+    border: 1px solid $PRIMARY-COLOR;
+    margin-top: 21px;
+    color: $SECONDARY-COLOR;
+    &:hover {
+        background-color: $PRIMARY-COLOR;
+    }
+}
+.right-nav {
+    &:hover {
+        background-color: $PRIMARY-COLOR;
+    }
+    color: $SECONDARY-COLOR;
+    left: calc(100% - 44px);
+    width: 29px;
+    position: absolute;
+    height: 38px;
+    border: 1px solid $PRIMARY-COLOR;
+    margin-top: 21px;
+}
+.cancel-btn {
+    position: absolute !important;
+    right: 10% !important;
+}
+.select-btn {
+    position: absolute !important;
+    right: 0 !important;
+}
+.search-btn {
+    position: relative;
+    display: flex;
+    padding: 0 15px 0 15px !important;
+}
+.color-picker {
+    padding: 0 !important;
+    margin: 4px;
+}
+.size-picker {
+    margin-left: 4px;
+}
+::ng-deep {
+    .header-panel-description {
+        font-weight: 400 !important;
+    }
+}
+
+.fa-li {
+    position: relative;
+}

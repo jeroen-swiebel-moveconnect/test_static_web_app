@@ -1,0 +1,207 @@
+<section class="toolbar displayToolbar">
+    <ejs-toolbar #toolbar id="toolbar{{ currentView._id }}">
+        <e-items>
+            <e-item
+                *ngFor="let item of toolbarOptions; trackBy: tackbyFn"
+                align="{{ item.Alignment ? item.Alignment : 'left' }}"
+            >
+                <ng-template #template>
+                    <!-- <ejs-tooltip
+                        id="tooltip{{ item._id }}"
+                        #tooltip
+                        content="{{
+                            (item && item.CodeHelp ? item.CodeHelp : item.CodeDescription)
+                                | translate
+                        }}"
+                        openDelay="2000"
+                        position="BottomCenter"
+                        (click)="closeToolTip(tooltip)"
+                    > -->
+
+                    <button
+                        *ngIf="
+                            item.items &&
+                            (!item.CodeFieldType ||
+                                !(
+                                    item.CodeFieldType.CodeCode === FIELD_TYPE_COMBO_BOX ||
+                                    item.CodeFieldType.CodeCode === FIELD_TYPE_DROPDOWN_LIST ||
+                                    item.CodeFieldType.CodeCode === FIELD_TYPE_PICKLIST
+                                ))
+                        "
+                        ejs-dropdownbutton
+                        class="primary-color font-description"
+                        [ngClass]="{
+                            'icontext-uploader': item.CodeButtonType === DISPLAY_ICONANDTEXT,
+                            'uploader-transparent': item.CodeButtonType === DISPLAY_ICON,
+                            'uploader-transparent remove-icon':
+                                item.CodeButtonType === DISPLAY_TEXT,
+                            'select-view-text': item.CodeCode === 'Select View'
+                        }"
+                        [items]="item.items"
+                        (select)="selection($event, item)"
+                        (beforeItemRender)="itemBeforeEvent($event, item, tooltip)"
+                        iconCss="{{
+                            item.CodeButtonType === DISPLAY_TEXT ? '' : item.CodeIcon.class
+                        }} "
+                    >
+                        {{ item?.value | translate }}
+                    </button>
+                    <ejs-dropdownlist
+                        *ngIf="
+                            item.items &&
+                            item.CodeFieldType &&
+                            (item.CodeFieldType.CodeCode === FIELD_TYPE_COMBO_BOX ||
+                                item.CodeFieldType.CodeCode === FIELD_TYPE_DROPDOWN_LIST ||
+                                item.CodeFieldType.CodeCode === FIELD_TYPE_PICKLIST)
+                        "
+                        [dataSource]="item.items"
+                        [fields]="fields"
+                        [allowFiltering]="item.allowFiltering"
+                        [value]="item.value"
+                        (select)="selection($event, item)"
+                        placeholder="{{ item?.value }}"
+                        width="100%"
+                        popupWidth="auto"
+                        filterType="contains"
+                        class=" {{ item.dataClass }} {{ item.groupDataClass }}"
+                        [ngClass]="{
+                            'icontext-uploader': item.CodeButtonType === DISPLAY_ICONANDTEXT,
+                            'uploader-transparent': item.CodeButtonType === DISPLAY_ICON,
+                            'uploader-transparent remove-icon':
+                                item.CodeButtonType === DISPLAY_TEXT,
+                            'select-view-text': item.CodeCode === 'Select View'
+                        }"
+                    >
+                        <ng-template #valueTemplate let-data>
+                            <span
+                                *ngIf="!data && item && item.CodeIcon.class"
+                                class="iconClass {{
+                                    item.CodeButtonType === DISPLAY_TEXT ? '' : item.CodeIcon.class
+                                }}"
+                            ></span>
+                            <span *ngIf="!data">{{ item?.value }}</span>
+                            <div *ngIf="data">{{ data.CodeDescription }}</div>
+                        </ng-template>
+                    </ejs-dropdownlist>
+                    <ui-button
+                        *ngIf="
+                            !item.items &&
+                            item.CodeCode !== TOOLBAR_FILTER_LIST &&
+                            item.CodeCode !== TOOLBAR_COLUMN_LIST &&
+                            item.CodeCode !== TOOLBAR_GROUPBY_COLUMN_LIST &&
+                            item.CodeCode !== TOOLBAR_GROUPBY_ROW_LIST
+                        "
+                        [button]="item"
+                        [isPrimaryBtn]="true"
+                        (actionEvent)="handleAction($event, null, tooltip)"
+                        (contextmenu)="handleContextMenu($event, item)"
+                        [selectedRow]="selectedRow"
+                        [translationContext]="translationContext"
+                    >
+                    </ui-button>
+                    <button
+                        ejs-button
+                        *ngIf="
+                            !item.items &&
+                            (item.CodeCode === TOOLBAR_FILTER_LIST ||
+                                item.CodeCode === TOOLBAR_COLUMN_LIST ||
+                                item.CodeCode === TOOLBAR_GROUPBY_ROW_LIST ||
+                                item.CodeCode === TOOLBAR_GROUPBY_COLUMN_LIST)
+                        "
+                        (click)="handleAction(item, $event, tooltip)"
+                        class="hide-focus"
+                        [ngClass]="
+                            item.CodeButtonType === DISPLAY_ICONANDTEXT
+                                ? 'icontext-uploader'
+                                : 'uploader-transparent'
+                        "
+                    >
+                        <i
+                            class="{{ item.CodeIcon.class }}"
+                            *ngIf="
+                                item.CodeIcon &&
+                                item.CodeIcon.class &&
+                                (item.CodeButtonType === DISPLAY_ICON ||
+                                    item.CodeButtonType === DISPLAY_ICONANDTEXT)
+                            "
+                        ></i>
+                        <span
+                            class="pd-l-10 font-description"
+                            *ngIf="
+                                item.CodeButtonType === DISPLAY_TEXT ||
+                                item.CodeButtonType === DISPLAY_ICONANDTEXT
+                            "
+                            >{{ translationContext + '.' + item.CodeCode | translate }}</span
+                        >
+                    </button>
+                    <!-- </ejs-tooltip> -->
+                </ng-template>
+            </e-item>
+            <e-item *ngIf="secondaryActions && secondaryActions.length" align="right">
+                <ng-template #template>
+                    <button
+                        ejs-dropdownbutton
+                        target="#secondaryTasks{{ currentView._id }}"
+                        iconCss="fa fa-ellipsis-v icon fa-lg collapsed-btn"
+                        class="remove-dropdownicon"
+                        (click)="showActions()"
+                    ></button>
+                </ng-template>
+            </e-item>
+        </e-items>
+    </ejs-toolbar>
+    <div id="secondaryTasks{{ currentView._id }}">
+        <ejs-menu
+            id="secondaryTasks{{ currentView._id }}"
+            [items]="secondaryActions"
+            orientation="Vertical"
+            [enableScrolling]="true"
+            (beforeOpen)="onBeforeOpen($event)"
+        >
+            <ng-template #template let-menu>
+                <!-- <ejs-tooltip
+                    id="tooltip{{ menu._id }}"
+                    #tooltipMenu
+                    content="{{
+                        (menu && menu.CodeHelp ? menu.CodeHelp : menu.CodeDescription) | translate
+                    }}"
+                    openDelay="2000"
+                    position="BottomCenter"
+                > -->
+                <div
+                    (contextmenu)="handleContextMenu($event, menu)"
+                    (click)="handleAction(menu, null, tooltipMenu)"
+                >
+                    <i
+                        class="{{ menu.CodeIcon.class }} "
+                        *ngIf="
+                            menu.CodeIcon &&
+                            menu.CodeIcon.class &&
+                            (menu.CodeButtonType === DISPLAY_ICON ||
+                                menu.CodeButtonType === DISPLAY_ICONANDTEXT)
+                        "
+                    ></i>
+                    <span class="pd-l-10">{{
+                        menu.isLookupOption
+                            ? menu.CodeDescription
+                            : (translationContext + '.' + menu.CodeCode | translate)
+                    }}</span>
+                </div>
+                <!-- </ejs-tooltip> -->
+            </ng-template>
+        </ejs-menu>
+    </div>
+</section>
+<section *ngIf="isFilterBarVisible && !isLoading" class="filter-bar--wrapper">
+    <div class="filter-bar">
+        <span>{{ filterBarText }}</span>
+        <button
+            ejs-button
+            (click)="resetFilters()"
+            (contextmenu)="clearAllFilters()"
+            class="refresh-icon"
+        >
+            <i class="fa fa-history"></i>
+        </button>
+    </div>
+</section>

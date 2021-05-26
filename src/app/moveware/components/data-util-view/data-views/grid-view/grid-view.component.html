@@ -1,0 +1,132 @@
+<div
+    class="grid-view"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No'
+    }"
+>
+    <ejs-grid
+        #gridView
+        [allowResizing]="true"
+        id="gridView"
+        height="100%"
+        [pageSettings]="pageSettings"
+        [allowSelection]="true"
+        [editSettings]="editSettings"
+        (rowSelected)="onRowSelection($event)"
+        [allowRowDragAndDrop]="isCodeRowReorderable"
+        [rowHeight]="rowHeight"
+        [allowReordering]="true"
+        [allowFiltering]="isColumnFiltersVisible"
+        [filterSettings]="filterOptions"
+        [allowSelection]="true"
+        [allowResizing]="true"
+        (dataBound)="dataBound($event)"
+        [gridLines]="gridLines"
+        (rowDrop)="rowDrop($event)"
+        [contextMenuItems]="contextMenus"
+        (created)="onGridCreate($event)"
+        (contextMenuClick)="contextMenuClick($event)"
+        (actionComplete)="actionComplete($event)"
+        [ngClass]="{ 'hide-header': !headerVisible }"
+    >
+        <e-columns>
+            <e-column
+                clipMode="Ellipsis"
+                field="_id"
+                headerText="_id"
+                clipMode="EllipsisWithTooltip"
+                isPrimaryKey="true"
+                [visible]="false"
+            >
+            </e-column>
+            <ng-template ngFor let-column [ngForOf]="allColumnsCopy" trackBy:getTrackBy(column)>
+                <e-column
+                    field="{{ column.CodeCode }}"
+                    headerText="{{ column.CodeCode }}"
+                    clipMode="Ellipsis"
+                    width="{{ gridsterCelWidth * column.CodeColumns }}"
+                    textAlign="{{ column.align }}"
+                    isPrimaryKey="{{ column.CodeCode == '_id' }}"
+                    allowEditing="{{ column.CodeEnabled == CODE_YES }}"
+                >
+                    <ng-template #headerTemplate>
+                        <div
+                            class="sort-selected header{{ currentView._id }}{{ column._id }}"
+                            (click)="onSort(column)"
+                        >
+                            <span
+                                translate
+                                [innerHTML]="
+                                    translationContext[this.currentPage._id] + '.' + column.CodeCode
+                                "
+                            ></span>
+                            <span class="sort-span">
+                                <span class="chevron-div-up">
+                                    <i
+                                        class="fa fa-sort-asc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'ASC'"
+                                    ></i>
+                                    <i
+                                        class="fa fa-sort-desc sort-arrow sort-selected"
+                                        *ngIf="column.sorted == 'DESC'"
+                                    ></i>
+                                </span>
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template #filterTemplate let-data>
+                        <div id="{{ column.CodeCode }}_filterBarcell">
+                            <ng-container
+                                dynamicField
+                                [field]="column"
+                                [codeValue]="column.CodeValue"
+                                [currentView]="currentView"
+                            >
+                            </ng-container>
+                        </div>
+                    </ng-template>
+                    <ng-template #template let-data>
+                        <span
+                            process-settings
+                            [record]="data"
+                            [column]="column"
+                            [value]="data[column.CodeCode]"
+                            class="d-block data{{ currentView._id }}{{ column._id }}"
+                            [innerHTML]="data | ContentProcessor: column"
+                        ></span>
+                    </ng-template>
+                    <ng-template #editTemplate let-data>
+                        <editable-cell
+                            [row]="data"
+                            [col]="column"
+                            [calculatedFields]="calculatedFields"
+                            [parentChildMap]="parentChildMap"
+                            [currentPage]="currentPage"
+                            [currentView]="currentView"
+                            [columnsMap]="columnsMap"
+                        ></editable-cell>
+                    </ng-template>
+                    <ng-template *ngIf="rowExpandAction" #detailTemplate let-data>
+                        <app-container
+                            *ngIf="data.detailsExpanded"
+                            [parentContainer]="currentPage.contextKey"
+                            [containerID]="rowExpandAction.UIContainer"
+                            [isQuickMenu]="true"
+                            [isDefaultContainer]="false"
+                            [currentRecord]="getActionMetaData(data)"
+                        >
+                        </app-container>
+                    </ng-template>
+                </e-column>
+            </ng-template>
+            <e-column
+                *ngIf="multiSelection"
+                type="checkbox"
+                width="4"
+                maxWidth="4"
+                minWidth="4"
+            ></e-column>
+        </e-columns>
+    </ejs-grid>
+</div>

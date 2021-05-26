@@ -1,0 +1,118 @@
+<section class="icon-picker">
+    <h2 class="dialog-title">{{ title }}</h2>
+    <button
+        type="button"
+        class="pull-right chevron-arrow expand-arrows font-caption"
+        *ngIf="!expanded"
+        (click)="resizeOverlay(true); expanded = true"
+    >
+        <i class="fa fa-angle-left"></i>
+    </button>
+    <button
+        type="button"
+        class="pull-right chevron-arrow expand-arrows font-caption right"
+        *ngIf="expanded"
+        (click)="resizeOverlay(false); expanded = false"
+    >
+        <i class="fa fa-angle-right"></i>
+    </button>
+    <section class="icon-picker--container">
+        <p-tabView>
+            <p-tabPanel header="Icons" headerStyleClass="header-panel">
+                <section>
+                    <section class="row icon-search text-center">
+                        <span class="search-btn">
+                            <input
+                                pInputText
+                                placeholder="Type to search"
+                                [(ngModel)]="searchText"
+                                (ngModelChange)="filterIcons($event)"
+                                autocomplete="off"
+                                class="w-100"
+                            />
+                            <button
+                                *ngIf="searchText"
+                                (click)="searchText = ''; searchedIcons = []"
+                                tabindex="-1"
+                                class="clear-btn"
+                            >
+                                <i class="pi pi-times"></i>
+                            </button>
+                        </span>
+                        <button
+                            pButton
+                            label="Cancel"
+                            class="ui-button-raised pull-right mr-b-10 mr-r-20 cancel-btn"
+                            (click)="closeDialog()"
+                        ></button>
+                        <button
+                            pButton
+                            label="Select"
+                            class="ui-button-raised pull-right mr-b-10 mr-r-20 select-btn"
+                            (click)="selectIcon()"
+                        ></button>
+                    </section>
+                    <ul
+                        class="icon-picker--list icon-search"
+                        *ngIf="searchedIcons.length"
+                        [ngClass]="{ 'add-scroll': searchedIcons.length > 150 }"
+                    >
+                        <li *ngFor="let icon of searchedIcons; let $index = index">
+                            <button
+                                type="button"
+                                (click)="selectOption(icon)"
+                                [ngClass]="{ active: icon.class === iconClass }"
+                                title="{{ icon.description }}"
+                                (focusout)="
+                                    $index === iconList.length - 1 && (openIconPickList = false)
+                                "
+                            >
+                                <i class="{{ icon.class }}"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </section>
+                <!-- <button class="left-nav" (click)="openPrev()"><i class="fa fa-chevron-left"></i> </button>
+                    <button class="right-nav" (click)="openNext()"><i class="fa fa-chevron-right"></i> </button> -->
+                <p-tabView
+                    orientation="left"
+                    #tabview
+                    *ngIf="!searchedIcons.length"
+                    class="pd-20 icons"
+                    [activeIndex]="index"
+                    (onChange)="
+                        getSelectedTabData($event) && selectedTab && selectedTab.setValue($event)
+                    "
+                >
+                    <p-tabPanel
+                        id="categoryIndex"
+                        [selected]="selectedTab && selectedTab.CodeValue"
+                        headerStyleClass="header-panel-description"
+                        header="{{ activeCatogory.description }}"
+                        *ngFor="let activeCatogory of iconList; let categoryIndex = index"
+                    >
+                        <ul
+                            class="icon-picker--list"
+                            [ngClass]="{ 'add-scroll': activeCatogory.icons.length > 100 }"
+                        >
+                            <li *ngFor="let icon of activeCatogory.icons; let $index = index">
+                                <button
+                                    type="button"
+                                    (click)="selectOption(icon)"
+                                    [ngClass]="{ active: icon.class === iconClass }"
+                                    tooltipPosition="bottom"
+                                    pTooltip="{{ icon.description }}"
+                                    (focusout)="
+                                        $index === iconList.length - 1 && (openIconPickList = false)
+                                    "
+                                >
+                                    <i class="{{ icon.class }}"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </p-tabPanel>
+                </p-tabView>
+            </p-tabPanel>
+        </p-tabView>
+    </section>
+</section>

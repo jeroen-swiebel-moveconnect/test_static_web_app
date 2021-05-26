@@ -1,0 +1,87 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.multiselect-field {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.demo-full-width {
+    padding: 0 !important;
+}
+
+.data-form-multiselect {
+    width: 75%;
+    position: relative;
+
+    .e-multiselect {
+        height: 31px;
+    }
+}
+
+.grid-multiselect {
+    width: 100%;
+    position: relative;
+
+    input[type='text'] {
+        border: none;
+    }
+}
+
+.selected-item {
+    @extend .font-label;
+    width: fit-content;
+    margin: 2px;
+    float: left;
+    border: none;
+    background: $PRIMARY-COLOR;
+    color: $PRIMARY-FONT-COLOR;
+    border-radius: 0px;
+    padding: 0px;
+}
+
+.form-field-section {
+    position: relative;
+}
+
+.selected-list-container {
+    top: 9px;
+    left: 26%;
+}
+
+.selected-list-container-position {
+    position: absolute;
+}
+
+::ng-deep .ui-multiselect-panel .ui-multiselect-item span {
+    padding-left: 10px;
+}
+
+::ng-deep .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+    padding-left: 0;
+}
+
+::ng-deep {
+    .ui-multiselect {
+        @include scrollBars();
+        width: 100%;
+        min-height: 29px !important;
+        max-height: 65px;
+        scroll-padding: 2px;
+        overflow-y: auto;
+    }
+
+    .ui-multiselect-filter-container {
+        input:focus {
+            border: 1px solid $GREY-A8;
+        }
+    }
+
+    .ui-multiselect-label {
+        padding-bottom: 0px;
+        margin-bottom: 0;
+    }
+
+    .form-field-section .ui-multiselect .ui-multiselect-label {
+        color: transparent;
+    }
+}

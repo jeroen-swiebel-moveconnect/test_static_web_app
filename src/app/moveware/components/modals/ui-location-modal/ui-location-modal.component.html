@@ -1,0 +1,61 @@
+<section *ngIf="data.position === 'center'" DraggableDialog></section>
+<section
+    class="ui-location-modal dialog-height"
+    [ngClass]="{ 'title-visible': title !== '' }"
+    (mouseleave)="mouseLeaveFromDialog()"
+    (mouseenter)="enteredIntoDialog()"
+>
+    <section *ngIf="position === 'left'" class="dialog-left pull-right">
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption"
+            *ngIf="expanded"
+            (click)="resizeOverlayToRight(true); expanded = false"
+        >
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption right"
+            *ngIf="!expanded"
+            (click)="resizeOverlayToRight(false); expanded = true"
+        >
+            <i class="fa fa-angle-right"></i>
+        </button>
+    </section>
+    <section *ngIf="position === 'right'">
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption"
+            *ngIf="!expanded"
+            (click)="resizeOverlay(true); expanded = true"
+        >
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button
+            type="button"
+            class="pull-right chevron-arrow expand-arrows font-caption right"
+            *ngIf="expanded"
+            (click)="resizeOverlay(false); expanded = false"
+        >
+            <i class="fa fa-angle-right"></i>
+        </button>
+    </section>
+    <button
+        (click)="checkSaveStateAndCloseDialog(null)"
+        class="not-a-btn right close-btn pull-right"
+    >
+        <i class="fa fa-times"> </i>
+    </button>
+    <section class="title-bar" *ngIf="title">{{ title }}</section>
+    <app-container
+        [containerID]="menu.UIContainer"
+        [isDefaultContainer]="true"
+        [isQuickMenu]="true"
+        [currentRecord]="currentRecord"
+        [dynamicView]="menu.defaultView"
+        [metaData]="metaData"
+        [parentContainer]="parentContainerId"
+    >
+    </app-container>
+</section>

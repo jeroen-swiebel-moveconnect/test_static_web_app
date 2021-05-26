@@ -1,0 +1,28 @@
+<section class="col-md-12 no-padding page-renderer" id="{{ currentRecord?._id }}_dashbaord">
+    <section class="dashboard-wrapper">
+        <section class="mw-dashboard col-md-12">
+            <gridster [options]="options" class="dashboard-gridster">
+                <gridster-item
+                    [item]="item"
+                    id="{{ item.CodeElement ? item.CodeElement : item._id }}_dashbaord-item"
+                    *ngFor="let item of dashboard"
+                    class="dashboard-gridster-item"
+                    [ngClass]="{
+                        'gridster-grid': item.CodeType == 'Data Grid',
+                        'gridster-component': dashboardRenderer
+                    }"
+                >
+                    <ng-container
+                        widget-renderer
+                        [component]="item"
+                        [currentRecord]="currentRecord"
+                        [currentPage]="currentPage"
+                        [isDashboardRenderer]="dashboardRenderer"
+                        [parentPage]="parentPage"
+                    >
+                    </ng-container>
+                </gridster-item>
+            </gridster>
+        </section>
+    </section>
+</section>

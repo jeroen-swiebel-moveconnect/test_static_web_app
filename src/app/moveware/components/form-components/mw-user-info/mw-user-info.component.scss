@@ -1,0 +1,44 @@
+@import '../../../../../assets/scss/vars.scss';
+$BLUE-06: rgba(#0171c1, 0.6);
+$WHITE: #fff;
+
+.user-info {
+    border: none !important;
+}
+
+.avatar img {
+    height: 60px;
+    width: 60px;
+    border: 1px solid $BLUE-06;
+    border-radius: 50%;
+}
+
+.mail-text {
+    color: $PRIMARY-COLOR;
+
+    &:hover {
+        color: $SECONDARY-COLOR;
+    }
+    &:focus {
+        outline: 1px dotted $BLACK;
+    }
+}
+
+.demo-full-width {
+    display: block;
+}
+
+.pd-15 {
+    padding: 15px;
+    padding-left: 0px;
+    padding-right: 5px;
+}
+
+.pd-10 {
+    padding: 10px;
+}
+
+.user-title {
+    font-size: 15px;
+    text-transform: capitalize;
+}

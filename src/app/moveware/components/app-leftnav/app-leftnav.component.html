@@ -1,0 +1,45 @@
+<ejs-contextmenu
+    #contextmenu
+    [items]="contextMenus"
+    (select)="select($event)"
+    (beforeOpen)="filterContextMenu()"
+></ejs-contextmenu>
+
+<div id="sidebar-collapse">
+    <!-- Mega Menu -->
+    <mega-menu
+        *ngIf="menuBarType === 'Expanded'"
+        (selectContextMenu)="megaMenuSelectContextMenu($event)"
+        (selectMenu)="megaMenuSelectMenu($event)"
+    >
+    </mega-menu>
+    <!-- Syncfusion Menu bar  -->
+    <ejs-menu
+        #menu
+        [items]="items"
+        class="main-menu"
+        [enableScrolling]="true"
+        (beforeClose)="beforeCollapseMenuBar($event)"
+        *ngIf="isLeftNavLoading() && menuBarType !== 'Expanded'"
+        [ngClass]="{
+            activatehorizontalmenu: menuLayout === 'Horizontal'
+        }"
+        [orientation]="menuLayout"
+        (select)="onMenuItemSelection($event)"
+    >
+        <ng-template #template let-menu>
+            <span
+                [ngClass]="{
+                    adjustpad: menu.iconCss,
+                    font14: menuLayout !== 'Horizontal'
+                }"
+                (contextmenu)="openContextmenu($event, menu.menu)"
+            >
+                <span *ngIf="menu.iconCss">
+                    <i class="{{ menu.iconCss }}"></i>
+                </span>
+                <span class="pad-l-8">{{ menu.text | translate }}</span>
+            </span>
+        </ng-template>
+    </ejs-menu>
+</div>

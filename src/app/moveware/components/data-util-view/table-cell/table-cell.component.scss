@@ -1,0 +1,32 @@
+::ng-deep {
+    editable-cell {
+        app-input,
+        app-password,
+        app-select,
+        app-checkbox,
+        file-upload,
+        query-builder,
+        app-textarea,
+        app-richtexteditor,
+        app-multiselect,
+        icon-picker,
+        style-picker,
+        file-upload,
+        app-hyperlink,
+        app-editable-select,
+        app-editable-combobox,
+        app-togglebutton,
+        app-selectbutton,
+        app-inputswitch,
+        app-radiobutton,
+        app-numaric-textbox,
+        app-date,
+        dropdown-tree {
+            padding-left: 2px;
+            .col-md-9 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}

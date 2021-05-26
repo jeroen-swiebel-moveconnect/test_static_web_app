@@ -1,0 +1,38 @@
+<section
+    class="gantt"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No'
+    }"
+>
+    <ejs-gantt
+        #gantt
+        id="gantt"
+        width="100%"
+        height="100%"
+        showColumnMenu="true"
+        [highlightWeekends]="true"
+        [dataSource]="data"
+        [taskFields]="taskSettings"
+        [toolbar]="toolbar"
+        [timelineSettings]="timelineSettings"
+        [editSettings]="editSettings"
+        [columns]="columns"
+        [gridLines]="gridLines"
+        [rowHeight]="rowHeight"
+        [splitterSettings]="splitterSettings"
+        [allowFiltering]="true"
+        [allowResizing]="true"
+        [allowSelection]="true"
+        [allowSorting]="true"
+        [allowReordering]="true"
+        [allowExcelExport]="true"
+        [treeColumnIndex]="1"
+        (dataSourceChange)="getData()"
+        (actionComplete)="actionComplete($event)"
+        (toolbarClick)="toolbarClick($event)"
+        (rowSelected)="onRowSelect($event)"
+        (recordDoubleClick)="onDoubleClick($event)"
+    >
+    </ejs-gantt>
+</section>

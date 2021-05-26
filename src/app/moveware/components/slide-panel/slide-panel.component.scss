@@ -1,0 +1,21 @@
+@import '../../../../assets/scss/moveware.scss';
+
+:host {
+    display: block;
+    overflow: hidden;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.panes {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background: $GREY-F1;
+
+    div {
+        flex: 1;
+    }
+}

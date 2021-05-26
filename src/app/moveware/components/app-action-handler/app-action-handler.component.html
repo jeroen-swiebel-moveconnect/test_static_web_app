@@ -1,0 +1,55 @@
+<section *ngIf="!IsInlineView || isInsertBelowView" class="action-handler col-md-12">
+    <div
+        [ngClass]="{ 'pull-left profile-btn': isProfileView }"
+        *ngIf="
+            (primaryActions && primaryActions.length) ||
+            (secondaryActions && secondaryActions.length)
+        "
+        class="{{ taskbarClass }}"
+    >
+        <toolbar
+            [currentPage]="currentPage"
+            [primaryActions]="primaryActions"
+            [secondaryActions]="secondaryActions"
+            (actionEvent)="handleAction($event)"
+            (handleRightClick)="onRightClick($event)"
+            [viewType]="viewType"
+            [currentView]="currentView"
+            [currentRecord]="currentRecord"
+            [currentType]="currentType"
+            [isFormTaskBar]="true"
+            [isProfileView]="isProfileView"
+            [translationContext]="translationContext"
+            [viewTranslationContext]="viewTranslationContext"
+            [viewList]="viewList"
+        ></toolbar>
+    </div>
+</section>
+<section *ngIf="IsInlineView || isInsertBelowView" class="h-100">
+    <button *ngIf="IsInlineView" class="more-btn back-btn" (click)="backButtonClicked()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </button>
+
+    <app-container
+        *ngIf="loadProfile || isInsertBelowView"
+        [containerID]="menu.UIContainer"
+        [isDefaultContainer]="false"
+        [isQuickMenu]="true"
+        [currentRecord]="currentRecord"
+        [dynamicView]="menu.defaultView"
+        [metaData]="metaData"
+        [parentContainer]="parentContainerId"
+    >
+    </app-container>
+    <!-- <section class="displaySetting" *ngIf="loadProfileSettings">
+          <button class="not-a-btn" (click)="showSettings=!showSettings">
+            <span class="col-md-3 form-label-c">Settings</span>
+          </button>
+        </section> -->
+    <section *ngIf="loadProfileSettings" class="h-100">
+        <user-details-form
+            *ngIf="loadProfileSettings"
+            [currentView]="currentView"
+        ></user-details-form>
+    </section>
+</section>

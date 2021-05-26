@@ -1,0 +1,167 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.e-upload.e-form-upload .e-upload-files .e-upload-file-list,
+.e-bigger.e-small .e-upload.e-form-upload .e-upload-files .e-upload-file-list {
+    min-height: 85px;
+    padding-bottom: 16px;
+    padding-top: 12px;
+}
+
+.e-upload .e-file-select-wrap {
+    padding: 8px 0px 8px 8px;
+}
+.e-upload .test {
+    position: absolute;
+}
+.file-upload {
+    margin-left: -3px;
+    padding-right: 15px;
+
+    input[type='file'] {
+        display: none;
+    }
+
+    ::ng-deep p-messages {
+        display: none;
+    }
+
+    .demo-full-width {
+        padding: 0 !important;
+        width: 75%;
+    }
+
+    .heading {
+        padding-bottom: 8px;
+        color: $BLACK-08;
+    }
+
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        width: 70%;
+        text-align: center;
+    }
+
+    .btn-success {
+        background-color: $PRIMARY-COLOR !important;
+        border-color: $PRIMARY-COLOR !important;
+        float: right;
+    }
+
+    img {
+        border: 1px solid $BLACK-04;
+        margin-right: 10px;
+        margin-left: 10px;
+        width: 20%;
+        max-width: 100%;
+
+        &:not(.hide-preview) {
+            display: none;
+        }
+    }
+
+    .pd-r-20 {
+        padding-right: 20px;
+    }
+
+    ::ng-deep .img-label,
+    .ui-fileupload-row {
+        width: 60%;
+        overflow: hidden;
+    }
+
+    .clear-button {
+        position: absolute;
+        right: 0;
+        width: 40px !important;
+        top: 22px;
+    }
+
+    ::ng-deep {
+        &.error {
+            .ui-fileupload-content {
+                border: 1px solid red;
+            }
+
+            .ui-fileupload {
+                .ui-fileupload-buttonbar {
+                    background-color: $RED;
+                    border: 1px solid red;
+
+                    .ui-button {
+                        &:hover {
+                            background: $RED !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ui-fileupload {
+            margin-left: -5px;
+            display: contents;
+
+            .ui-progressbar {
+                display: none;
+            }
+
+            .ui-fileupload-content {
+                background: $WHITE;
+                width: calc(100% - 2em);
+
+                .ui-button {
+                    background: transparent;
+                    color: $BLACK;
+                }
+            }
+
+            .ui-fileupload-row {
+                display: none;
+            }
+
+            .ui-fileupload-buttonbar {
+                background-color: $PRIMARY-COLOR;
+                border: none;
+                margin-left: -4px;
+                padding: 2px 0 0 0px;
+                float: right;
+                position: inherit;
+                width: 2em;
+                height: 100%;
+                right: 0;
+
+                .ui-button {
+                    color: $PRIMARY-COLOR !important;
+                    background: transparent !important;
+                    cursor: pointer;
+                    height: 100%;
+                    width: 2em;
+
+                    &:hover {
+                        background: $SECONDARY-COLOR !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .ui-fileupload-choose {
+    .pi-plus::before {
+        content: '\e908';
+        color: $WHITE;
+
+        .ui-button-text-icon-left .ui-button-icon-left {
+            position: absolute;
+            top: 42%;
+            margin-top: -0.5em;
+            height: 1em;
+        }
+    }
+
+    input[type='file'] {
+        z-index: 1;
+    }
+}

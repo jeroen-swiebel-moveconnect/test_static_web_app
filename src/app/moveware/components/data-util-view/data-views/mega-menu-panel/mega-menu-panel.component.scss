@@ -1,0 +1,172 @@
+@import '../../../../../../assets/scss/moveware.scss';
+@import '../../../app-leftnav/app-leftnav.component.scss';
+// @import '../../../mega-menu/mega-menu.component.scss';
+
+.menu-sub {
+    height: auto;
+
+    &.activateTaskMenu {
+        position: absolute;
+        display: block;
+        padding: 5% 10%;
+
+        .menu-column {
+            line-height: 42px;
+            margin: 0 2em 0 1em;
+
+            a {
+                padding-left: 5px;
+            }
+        }
+    }
+
+    &.activatehorizontalmenu {
+        position: fixed;
+        left: 0;
+        top: 63px;
+        background: white;
+        color: $PRIMARY-COLOR;
+        width: 100%;
+        max-height: 100%;
+        padding: 2em;
+        display: none;
+        z-index: 999;
+        overflow: auto;
+    }
+
+    &:not(.activatehorizontalmenu):not(.activateTaskMenu) {
+        &.menu-sub {
+            position: fixed;
+            display: none;
+            left: 119px;
+            top: 64px;
+            background: white;
+            color: $PRIMARY-COLOR;
+            width: 100%;
+            max-height: 100%;
+            padding: 2em;
+            z-index: 999;
+            overflow: auto;
+        }
+    }
+
+    &.displayMenu {
+        display: block;
+    }
+
+    .subMenuIcon {
+        width: 18px;
+    }
+
+    .expand-icon {
+        position: absolute;
+        line-height: 20px;
+        width: 30px;
+        padding: 5px;
+        text-align: center;
+        top: 10px;
+        right: 10px;
+
+        &:hover {
+            cursor: pointer;
+            background: $BLACK-01;
+        }
+    }
+
+    .menu-column {
+        float: left;
+        display: block;
+        margin-right: 3em;
+        min-height: 380px;
+        min-width: 250px;
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li:hover.childSubMenu .external-link {
+            display: inline;
+        }
+
+        li {
+            font-size: 13px;
+            z-index: 999;
+            position: static;
+        }
+
+        a {
+            color: $PRIMARY-COLOR;
+            z-index: 999;
+            display: block;
+
+            &:not(.sub-header-menu):hover {
+                color: white;
+                background-color: $PRIMARY-COLOR;
+            }
+
+            &.sub-header-menu {
+                font-size: 16px;
+                font-weight: 700;
+                color: $PRIMARY-COLOR;
+                line-height: 42px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+
+                .menu-separator {
+                    color: $PRIMARY-COLOR;
+                }
+            }
+
+            .sub-item i {
+                color: $PRIMARY-COLOR;
+
+                &:hover {
+                    color: white;
+                    background-color: $PRIMARY-COLOR;
+                }
+            }
+
+            .badge {
+                margin: 0 5px;
+                line-height: 10px;
+                border-radius: 8px;
+                width: 22px;
+                float: right;
+                background-color: $PRIMARY-COLOR;
+                text-align: center;
+            }
+
+            .external-link {
+                display: none;
+                position: absolute;
+                top: 0px;
+                right: 2px;
+
+                .fa-external-link {
+                    z-index: 1000;
+                }
+            }
+        }
+    }
+}
+
+.modal-overlay {
+    &.mega-menu-overlay {
+        z-index: 998;
+        pointer-events: auto;
+        background-color: #35353547;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.no-display {
+    display: none;
+}

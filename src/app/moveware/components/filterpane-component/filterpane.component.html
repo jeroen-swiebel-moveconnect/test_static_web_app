@@ -1,0 +1,246 @@
+<section DraggableDialog class="dialog-content">
+    <div class="h-100">
+        <!-- Filters List-->
+        <ul
+            class="filter-list"
+            *ngIf="filtersList && filtersList.length"
+            [ngClass]="{ row: filtersList.length < 5 }"
+        >
+            <li
+                *ngFor="let filter of filtersList"
+                class="filters-list-item"
+                [ngClass]="{ 'col-sm': filtersList.length < 5 }"
+            >
+                <div
+                    class="filter-title"
+                    [ngClass]="{ 'pd-l-10': filter.CodeFilterType !== 'Check Box' }"
+                >
+                    {{ filter.CodeDescription | translate }}
+                </div>
+                <ng-container
+                    *ngIf="filter && filter.CodeFilterType !== 'Check Box'"
+                    dynamicField
+                    [field]="filter"
+                    [currentPage]="currentPage"
+                    [currentView]="currentView"
+                    [currentRecord]="currentRecord"
+                    [currentType]="currentType"
+                    (loadDynamicFilter)="loadDynamicFilter($event)"
+                >
+                </ng-container>
+                <div *ngIf="filter && filter.CodeFilterType === 'Check Box'" class="h-100 checkbox">
+                    <section class="row form-field-section h-100">
+                        <span class="demo-full-width h-100 filter-checkbox-list">
+                            <ejs-listview
+                                id="sample-list"
+                                style="height: inherit"
+                                [dataSource]="filter.options"
+                                [fields]="checkBoxFields"
+                                (select)="onCheckBoxSelect($event)"
+                                [showCheckBox]="true"
+                            ></ejs-listview>
+                        </span>
+                    </section>
+                </div>
+
+                <!-- <div
+                   
+                    *ngIf="
+                        (filter && filter.CodeFilterType === 'Date') ||
+                        filter.CodeFilterType === 'Date Time'
+                    "
+                >
+                    <div title="filter.CodeElement" class="font-caption-alt filter-dropdown">
+                        <p-calendar
+                            [(ngModel)]="filter.value"
+                            [showIcon]="true"
+                            panelStyleClass="filter-dropdown"
+                            appendTo="body"
+                            class="demo-full-width"
+                            dateFormat="dd/mm/yy"
+                            selectionMode="range"
+                            showButtonBar="true"
+                            (onClose)="setDateTimeFilter(filter, filter.value, 'Date')"
+                            (onClearClick)="applyFilters(filter, [], true)"
+                            hourFormat="24"
+                        ></p-calendar>
+                        <div class="slider-filter" *ngIf="filter.CodeFilterType === 'Date Time'">
+                            <div>
+                                {{ filter.valuesTime[0] }} -
+                                {{ filter.valuesTime[1] }}
+                            </div>
+                            <p-slider
+                                [(ngModel)]="filter.values"
+                                [range]="true"
+                                (onChange)="setDateTimeFilter(filter, $event, 'TimeChange')"
+                                [min]="0"
+                                [max]="1440"
+                                [step]="15"
+                                (onSlideEnd)="setDateTimeFilter(filter, $event, 'Time')"
+                            ></p-slider>
+                        </div>
+                    </div>
+                </div> -->
+            </li>
+        </ul>
+        <!-- Columns List -->
+        <div
+            class="customise-table remove-alt-row-shadding"
+            style="padding: 10px; height: calc(100% - 80px)"
+            *ngIf="allColumns && allColumns.length > 0"
+        >
+            <ejs-grid
+                #columnsgrid
+                [dataSource]="allColumns"
+                [rowHeight]="30"
+                id="columnsgrid"
+                gridLines="None"
+                [allowRowDragAndDrop]="true"
+                [editSettings]="editSettings"
+                (rowDrop)="updateColumnOrder($event, 'Col')"
+            >
+                <e-columns>
+                    <e-column
+                        field="CodeCode"
+                        [allowEditing]="false"
+                        headerText="Columns"
+                        textAlign="Left"
+                    >
+                        <ng-template #headerTemplate let-data>
+                            <span scope="col" class="customise-table-header"> Columns </span>
+                        </ng-template>
+                        <ng-template #template let-rowData>
+                            <ejs-checkbox
+                                (change)="updateCheckedValues('ColSelect', $event, rowData)"
+                                [checked]="rowData.isChecked"
+                                label=""
+                            ></ejs-checkbox>
+                            <div
+                                [ngClass]="{
+                                    'rowData-display': true
+                                }"
+                            >
+                                {{ rowData.CodeCode | translate }}
+                            </div>
+                        </ng-template>
+                    </e-column>
+                    <e-column headerText="Sort" [allowEditing]="false">
+                        <ng-template #headerTemplate let-data>
+                            <span scope="col" class="customise-table-header"> Sort </span>
+                        </ng-template>
+                        <ng-template #template let-rowData>
+                            <button
+                                ejs-button
+                                class="hide-focus btn-icon-text"
+                                (click)="handleClick(rowData)"
+                            >
+                                <span
+                                    class="pd-l-5 font-description"
+                                    *ngIf="rowData.sorted === 'ASC'"
+                                >
+                                    Ascending
+                                </span>
+                                <span
+                                    class="pd-l-5 font-description"
+                                    *ngIf="rowData.sorted === 'DESC'"
+                                >
+                                    Descending
+                                </span>
+                                <span class="pd-l-5 font-description" *ngIf="!rowData.sorted">
+                                    None
+                                </span>
+                            </button>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+        <!-- Groupby List -->
+        <div
+            *ngIf="groupOptions && groupOptions.length > 0"
+            class="customise-table remove-alt-row-shadding"
+            style="padding: 10px; height: calc(100% - 80px)"
+        >
+            <ejs-grid
+                #groupbygrid
+                [dataSource]="groupOptions"
+                id="groupbygrid"
+                [rowHeight]="30"
+                gridLines="None"
+                [editSettings]="editSettings"
+                [allowRowDragAndDrop]="true"
+                (rowDrop)="customiseLayout('GroupReorder', $event)"
+            >
+                <e-columns>
+                    <e-column headerText="Columns" [allowEditing]="false">
+                        <ng-template #headerTemplate let-data>
+                            <span scope="col" class="customise-table-header"> Grouping </span>
+                        </ng-template>
+                        <ng-template #template let-rowData>
+                            <ejs-checkbox
+                                *ngIf="rowData.CodeCode !== 'Details' && rowData.Code !== 'Summary'"
+                                [checked]="rowData.isChecked"
+                                label=""
+                                (change)="updateCheckedValues('GroupSelect', $event, rowData)"
+                            ></ejs-checkbox>
+                            <div
+                                [ngClass]="{
+                                    'rowData-display': true
+                                }"
+                            >
+                                {{ rowData.CodeCode | translate }}
+                            </div>
+                        </ng-template>
+                    </e-column>
+                    <e-column headerText="Sort" [allowEditing]="false">
+                        <ng-template #headerTemplate let-data>
+                            <span scope="col" class="customise-table-header"> Sort </span>
+                        </ng-template>
+                        <ng-template #template let-rowData>
+                            <button
+                                ejs-button
+                                class="hide-focus btn-icon-text"
+                                (click)="handleClick(rowData)"
+                            >
+                                <span
+                                    class="pd-l-5 font-description"
+                                    *ngIf="rowData.sorted === 'ASC'"
+                                >
+                                    Ascending
+                                </span>
+                                <span
+                                    class="pd-l-5 font-description"
+                                    *ngIf="rowData.sorted === 'DESC'"
+                                >
+                                    Descending
+                                </span>
+                                <span class="pd-l-5 font-description" *ngIf="!rowData.sorted">
+                                    None
+                                </span>
+                            </button>
+                        </ng-template>
+                    </e-column>
+                </e-columns>
+            </ejs-grid>
+        </div>
+
+        <div class="clear"></div>
+        <div class="dialog-buttons-div">
+            <button
+                ejs-button
+                class="primary-button"
+                *ngIf="showResetButton"
+                (click)="onFiltersReset()"
+            >
+                Reset Filters
+            </button>
+            <button ejs-button class="primary-button" (click)="onDialogCloseAndApply()">
+                Apply
+            </button>
+            <button ejs-button class="secondary-button" (click)="onDialogCloseAndCancel()">
+                Cancel
+            </button>
+        </div>
+        <!-- </div> -->
+    </div>
+</section>

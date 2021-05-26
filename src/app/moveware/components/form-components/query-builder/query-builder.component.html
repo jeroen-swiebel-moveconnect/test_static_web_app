@@ -1,0 +1,150 @@
+<section class="row form-field-section query-builder-wrapper" [hidden]="!field.CodeVisible">
+    <span
+        *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.headerClass }}"
+    >
+        {{ fieldLabel | translate }}
+    </span>
+
+    <div
+        *ngIf="Options && Options.length"
+        class="col-md-9 pd-0 demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}"
+    >
+        <button class="e-btn show-rule" [ngClass]="{ position: sqlRule }" (click)="showDialog()">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button *ngIf="sqlRule" class="e-btn show-rule" (click)="onRemove()">
+            <i class="fa fa-remove"></i>
+        </button>
+        <textarea
+            #inputTextArea
+            class="full-width {{ field.CodeFieldType }} {{ field.CodeDescription }} {{
+                field.dataClass
+            }} {{ field.groupDataClass }}"
+            class="e-input"
+            [(ngModel)]="sqlRule"
+            (contextmenu)="onRightClick($event, input)"
+            rows="5"
+            [disabled]="true"
+        ></textarea>
+    </div>
+</section>
+
+<p-dialog
+    header="{{ promptHeader }}"
+    [(visible)]="displayDialog"
+    [style]="{ width: '50vw', height: '500px' }"
+    styleClass="rule-dialog"
+    appendTo="body"
+    modal="true"
+>
+    <ejs-querybuilder
+        tabindex="{{ field.tabIndex }}"
+        id="querybuilder"
+        #querybuilder
+        [rule]="rulesData"
+        (change)="change($event)"
+        (actionBegin)="actionBegin($event)"
+    >
+        <e-columns>
+            <e-column
+                field="{{ option.CodeCode }}"
+                label="{{ option.label }}"
+                type="string"
+                *ngFor="let option of Options"
+            >
+                <ng-template #ruleTemplate let-data>
+                    <div class="e-rule e-rule-template">
+                        <div
+                            class="e-rule-filter e-custom-filter pd-r-l-15"
+                            style="display: inline-block !important; width: 30%"
+                        >
+                            <span class="pd-r-0">Field</span>
+                            <ejs-dropdownlist
+                                class="pd-0"
+                                (change)="fieldChange($event, data)"
+                                [fields]="data.fields"
+                                [dataSource]="data.columns"
+                                [(value)]="data.rule.field"
+                                filterType="contains"
+                                [allowFiltering]="true"
+                            >
+                            </ejs-dropdownlist>
+                        </div>
+                        <div
+                            class="e-rule-operator e-operator pd-r-l-15"
+                            style="display: inline-block !important; width: 30%"
+                        >
+                            <span class="col-md-3 pd-r-0"> Operator </span>
+                            <div class="pd-0">
+                                <ejs-dropdownlist
+                                    (change)="operatorChange($event, data.rule)"
+                                    [fields]="OperatorFields"
+                                    [dataSource]="operators"
+                                    [value]="data.rule.operator"
+                                >
+                                </ejs-dropdownlist>
+                            </div>
+                        </div>
+                        <div
+                            class="e-rule-value pd-r-l-15"
+                            style="display: inline-block !important; width: 30%; position: absolute"
+                        >
+                            <div class="e-slider-value">
+                                <section
+                                    class="dynamic-field-container"
+                                    *ngIf="
+                                        dynamicFields &&
+                                        data?.rule?.custom?.ruleId &&
+                                        dynamicFields[data.rule.custom.ruleId] &&
+                                        data.rule.operator &&
+                                        data.rule.operator != 'isempty' &&
+                                        data.rule.operator != 'isnotempty' &&
+                                        data.rule.operator != 'isnull' &&
+                                        data.rule.operator != 'isnotnull'
+                                    "
+                                >
+                                    <span class="pd-r-0"> Value </span>
+                                    <section class="pd-0">
+                                        <ng-container
+                                            dynamicField
+                                            [field]="dynamicFields[data.rule.custom.ruleId]"
+                                            [currentPage]="currentPage"
+                                            [currentView]="currentView"
+                                            [currentRecord]="currentRecord"
+                                            [translationContext]="translationContext"
+                                        >
+                                        </ng-container>
+                                    </section>
+                                </section>
+                                <button
+                                    class="e-removerule e-rule-delete e-css e-btn e-small e-round pull-right"
+                                    style="
+                                        display: inline-block !important;
+                                        width: 30%;
+                                        position: absolute;
+                                        top: 36px;
+                                    "
+                                >
+                                    <span class="fa fa-remove"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+    </ejs-querybuilder>
+    <p-footer>
+        <button ejs-button class="primary-button" (click)="displayDialog = false; markDirty()">
+            Save
+        </button>
+        <button
+            ejs-button
+            class="secondary-button"
+            (click)="displayDialog = false; onCancel(rulesData)"
+        >
+            Cancel
+        </button>
+    </p-footer>
+</p-dialog>

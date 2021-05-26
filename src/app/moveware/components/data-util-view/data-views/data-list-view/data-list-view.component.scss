@@ -1,0 +1,40 @@
+@import '../../../../../../assets/scss/moveware.scss';
+
+.list-view {
+    .list-items {
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: #ffffff;
+
+        &.active-record,
+        &.active-record:hover {
+            background-color: $PRIMARY-COLOR;
+            color: $WHITE;
+        }
+
+        .listgridster,
+        .list-gridster gridster-item {
+            background-color: transparent;
+        }
+
+        &.inactive-record {
+            &:hover {
+                background-color: $WHITE-05;
+                cursor: pointer !important;
+                // color: $BLACK-08;
+            }
+        }
+    }
+}
+
+.heading-cell {
+    padding-top: 3px;
+    float: left;
+}
+
+.ui-table-scrollable-body {
+    height: calc(100% - 60px);
+    max-height: calc(100% - 80px) !important;
+    overflow-x: hidden;
+}

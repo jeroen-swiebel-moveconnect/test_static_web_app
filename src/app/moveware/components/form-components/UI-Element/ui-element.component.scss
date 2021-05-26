@@ -1,0 +1,61 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.hideHeader {
+    /deep/ .ui-fieldset-legend {
+        display: none;
+    }
+
+    /deep/ .ui-fieldset {
+        margin-top: 0px;
+    }
+}
+
+.image {
+    padding: 10px 155px 10px;
+}
+
+.divider {
+    padding: 15px 0px 15px 0px;
+}
+
+.horizontal-ruler {
+    border-bottom: 1px solid $BLACK-03;
+}
+
+.collapsible-icon {
+    padding-right: 5px;
+    padding-left: 7px;
+}
+::ng-deep {
+    .pd-f-5 {
+        app-date,
+        app-multiselect {
+            padding-left: 5px !important;
+        }
+    }
+}
+.description {
+    cursor: pointer;
+
+    &:hover {
+        background-color: #dcdfe0;
+    }
+}
+:host {
+    height: 100% !important;
+}
+
+.ui-element {
+    width: 100% !important;
+}
+.adjust-heading {
+    margin: 5% 5% 0 5%;
+}
+.item {
+    padding-right: 5px;
+}
+.ui-element {
+    .form-gridster {
+        overflow-y: hidden !important;
+    }
+}

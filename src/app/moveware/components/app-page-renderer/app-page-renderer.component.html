@@ -1,0 +1,258 @@
+<section
+    class="col-md-12 no-padding page-renderer {{ pageWidth }} {{ currentContainerID }}"
+    *ngIf="currentPage"
+>
+    <section *ngIf="currentPage.isDefaultContainer" class="col-md-12 page-0s">
+        <section *ngIf="viewsList.length <= 1; else summaryViews" class="h-100">
+            <ng-container *ngIf="currentPage.CodeType === uiContainerDesignerTypeCode">
+                <app-container
+                    [isSubContainer]="true"
+                    [parentViewID]="parentViewID"
+                    [subContainerID]="currentPage.CodeElement"
+                    [isDefaultContainer]="currentPage.isDefaultContainer"
+                    [windowSize]="windowSize"
+                    [currentRecord]="currentRecord"
+                >
+                </app-container>
+            </ng-container>
+            <ng-container
+                *ngIf="
+                    currentPage.CodeType !== uiContainerDesignerTypeCode &&
+                    currentPage.CodeType !== uiDataFormDesignerTypeCode &&
+                    currentPage.CodeType !== uiDashboardTypeCode &&
+                    currentPage.CodeType !== uiDesignerTypeCode
+                "
+            >
+                <data-util-view
+                    [viewList]="currentContainer"
+                    [currentContainerID]="currentContainerID"
+                    [metaData]="metaData"
+                    [windowSize]="windowSize"
+                    [parentPage]="pageContainerData"
+                    [parentViewID]="parentViewID"
+                    [currentRecord]="currentRecord"
+                >
+                </data-util-view>
+            </ng-container>
+            <ng-container *ngIf="currentPage.CodeType === uiDataFormDesignerTypeCode">
+                <div
+                    *ngIf="currentPage && currentPage.CodeCode !== 'User Profile'"
+                    class="view-heading"
+                >
+                    {{ currentPage.CodeCode | translate }}
+                </div>
+                <data-form-renderer
+                    [currentRecord]="currentRecord"
+                    [currentPage]="currentPage"
+                    [currentContainerID]="currentContainerID"
+                    [parentViewID]="parentViewID"
+                ></data-form-renderer>
+            </ng-container>
+            <ng-container *ngIf="currentPage.CodeType === uiDashboardTypeCode">
+                <dashboard-renderer
+                    [currentRecord]="currentRecord"
+                    [parentPage]="currentPage"
+                    [currentPage]="currentPage"
+                    [windowSize]="windowSize"
+                >
+                </dashboard-renderer>
+            </ng-container>
+
+            <ng-container *ngIf="currentPage.CodeType == uiDesignerTypeCode">
+                <app-designer
+                    class="h-100"
+                    [viewList]="currentContainer"
+                    [currentRecord]="currentRecord"
+                    [currentPage]="currentPage"
+                    [parentViewID]="parentViewID"
+                    [currentContainerID]="currentContainerID"
+                    [parentPage]="parentPage"
+                ></app-designer>
+            </ng-container>
+        </section>
+    </section>
+
+    <section *ngIf="!currentPage.isDefaultContainer" class="h-100">
+        <div class="view-renderer right-views col-md-12 no-padding">
+            <div class="clear"></div>
+            <div
+                *ngIf="currentContainer && currentContainer.length"
+                class="tab-container col-md-12"
+            >
+                <div class="tabs" *ngIf="!(metaData && metaData.onlyLookup)">
+                    <ul class="nav nav-tabs -primary">
+                        <li *ngFor="let collectionView of currentContainer; let $index = index">
+                            <a
+                                [ngClass]="{ active: collectionView.active }"
+                                title="{{ collectionView.CodeCode | translate }}"
+                                [class.disabled]="
+                                    currentRecord &&
+                                    !currentRecord._id &&
+                                    collectionView.CodeType !== Dashboard &&
+                                    this.currentContainer[0].CodeDescription !==
+                                        collectionView.CodeDescription
+                                "
+                                class="font-description"
+                                *ngIf="!collectionView?.hidden && !collectionView?.CodeHideLabel"
+                                (click)="loadSelectedPage(collectionView)"
+                            >
+                                <span *ngIf="!collectionView.CodeAlias">
+                                    {{
+                                        translationContext + collectionView.CodeCode | translate
+                                    }}</span
+                                >
+                                <span *ngIf="collectionView.CodeAlias">
+                                    {{ collectionView.CodeCode | translate }}</span
+                                ></a
+                            >
+                            <span class="border-line"></span>
+                        </li>
+                        <li class="-more dropdown --hidden">
+                            <ul class="nav-tabs -secondary dropdown-menu">
+                                <ejs-listview
+                                    id="List"
+                                    #List
+                                    [dataSource]="currentContainer"
+                                    cssClass="e-list-template "
+                                    [showHeader]="false"
+                                >
+                                    <ng-template #template let-data="">
+                                        <button
+                                            *ngIf="!data.CodeAlias"
+                                            ejs-button
+                                            (click)="tabSelectedFromList(data, List)"
+                                            class="not-a-btn list-btn"
+                                        >
+                                            {{ translationContext + data.CodeCode | translate }}
+                                        </button>
+                                        <span *ngIf="data.CodeAlias">
+                                            {{ data.CodeCode | translate }}</span
+                                        >
+                                    </ng-template>
+                                </ejs-listview>
+                            </ul>
+                            <button
+                                ejs-dropdownbutton
+                                target="#List"
+                                cssClass="more no-a-btn dropdown-toggl"
+                            ></button>
+                        </li>
+                    </ul>
+                </div>
+
+                <section
+                    *ngIf="currentPage.CodeType === uiDataFormDesignerTypeCode"
+                    class="col-md-12 no-padding child-content-wraper"
+                >
+                    <data-form-renderer
+                        *ngIf="currentPage.CodeElement !== 'b8c852bc-bf14-4c51-a10b-4a812b80b642'"
+                        [currentRecord]="currentRecord"
+                        [currentPage]="currentPage"
+                        [currentContainerID]="currentContainerID"
+                        [parentViewID]="parentViewID"
+                    ></data-form-renderer>
+
+                    <section
+                        class="h-100"
+                        *ngIf="currentPage.CodeElement == 'b8c852bc-bf14-4c51-a10b-4a812b80b642'"
+                    >
+                        <app-designer
+                            class="h-100"
+                            [currentRecord]="currentRecord"
+                            [currentPage]="currentPage"
+                            [parentViewID]="parentViewID"
+                        ></app-designer>
+                    </section>
+                </section>
+
+                <section
+                    *ngIf="currentPage.CodeType === uiDashboardTypeCode"
+                    class="col-md-12 no-padding child-content-wraper"
+                >
+                    <dashboard-renderer
+                        [parentViewID]="parentViewID"
+                        [parentPage]="currentPage"
+                        [parentContainer]="currentPage.parentContainerId"
+                        [currentRecord]="currentRecord"
+                        [currentPage]="currentPage"
+                        [windowSize]="windowSize"
+                    >
+                    </dashboard-renderer>
+                </section>
+                <section class="h-100" *ngIf="currentPage.CodeType == uiDesignerTypeCode">
+                    <app-designer
+                        class="h-100"
+                        [currentRecord]="currentRecord"
+                        [currentPage]="currentPage"
+                        [parentViewID]="parentViewID"
+                    ></app-designer>
+                </section>
+                <ng-container
+                    *ngIf="
+                        currentPage.CodeType &&
+                        currentPage.CodeType !== uiContainerDesignerTypeCode &&
+                        currentPage.CodeType !== uiDataFormDesignerTypeCode &&
+                        currentPage.CodeType !== uiDashboardTypeCode &&
+                        currentPage.CodeType !== uiDesignerTypeCode
+                    "
+                >
+                    <data-util-view
+                        [viewList]="currentContainer"
+                        [currentContainerID]="currentContainerID"
+                        [windowSize]="windowSize"
+                        class="sub-grid"
+                        [metaData]="metaData"
+                        [parentPage]="currentPage"
+                        [currentRecord]="currentRecord"
+                        [parentViewID]="parentViewID"
+                    >
+                    </data-util-view>
+                </ng-container>
+
+                <section
+                    *ngIf="currentPage.CodeType === uiContainerDesignerTypeCode"
+                    class="col-md-12 child-content-wraper"
+                >
+                    <app-container
+                        [isSubContainer]="true"
+                        [parentViewID]="parentViewID"
+                        [subContainerID]="currentPage.CodeElement"
+                        [windowSize]="windowSize"
+                        [pageContainerData]="currentPage"
+                        [parentContainer]="currentPage.parentContainerId"
+                        [currentRecord]="currentRecord"
+                    ></app-container>
+                </section>
+            </div>
+        </div>
+    </section>
+</section>
+<ng-template #summaryViews>
+    <section class="pages-wrapper">
+        <ng-container>
+            <section *ngFor="let view of viewsList" class="viewslist">
+                <section *ngIf="view.CodeVisible" class="view-wrapper">
+                    <button
+                        class="font-sutitle-alt view-header not-a-btn"
+                        (click)="view.expanded = !view.expanded"
+                    >
+                        {{ view.CodeDescription }}
+                        <span class="fa fa-arrow-circle-right header-icon"></span>
+                    </button>
+                    <section *ngIf="view.expanded" class="summary-view">
+                        <ng-template
+                            widget-renderer
+                            [component]="view"
+                            [currentRecord]="currentRecord"
+                            [currentPage]="view"
+                            [windowSize]="windowSize"
+                            [isDashboardRenderer]="true"
+                        >
+                        </ng-template>
+                    </section>
+                </section>
+                <!-- </ng-template> -->
+            </section>
+        </ng-container>
+    </section>
+</ng-template>

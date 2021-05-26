@@ -1,0 +1,65 @@
+<form class="dynamic-form" (submit)="onSubmit($event)" [ngClass]="{ 'preview-form': isPreview }">
+    <section style="height: 100%">
+        <!-- <gridster [options]="options" #gridster_form class="form-gridster"> -->
+        <section
+            [ngClass]="{
+                'pd-r-0': UIElements[element._id].CodeType == 'UI Component',
+                'h-auto': UIElements[element._id].CodeFieldType == 'Rich Text'
+            }"
+            [item]="element"
+            *ngFor="let element of UIElementsMetaData; let indexOfElement = index"
+        >
+            <ng-container
+                [ngTemplateOutlet]="fieldRenderer"
+                [ngTemplateOutletContext]="{ field: UIElements[element._id] }"
+            >
+            </ng-container>
+        </section>
+        <!-- </gridster> -->
+    </section>
+    <section *ngIf="CodeFields">
+        <div *ngFor="let codeField of CodeFields" class="row">
+            <ng-container
+                [ngTemplateOutlet]="fieldRenderer"
+                [ngTemplateOutletContext]="{ field: codeField }"
+            >
+            </ng-container>
+        </div>
+    </section>
+</form>
+
+<ng-template #fieldRenderer let-field="field">
+    <ng-container
+        [translationContext]="translationContext"
+        dynamicField
+        [field]="field"
+        [group]="form"
+        [viewMode]="viewMode"
+        *ngIf="
+            field.CodeType == 'Taskbar' ||
+            field.CodeType == 'Field' ||
+            field.CodeType.CodeCode == 'Setting'
+        "
+        [parentViewFields]="UIElements"
+        [globalEventsNames]="globalEventsNames"
+        [currentPage]="currentPage"
+        [currentRecord]="currentRecord"
+        [currentView]="currentView"
+        [parentPageCode]="parentPageCode"
+        [dataFields]="dataFields"
+    >
+    </ng-container>
+    <ui-element
+        [translationContext]="translationContext"
+        [field]="field"
+        [UIElements]="UIElements"
+        *ngIf="field.CodeType == 'UI Component'"
+        [globalEventsNames]="globalEventsNames"
+        [currentPage]="currentPage"
+        [currentView]="currentView"
+        [parentPageCode]="parentPageCode"
+        [currentRecord]="currentRecord"
+        [dataFields]="dataFields"
+    >
+    </ui-element>
+</ng-template>

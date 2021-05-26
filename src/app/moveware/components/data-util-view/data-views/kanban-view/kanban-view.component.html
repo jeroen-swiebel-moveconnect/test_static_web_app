@@ -1,0 +1,81 @@
+<section
+    class="kanban-view"
+    *ngIf="dataSource && dataSource.length && selectedColumns && selectedColumns.length"
+    [ngClass]="{
+        'hide-header': !headerVisible,
+        'remove-alt-row-shadding': gridRowShading === 'No'
+    }"
+>
+    <ejs-kanban
+        #kanbanBoard
+        keyField="{{ keyField }}"
+        [dataSource]="dataSource"
+        [allowKeyboard]="true"
+        [cardSettings]="cardSettings"
+        [swimlaneSettings]="swimlaneSettings"
+        (dragStop)="dragStop($event)"
+        (dragStart)="dragStart($event)"
+        (cardClick)="cardClick($event)"
+        (dataBinding)="getData($event)"
+        height="auto"
+    >
+        <e-columns>
+            <e-column
+                *ngFor="let column of kanbanColumns"
+                headerText="{{ column.headerText }}"
+                keyField="{{ column.keyField }}"
+                allowToggle="{{ column.allowToggle }}"
+            >
+                <ng-template #template let-data>
+                    <div class="header-template-wrap">
+                        <div class="header-text">{{ data.headerText }}</div>
+                    </div>
+                </ng-template>
+            </e-column>
+        </e-columns>
+        <ng-template #cardSettingsTemplate let-data>
+            <div class="e-card-content">
+                <div
+                    class=".e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card .e-card-content"
+                >
+                    <section *ngFor="let header of columns" class="pd-b-6 row">
+                        <div class="font-caption pd-b-10 col-md-4 header{{ header._id }}">
+                            {{ header['CodeDescription'] }}
+                        </div>
+                        <div
+                            class="font-caption-alt col-md-8 data{{ currentView._id }}{{
+                                header._id
+                            }}"
+                            process-settings
+                            [record]="data"
+                            [column]="header"
+                            [value]="data[header.CodeCode]"
+                            title="{{ data[header.CodeCode] }}"
+                        >
+                            <ng-container>
+                                <span
+                                    *ngIf="
+                                        !(header.allActions && header.allActions.length);
+                                        else linkTemplate
+                                    "
+                                    [innerHTML]="data | ContentProcessor: header"
+                                ></span>
+                                <ng-template #linkTemplate>
+                                    <a
+                                        class="link"
+                                        [contextKey]="currentPage.contextKey"
+                                        [event-manager]="header.actions"
+                                        [column]="header"
+                                        [data]="data"
+                                        href="javascript:;"
+                                        [innerHTML]="data | ContentProcessor: header"
+                                    ></a>
+                                </ng-template>
+                            </ng-container>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </ng-template>
+    </ejs-kanban>
+</section>

@@ -1,0 +1,175 @@
+<div
+    *ngIf="menu && menu.subMenus && menu.subMenus.length"
+    id="menupos_{{ index }}"
+    class="menu-sub"
+    [ngClass]="{
+        displayMenu: menu.show || menu.isTask,
+        activatehorizontalmenu: menuLayout === 'Horizontal',
+        activateTaskMenu: menu.isTask
+    }"
+    (mouseenter)="applyModal()"
+    (mouseleave)="removeModal()"
+    (window:resize)="onResize()"
+>
+    <div (click)="expandMenu(index)" *ngIf="!menu.isTask" class="expand-icon subMenuIcon">
+        <i class="fa" [ngClass]="[menuExpanded ? 'fa-compress' : 'fa-expand']"></i>
+    </div>
+    <ng-template ngFor let-subMenu [ngForOf]="menu.subMenus" let-subIndex="index">
+        <div *ngIf="subIndex % numberOfCols == 0 && subIndex !== 0" class="clearfix"></div>
+        <div id="menucol_{{ subIndex }}" class="menu-column">
+            <a
+                class="sub-item activeMenu sub-header-menu"
+                *ngIf="!(subMenu && subMenu.subMenus && subMenu.subMenus.length)"
+                (click)="checkAction(UI_ACTION_CLICK, index, menu, subMenu)"
+                href="javascript:;"
+                data-parent="#submenu1"
+                (contextmenu)="openContextmenu($event, menu, subMenu)"
+            >
+                <span
+                    *ngIf="
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICON) ||
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT)
+                    "
+                >
+                    <i
+                        *ngIf="subMenu.CodeIcon"
+                        class="subMenuIcon fa {{ subMenu.CodeIcon.class }}"
+                        [style.font-size.px]="subMenu.CodeIcon.fontSize"
+                        [ngStyle]="{ color: subMenu.CodeIcon.color }"
+                    ></i>
+                    <i *ngIf="!subMenu.CodeIcon" class="subMenuIcon fa fa-question"></i>
+                </span>
+
+                <span
+                    *ngIf="
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_TEXT) ||
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT) ||
+                        !subMenu.MenuType
+                    "
+                    [ngClass]="{
+                        'pad-l-8': equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT)
+                    }"
+                >
+                    <span
+                        *ngIf="subMenu.CodeDescription"
+                        class="menudescription"
+                        [ngClass]="{
+                            'pad-l-38':
+                                subMenu.MenuType === null ||
+                                equalIgnoreCase(subMenu.MenuType, DISPLAY_TEXT)
+                        }"
+                        >{{ subMenu.CodeCode | translate }}</span
+                    >
+                </span>
+            </a>
+
+            <a *ngIf="subMenu.subMenus && subMenu.subMenus.length" class="sub-header-menu">
+                <span
+                    class="menu-icons"
+                    *ngIf="
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICON) ||
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT)
+                    "
+                >
+                    <i
+                        *ngIf="subMenu.CodeIcon"
+                        class="subMenuIcon fa {{ subMenu.CodeIcon.class }}"
+                        [style.font-size.px]="subMenu.CodeIcon.fontSize"
+                        [ngStyle]="{ color: subMenu.CodeIcon.color }"
+                    ></i>
+                    <i *ngIf="!subMenu.CodeIcon" class="fa fa-question"></i>
+                </span>
+                <span
+                    *ngIf="
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_TEXT) ||
+                        equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT) ||
+                        !subMenu.MenuType
+                    "
+                    [ngClass]="{
+                        'pad-l-8': equalIgnoreCase(subMenu.MenuType, DISPLAY_ICONANDTEXT)
+                    }"
+                >
+                    <span *ngIf="subMenu.CodeDescription" class="menudescription">{{
+                        subMenu.CodeCode | translate
+                    }}</span>
+                </span>
+            </a>
+            <hr class="menu-separator" />
+            <ul
+                *ngIf="subMenu.subMenus && subMenu.subMenus.length"
+                id="menupos_sub_{{ subIndex }}"
+                class="no-collapse"
+            >
+                <li
+                    *ngFor="let childSubMenu of subMenu.subMenus"
+                    class="childSubMenu"
+                    [attr.CodeCode]="childSubMenu.CodeCode"
+                >
+                    <a
+                        class="sub-item activeMenu"
+                        *ngIf="
+                            !(childSubMenu && childSubMenu.subMenus && childSubMenu.subMenus.length)
+                        "
+                        (click)="checkAction(UI_ACTION_CLICK, index, menu, subMenu, childSubMenu)"
+                        (contextmenu)="openContextmenu($event, menu, subMenu, childSubMenu)"
+                        href="javascript:;"
+                        data-toggle="collapse"
+                        data-parent="#submenu2"
+                    >
+                        <span
+                            *ngIf="
+                                equalIgnoreCase(childSubMenu.MenuType, DISPLAY_ICON) ||
+                                equalIgnoreCase(childSubMenu.MenuType, DISPLAY_ICONANDTEXT)
+                            "
+                        >
+                            <i
+                                *ngIf="childSubMenu.CodeIcon"
+                                class="subMenuIcon fa {{ childSubMenu.CodeIcon.class }}"
+                                [style.font-size.px]="childSubMenu.CodeIcon.fontSize"
+                                [ngStyle]="{ color: childSubMenu.CodeIcon.color }"
+                            ></i>
+                        </span>
+                        <span
+                            *ngIf="
+                                !childSubMenu.MenuType ||
+                                equalIgnoreCase(childSubMenu.MenuType, DISPLAY_TEXT) ||
+                                equalIgnoreCase(childSubMenu.MenuType, DISPLAY_ICONANDTEXT)
+                            "
+                            [ngClass]="{
+                                'pad-l-8': equalIgnoreCase(
+                                    childSubMenu.MenuType,
+                                    DISPLAY_ICONANDTEXT
+                                )
+                            }"
+                        >
+                            <span
+                                *ngIf="childSubMenu.CodeDescription"
+                                class="menudescription"
+                                [ngClass]="{
+                                    'pad-l-38':
+                                        childSubMenu.MenuType === null ||
+                                        equalIgnoreCase(childSubMenu.MenuType, DISPLAY_TEXT)
+                                }"
+                                >{{ childSubMenu.CodeCode | translate }}</span
+                            >
+                        </span>
+                        <span class="external-link"
+                            ><i
+                                (click)="openInNewTab($event, index, menu, subMenu, childSubMenu)"
+                                class="fa fa-external-link"
+                            ></i
+                        ></span>
+                        <span
+                            class="badge"
+                            [ngStyle]="{
+                                'background-color': randomColor(childSubMenu.badge)
+                            }"
+                            *ngIf="childSubMenu.badge"
+                            >{{ childSubMenu.badge }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </ng-template>
+</div>

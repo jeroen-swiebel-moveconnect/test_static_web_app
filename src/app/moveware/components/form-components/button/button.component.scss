@@ -1,0 +1,43 @@
+@import '../../../../../assets/scss/moveware.scss';
+@import '../../../../../assets/scss/syncfusion/custom.scss';
+
+.pd-l-5 {
+    padding-left: 5px;
+}
+
+.e-upload .e-upload-files .e-upload-file-list {
+    display: none;
+}
+
+.e-upload .e-file-select-wrap {
+    padding: 0px;
+}
+
+.e-btn {
+    // overiding the fabric.css line-height of 1.8572em;
+    line-height: 1em;
+    color: $PRIMARY-COLOR;
+    font-size: 15px;
+    cursor: pointer;
+
+    &:focus {
+        outline: 1px dotted $BLACK !important;
+    }
+}
+
+::ng-deep {
+    ui-button {
+        width: 100%;
+
+        button {
+            width: 100%;
+        }
+    }
+}
+
+.btn-icon-text {
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+}

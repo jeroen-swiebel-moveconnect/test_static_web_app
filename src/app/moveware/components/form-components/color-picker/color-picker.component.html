@@ -1,0 +1,32 @@
+<section class="row form-field-section color-picker" [hidden]="!field.CodeVisible">
+    <span
+        *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+        class="col-md-3 {{ field.groupHeaderClass }}"
+        [ngClass]="isTableHeader ? '' : field.headerClass"
+        >{{ this.translationContext + field.CodeCode | translate }}
+    </span>
+    <div class="form-group col-md-9 demo-full-width margin-top boder-color">
+        <div class="wrap">
+            <input
+                type="text"
+                id="color"
+                name="color"
+                class="form-control"
+                spellcheck="false"
+                [(ngModel)]="field.CodeValue"
+                required
+            />
+            <input
+                ejs-colorpicker
+                type="color"
+                class="form-control"
+                id="colorpicker"
+                [showButtons]="true"
+                required
+                [(value)]="field.CodeValue"
+                (change)="onSelect($event)"
+                name="colorpicker"
+            />
+        </div>
+    </div>
+</section>

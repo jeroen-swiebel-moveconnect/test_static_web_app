@@ -1,0 +1,43 @@
+<section class="icon-picker w-100" *ngIf="field" [hidden]="!field.CodeVisible">
+    <section class="row form-field-section">
+        <span
+            *ngIf="!field.isTableCell && currentView && currentView['CodeType'] === 'Data Form'"
+            class="col-md-3 {{ field.headerClass }}"
+            >{{ fieldLabel | translate }}</span
+        >
+        <div class="col-md-9 icon-picker-section {{ field.dataClass }} {{ field.groupDataClass }} ">
+            <button class="ui-inputgroup-addon icon-button" (click)="openSlidePane()" type="button">
+                <i *ngIf="field.CodeValue" class="fa {{ field.CodeValue.class }}"></i>
+            </button>
+            <input
+                tabindex="{{ field.tabIndex }}"
+                class="icon-picker input"
+                type="text"
+                pInputText
+                placeholder="{{ field.CodePlaceholder }}"
+                [ngModel]="field.CodeValue | jsonParser"
+                required="{{ field.CodeRequired ? true : false }}"
+                autocomplete="off"
+                (focusout)="changeIcon($event.target.value)"
+                pTooltip="{{ field.CodeHelp }}"
+                [escape]="false"
+                tooltipPosition="bottom"
+                placeholder="Bottom"
+                showDelay="1000"
+                hideDelay="500"
+            />
+            <i
+                (click)="openSlidePane()"
+                tooltipPosition="bottom"
+                pTooltip="search"
+                class="pi pi-chevron-down search-btn"
+            ></i>
+            <i
+                (click)="clearIcon()"
+                ejs-button
+                iconCss="e-icons e-clear-icon"
+                class="clear-btn"
+            ></i>
+        </div>
+    </section>
+</section>

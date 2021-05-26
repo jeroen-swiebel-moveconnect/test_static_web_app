@@ -1,0 +1,32 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.mw-selectbutton {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    .e-active {
+        color: $WHITE !important;
+        background-color: $PRIMARY-COLOR !important;
+    }
+    .demo-full-width {
+        display: flex;
+    }
+}
+.mw-selectbutton {
+    .e-inactive {
+        color: $BLACK;
+        background-color: $WHITE-F1;
+        font-size: 14px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.8572em;
+        padding-bottom: 2px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 2px;
+        border-right-width: 0px;
+        border-left-width: 0px;
+        &:hover {
+            background-color: $GREY-A8;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<section
+    class="row form-field-section slider-field"
+    id="{{ field._id }}"
+    [hidden]="!field.CodeVisible"
+>
+    <span *ngIf="!field.isTableCell" class="col-md-3 {{ field.headerClass }}"
+        >{{ field.CodeCode | translate }}
+    </span>
+    <div class="demo-full-width {{ field.CodeFieldType }} {{ field.dataClass }}">
+        <div>{{ fieldValue }}</div>
+        <p-slider
+            [(ngModel)]="fieldValueInt"
+            (onChange)="changeValue($event)"
+            [step]="fieldStep"
+            [min]="fieldMin"
+            [max]="fieldMax"
+        ></p-slider>
+    </div>
+</section>

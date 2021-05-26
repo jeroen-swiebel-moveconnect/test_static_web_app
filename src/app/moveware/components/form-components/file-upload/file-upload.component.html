@@ -1,0 +1,48 @@
+<div *ngIf="!isLookup; else lookupTemplate">
+    <section class="file-upload row" [hidden]="!field.CodeVisible" *ngIf="field">
+        <div
+            *ngIf="!field.isTableCell"
+            class="heading col-md-3 {{ field.headerClass }}  {{ field.groupHeaderClass }}"
+        >
+            {{ translationContext + field.CodeCode | translate }}
+        </div>
+        <ejs-uploader
+            [htmlAttributes]="{ tabindex: field.tabIndex }"
+            #preloadupload
+            id="preloadfileupload"
+            (selected)="onFileSelect($event)"
+            class="demo-full-width {{ field.dataClass }} {{ field.groupDataClass }} {{
+                errorClass
+            }}"
+            [files]="preLoadFiles"
+            (removing)="onRemove($event)"
+            allowedExtensions="{{ acceptedFormats }}"
+        >
+            <ng-template #template="" let-data>
+                <span class="fileListwrapper">
+                    <span class="icon template-icons sf-icon-{{ data.type }}"></span>
+                    <span class="name test file-name">{{ data.name }} </span>
+                    <img
+                        [src]="imgUri"
+                        *ngIf="imgUri"
+                        class="pull-left {{ previewClass }}"
+                        draggable="false"
+                        alt="uploaded file"
+                    />
+                </span>
+                <span class="e-icons e-file-remove-btn" title="Remove" (click)="onClear()"></span>
+                <br />
+            </ng-template>
+        </ejs-uploader>
+    </section>
+</div>
+<ng-template #lookupTemplate>
+    <lookup
+        [value]="field.CodeValue"
+        [field]="field"
+        [currentView]="currentView"
+        [currentPage]="currentPage"
+        [currentRecord]="currentRecord"
+    >
+    </lookup>
+</ng-template>

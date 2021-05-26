@@ -1,0 +1,63 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.demo-full-width {
+    display: block;
+    padding-right: 0;
+    padding-left: 0;
+
+    .Notes {
+        border: 1px solid $BLACK-03 !important;
+        padding-left: 12px;
+        display: inherit;
+
+        &:hover {
+            border: 1px solid $BLACK-06 !important;
+        }
+
+        &:focus {
+            outline: 1px dotted $BLACK !important;
+        }
+    }
+}
+.e-dlg-content {
+    padding: inherit !important;
+}
+.selected-item {
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+}
+.rich-text-field {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.adjust {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    list-style-type: none;
+    background-color: #f5f8f9;
+    height: auto;
+    max-height: 300px;
+    max-width: 300px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+::ng-deep .ui-overlaypanel-content {
+    border: none;
+}
+.full-width {
+    width: 100%;
+}
+
+.items {
+    padding-left: 10px !important;
+    padding-top: 5px !important;
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+
+.items:hover {
+    background-color: #dce2e7 !important;
+}

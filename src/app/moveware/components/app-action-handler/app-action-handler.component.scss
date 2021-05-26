@@ -1,0 +1,36 @@
+@import '../../../../assets/scss/moveware.scss';
+
+.action-handler {
+    float: left;
+    padding-right: 0px;
+
+    .tray-icon-button {
+        color: $PRIMARY-COLOR;
+    }
+
+    ::ng-deep .ui-button {
+        margin: 2px !important;
+    }
+}
+
+.btn {
+    padding: 0;
+}
+
+.more-btn {
+    margin: 1px 20px 0px 3px !important;
+    border: none;
+    background: transparent;
+}
+
+.icon {
+    color: $PRIMARY-COLOR !important;
+}
+
+.btn-display {
+    display: flex !important;
+}
+
+.back-btn {
+    padding-bottom: 10px;
+}

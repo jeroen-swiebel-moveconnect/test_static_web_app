@@ -1,0 +1,90 @@
+@import "./vars.scss";
+@mixin keyframe () {
+    @-webkit-keyframes play {
+        @content;
+    }
+    @-moz-keyframes play {
+        @content;
+    }
+    @-o-keyframes play {
+        @content;
+    }
+    @keyframes play {
+        @content;
+    }
+}
+
+@mixin animationLoading () {
+    -webkit-animation: play .8s steps(1) infinite;
+    -moz-animation: play .8s steps(1) infinite;
+    -ms-animation: play .8s steps(1) infinite;
+    -o-animation: play .8s steps(1) infinite;
+    animation: play .8s steps(1) infinite;
+}
+
+@include keyframe() {
+    0% {
+        background: rgba($GREY-AF, 0.1)
+    }
+    25% {
+        background: rgba($GREY-AF, 0.2)
+    }
+    50% {
+        background: rgba($GREY-AF, 0.3)
+    }
+    100% {
+        background: rgba($GREY-AF, 0.5)
+    }
+}
+
+@mixin animationFromTop($duration) {
+    animation: palyFromTop 0.5s $duration 1 ease forwards;
+    -webkit-animation: palyFromTop 0.5s $duration 1 ease forwards;
+}
+
+@mixin keyFrameForTop () {
+    @-webkit-keyframes palyFromTop {
+        @content;
+    }
+    @-moz-keyframes palyFromTop {
+        @content;
+    }
+    @-o-keyframes palyFromTop {
+        @content;
+    }
+    @keyframes palyFromTop {
+        @content;
+    }
+}
+
+@include keyFrameForTop {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 0px;
+        opacity: 1
+    }
+}
+@mixin scrollBars() {
+   
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background-color: $WHITE;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: $BLACK-03;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: $BLACK-04;
+    }
+  }

@@ -1,0 +1,80 @@
+<section class="confirm-dialog">
+    <section class="header-title">
+        <section class="header-icon">
+            <i class="{{ iconClass }}" aria-hidden="true"></i>
+        </section>
+        <section class="font-subtitle">
+            <div>{{ title }}</div>
+        </section>
+    </section>
+    <section class="font-caption-alt message" [innerHTML]="message"></section>
+    <section *ngIf="type === 'confirm'" class="dialog-actions">
+        <button pButton class="ui-button-raised" label="No" (click)="onNoClick()"></button>
+        <button
+            pButton
+            class="ui-button-raised primary pull-right"
+            label="Yes"
+            (click)="onYesClick()"
+        ></button>
+    </section>
+    <section>
+        <section class="pass-input" *ngIf="type === 'inputRequest'">
+            <span style="padding: 5px">Password</span>
+            <span class="input">
+                <section style="display: flex">
+                    <input
+                        [ngClass]="{ 'error-border': errorMesage || warningMesage }"
+                        type="password"
+                        style="width: 124px; min-height: 32px"
+                        (ngModelChange)="onInputChange()"
+                        [(ngModel)]="value"
+                    />
+                    <span
+                        *ngIf="errorMesage"
+                        class="error-message-span"
+                        severity="error"
+                        text="Wrong password"
+                        >{{ errorMesage }}</span
+                    >
+                    <span
+                        *ngIf="warningMesage"
+                        class="warning-message-span"
+                        severity="error"
+                        text="Enter password"
+                        >{{ warningMesage }}</span
+                    >
+                </section>
+            </span>
+        </section>
+        <section
+            [ngClass]="{
+                'display-flex': noButtonDescription && yesButtonDescription,
+                'align-center': noButtonDescription || yesButtonDescription
+            }"
+            class="dialog-actions"
+            *ngIf="noButtonDescription || yesButtonDescription"
+        >
+            <button
+                pButton
+                *ngIf="noButtonDescription"
+                class="no-btn ui-button-raised ui-button-secondary"
+                label="{{ noButtonDescription }}"
+                (click)="onNoClick()"
+            ></button>
+            <button
+                pButton
+                *ngIf="yesButtonDescription"
+                class="yes-btn ui-button-raised primary pull-right"
+                label="{{ yesButtonDescription }}"
+                (click)="tryLogin()"
+            ></button>
+        </section>
+    </section>
+
+    <section
+        class="dialog-actions"
+        *ngIf="type === 'alert' && !(noButtonDescription || yesButtonDescription)"
+    >
+        <button pButton class="button" label="OK" (click)="onAccept()"></button>
+    </section>
+</section>

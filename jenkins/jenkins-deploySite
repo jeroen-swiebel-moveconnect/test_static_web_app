@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+
+    options {
+        parallelsAlwaysFailFast()
+    }
+    
+    environment  {
+        nodejsHome = tool 'nodejs'
+        NODE_HOME = "${nodejsHome}"
+        PATH = "${nodejsHome}/bin:${env.PATH}"
+
+        DEVELOP_BRANCH='origin/dev'
+        DEV_TARGET_BRANCH='dev'
+
+        TEST_BRANCH='origin/test'
+        TEST_TARGET_BRANCH='test'
+
+        UAT_BRANCH='origin/uat'
+        UAT_TARGET_BRANCH='uat'
+
+        PROD_BRANCH='origin/master'
+        PROD_TARGET_BRANCH='master'
+    }
+
+    stages {
+
+        stage('npm install'){
+            steps {
+                dir('ui') {
+                    sh "npm install"
+                }
+                dir('supplemental') {
+                    sh "npm install"
+                }
+            }
+        }
+
+        stage ('Create compodoc'){
+            steps {
+                dir('ui'){
+                    script { 
+                        sh """
+                            npx compodoc -p tsconfig.app.json
+                        """
+                    }
+                }
+            }
+        }
+        stage('Copy artifacts') {
+            steps {
+                sh 'mkdir -p ui-documentation'
+                sh 'mkdir -p assets/i18n'
+                sh 'cp -r supplemental/node_modules/cldr-data/main/* ./assets/i18n'
+                sh 'cp -r supplemental/node_modules/cldr-data/supplemental/* ./assets/i18n'
+                sh 'cp -r supplemental/node_modules/@syncfusion/ej2-locale/src/* ./assets/i18n'
+                sh 'cp -r ui/documentation/* ./ui-documentation'
+                sh "rm -r ui"
+                sh "rm -r ui@tmp"
+                sh "rm -r supplemental*"
+            }
+        }   
+
+        stage('Deploy project info site') {
+            steps {
+                script {
+                    if (env.GIT_BRANCH==DEVELOP_BRANCH) {
+                        echo 'Deploy DEV website'
+                        azureUpload blobProperties: [cacheControl: '', contentEncoding: '', contentLanguage: '', contentType: '', detectContentType: true], cleanUpContainerOrShare: false, containerName: '$web', excludeFilesPath: '', fileShareName: '', filesPath: '**', storageCredentialId: 'static_website_DEV_storage_account', storageType: 'blobstorage', uploadArtifactsOnlyIfSuccessful: true
+                    }
+                    else if (env.GIT_BRANCH==TEST_BRANCH) {
+                        echo 'Deploy TEST website'
+                        azureUpload blobProperties: [cacheControl: '', contentEncoding: '', contentLanguage: '', contentType: '', detectContentType: true], cleanUpContainerOrShare: false, containerName: '$web', excludeFilesPath: '', fileShareName: '', filesPath: '**', storageCredentialId: 'static_website_TEST_storage_account', storageType: 'blobstorage', uploadArtifactsOnlyIfSuccessful: true
+                    }
+                    else {
+                        echo 'Deploy UAT website'
+                        azureUpload blobProperties: [cacheControl: '', contentEncoding: '', contentLanguage: '', contentType: '', detectContentType: true], cleanUpContainerOrShare: false, containerName: '$web', excludeFilesPath: '', fileShareName: '', filesPath: '**', storageCredentialId: 'static_website_UAT_storage_account', storageType: 'blobstorage', uploadArtifactsOnlyIfSuccessful: true
+                    }
+                }
+            }
+        }
+        stage('clean') {
+            steps {
+                cleanWs()
+            }
+        }
+    }
+}

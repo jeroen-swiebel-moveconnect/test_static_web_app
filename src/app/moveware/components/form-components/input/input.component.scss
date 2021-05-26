@@ -1,0 +1,123 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.link {
+    color: $PRIMARY-COLOR !important;
+}
+
+.selected-item {
+    background-color: $PRIMARY-COLOR;
+    color: $WHITE;
+}
+
+.demo-full-width {
+    display: block;
+
+    &.readonly-field {
+        &.col-md-9 {
+            padding-top: 4px;
+            padding-left: 12px !important;
+        }
+    }
+}
+
+.pd-0 {
+    padding: 0 !important;
+}
+
+.input {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.options-text {
+    ::ng-deep {
+        .ui-chips .ui-inputtext {
+            width: 100%;
+
+            input {
+                &:focus,
+                &:hover {
+                    border: none !important;
+                    outline: none !important;
+                }
+            }
+        }
+    }
+}
+
+button {
+    background: transparent;
+    border: none;
+
+    &.search-icon {
+        height: 27px;
+        width: 27px;
+        position: absolute;
+        right: 3px;
+        bottom: 16px;
+        top: 2px;
+        z-index: 100;
+        background: $WHITE;
+    }
+
+    &:hover {
+        background: $PRIMARY-COLOR;
+        color: $PRIMARY-FONT-COLOR;
+    }
+
+    &:focus {
+        outline: 1px dotted $BLACK;
+    }
+
+    &.btn-chip {
+        border: none;
+        background: $PRIMARY-COLOR;
+        color: $PRIMARY-FONT-COLOR;
+        border-radius: 20px;
+        height: 20px;
+        padding-left: 12px;
+        padding-right: 12px;
+        margin: 5px;
+    }
+
+    .close-icon {
+        padding-left: 5px;
+        font-size: 12px;
+    }
+}
+
+.e-dlg-content {
+    padding: inherit !important;
+}
+
+.adjust {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    list-style-type: none;
+    background-color: #f5f8f9;
+    height: auto;
+    max-height: 300px;
+    max-width: 300px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.items {
+    padding-left: 10px !important;
+    padding-top: 5px !important;
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+
+.items:hover {
+    background-color: #dce2e7 !important;
+}
+
+.selected-item {
+    padding-right: 10px;
+}
+
+::ng-deep .ui-inputtext {
+    width: 100% !important;
+}

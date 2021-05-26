@@ -1,0 +1,148 @@
+@import '../../../../../assets/scss/moveware.scss';
+
+.dialog-title {
+    display: inline-flex;
+    padding-left: 15px;
+}
+
+.form-field-section {
+    padding-left: 40px !important;
+    margin: -9px -14px 2px -18px;
+}
+
+::ng-deep .ui-dialog-center {
+    .ui-dialog-content {
+        overflow: auto;
+        display: contents;
+    }
+}
+
+.close-btn {
+    border: none;
+    background: none;
+    box-shadow: none;
+    color: $PRIMARY-COLOR;
+
+    &:hover,
+    &:focus {
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    &-container {
+        position: absolute;
+        right: -18px;
+        top: 15px;
+    }
+}
+
+.more-btn {
+    border: none;
+    background: none;
+    box-shadow: none;
+    padding: 14px;
+    color: $PRIMARY-COLOR;
+
+    &:hover,
+    &:focus {
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    &-container {
+        position: absolute;
+        right: -18px;
+        top: 15px;
+    }
+}
+
+.pd-l-60 {
+    padding-left: 60px !important;
+}
+
+lookup {
+    width: 100%;
+}
+
+.hideTab {
+    display: none;
+
+    &.showTab {
+        height: 250px;
+        width: 400px;
+        display: block;
+        position: relative;
+        -webkit-animation-name: animateFromRight;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animateFromRight;
+        animation-duration: 0.4s;
+    }
+}
+
+@-webkit-keyframes animateFromRight {
+    from {
+        right: -120px;
+        opacity: 0;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}
+
+@keyframes animateFromRight {
+    from {
+        right: -120px;
+        opacity: 0;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}
+
+.demo-full-width {
+    border: 1px solid $GREY-AF !important;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.right {
+    float: right;
+
+    &.close-btn {
+        width: 40px !important;
+        height: 40px;
+        padding-top: 7px;
+        padding-right: 50px !important;
+
+        &:focus {
+            outline: 1px dotted;
+        }
+    }
+}
+
+.button-bar {
+    display: flow-root;
+    padding-bottom: 5px;
+}
+
+.rich-text-field {
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 100%;
+}
+
+.textarea-zoom-in {
+    height: 90%;
+
+    .rich-text-field {
+        height: 90%;
+    }
+}

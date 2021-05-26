@@ -1,0 +1,6 @@
+.icon-edit:before {
+    content: '\e97c';
+}
+.icon-clear:before {
+    content: '\e932';
+}

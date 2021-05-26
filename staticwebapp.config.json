@@ -1,30 +1,7 @@
 {
     "routes": [
         {
-            "route": "/*",
-            "rewrite": "/index.html",
-            "exclude": [
-                "/assets/images/*.{png,jpg,gif}",
-                "/assets/css/*",
-                "/assets/scss/*",
-                "/assets/fonts/*",
-                "/assets/js/*",
-                "/assets/*",
-                "/polyfills*.*",
-                "/prime*.*",
-                "/*.{js,gif,ico,png,eot,svg,ttf,woff,woff2}",
-                "/*.js.map"
-            ]
+            "route": "/"
         }
-    ],
-    "navigationFallback": {
-        "rewrite": "/index.html",
-        "exclude": [
-            "/assets/images/*.{png,jpg,gif}",
-            "/assets/css/*",
-            "/assets/scss/*",
-            "/assets/fonts/*",
-            "/assets/js/*"
-        ]
-    }
+    ]
 }

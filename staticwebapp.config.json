@@ -8,7 +8,12 @@
                 "/assets/css/*",
                 "/assets/scss/*",
                 "/assets/fonts/*",
-                "/assets/js/*"
+                "/assets/js/*",
+                "/assets/*",
+                "/polyfills*.*",
+                "/prime*.*",
+                "/*.{js,gif,ico,png,eot,svg,ttf,woff,woff2}",
+                "/*.js.map"
             ]
         }
     ],

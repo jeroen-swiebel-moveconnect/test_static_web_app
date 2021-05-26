@@ -2,12 +2,48 @@
     "routes": [
         {
             "route": "/"
+        },
+        {
+            "route": "/.auth/"
         }
     ],
+    "navigationFallback": {
+        "rewrite": "index.html",
+        "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+    },
     "responseOverrides": {
         "404": {
             "rewrite": "index.html",
             "statusCode": 200
+        }
+    },
+    "auth": {
+        "identityProviders": {
+            "customOpenIdConnectProviders": {
+                "myProvider": {
+                    "registration": {
+                        "clientIdSettingName": "abd66a29-4259-4b03-9287-5d91a5d2d536",
+                        "clientCredential": {
+                            "clientSecretSettingName": "_bK84J3O6aek~08R8k6y~~BVT-gX_Yn4Q4"
+                        },
+                        "openIdConnectConfiguration": {
+                            "wellKnownOpenIdConfiguration": "https://moveconnectb2ctest.b2clogin.com/moveconnectb2ctest.onmicrosoft.com/B2C_1_MW10_moveware/v2.0/.well-known/openid-configuration"
+                        }
+                    },
+                    "login": {
+                        "nameClaimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                        "scopes": [
+                            "openid",
+                            "profile",
+                            "email",
+                            "offline_access",
+                            "https://moveconnectb2ctest.onmicrosoft.com/movewarerest/read",
+                            "https://moveconnectb2ctest.onmicrosoft.com/movewarerest/write"
+                        ],
+                        "loginParameterNames": []
+                    }
+                }
+            }
         }
     }
 }

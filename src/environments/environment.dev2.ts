@@ -1,5 +1,4 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
-
 export const i18nFiles = {
     LangBased: ['numbers.json', 'currencies.json', 'ca-gregorian.json', 'timeZoneNames.json'],
     common: ['weekData.json', 'numberingSystems.json', 'currencyData.json']
@@ -28,7 +27,6 @@ export const authConfig: AuthConfig = {
     issuer: environment.AUTH_SERVER_HOST_AND_PORT + '/03bab744-0146-434c-8725-e170682d5b65/v2.0/',
     redirectUri: environment.UI_ROOT,
     clientId: 'abd66a29-4259-4b03-9287-5d91a5d2d536',
-
     scope:
         'openid profile email offline_access' +
         ' https://moveconnectb2ctest.onmicrosoft.com/movewarerest/read' +

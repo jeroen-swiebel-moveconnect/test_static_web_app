@@ -18,6 +18,12 @@ jobs:
             - uses: actions/checkout@v2
               with:
                   submodules: true
+            - uses: actions/checkout@master
+            - name: copy file
+              uses: canastro/copy-file-action@master
+              with:
+                  source: 'src/environments/environment.dev2.ts'
+                  target: 'src/environments/environment.ts'
             - name: Build And Deploy
               id: builddeploy
               uses: Azure/static-web-apps-deploy@v1

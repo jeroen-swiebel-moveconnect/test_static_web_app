@@ -1,9 +1,4 @@
 {
-    "routes": [
-        {
-            "route": "/*"
-        }
-    ],
     "responseOverrides": {
         "404": {
             "rewrite": "index.html",
